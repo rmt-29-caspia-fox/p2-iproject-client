@@ -1,12 +1,28 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import axios from "axios";
 
-export const useCounterStore = defineStore("counter", () => {
-  const count = ref(0);
-  const doubleCount = computed(() => count.value * 2);
-  function increment() {
-    count.value++;
+const urlServer = "http://localhost:3000/"
+
+export const useCounterStore = defineStore("counter", {
+  state:()=>{
+    return {
+      books:[]
+    }
+  },
+  actions: {
+    async searchG(query){
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: urlServer + "gsearch",
+          data: { query },
+        });
+        console.log(data);
+        this.books = data;
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
-
-  return { count, doubleCount, increment };
 });
