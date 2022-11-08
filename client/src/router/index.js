@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LandingView from '../views/LandingView.vue'
-import FormOrderView from '../views/FormOrderView.vue'
-import WaitinglistView from '../views/WaitinglistView.vue'
+import LandingView from "../views/LandingView.vue";
+import FormOrderView from "../views/FormOrderView.vue";
+import WaitinglistView from "../views/WaitinglistView.vue";
+import MapView from "../views/MapView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,22 +10,22 @@ const router = createRouter({
     {
       path: "/",
       name: "landing",
-      component: LandingView
+      component: LandingView,
     },
+    { path: "/map", name: "map", component: MapView },
     {
       path: "/order",
       name: "order", //order form
-      component : FormOrderView
+      component: FormOrderView,
     },
     {
       path: "/waitinglist",
       name: "waitinglist", //table book,
-      component: WaitinglistView
+      component: WaitinglistView,
     },
     {
       path: "/waitinglist/rute",
       name: "rute", //table book,
-      
     },
     {
       path: "/admin",
@@ -38,9 +39,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'cms-table' && !localStorage.access_token){
-    return to.name === 'cms-login'
-  }else next()
-})
+  if (to.name === "cms-table" && !localStorage.access_token) {
+    return to.name === "cms-login";
+  } else next();
+});
 
 export default router;
