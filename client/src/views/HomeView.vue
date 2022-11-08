@@ -1,7 +1,7 @@
 <template>
   <form class="form">
-    <input type="text" v-model="query" class="form-control"/>
-    <button class="btn btn-primary" @click.prevent="emitSrc">Search</button>
+    <input type="text" v-model="query" class="form-control-lg"/>
+    <button class="btn btn-primary" @click.prevent="emitSrc"><img src="@/components/icons/icons8-search-50.png"></button>
   </form>
 </template>
 
@@ -23,3 +23,7 @@ import { useCounterStore } from '../stores/counter';
     }
   }
 </script>
+
+<style scoped>
+
+</style>
