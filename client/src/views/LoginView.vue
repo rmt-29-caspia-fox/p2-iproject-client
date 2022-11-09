@@ -50,6 +50,9 @@ export default {
           });
         });
     },
+    callback(response) {
+      this.googleLogin(response);
+    },
   },
 };
 </script>
@@ -111,6 +114,7 @@ export default {
           <br />
           <br />
           <!-- glogin -->
+          <GoogleLogin :callback="callback" />
         </form>
 
         <p class="exist mt-4">
@@ -148,7 +152,7 @@ body {
   padding: 0 35px;
 }
 .rcol {
-  background: #fff9ed;
+  background: #fcf3a7;
   padding: 80px;
   height: 800px;
 }
