@@ -1,4 +1,32 @@
-<script></script>
+<script>
+import {mapActions} from 'pinia'
+import {useIndexStore} from '@/stores/index'
+
+export default {
+  data() {
+    return {
+      user: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    ...mapActions(useIndexStore, ['loginHandler']),
+    loginAction() {
+      let login = {
+        email: this.user.email,
+        password: this.user.password
+      }
+      this.loginHandler(login)
+    },
+    navigation(page) {
+      this.$router.push(page)
+    }
+  }
+}
+</script>
+
 
 
 <template>
@@ -17,12 +45,12 @@
         <p class="text-sm mt-4">Log in to your account</p>
 
         <form
-          @submit.prevent="loginHandler"
+          @submit.prevent="loginAction"
           action=""
           class="flex flex-col gap-4"
         >
           <input
-           
+           v-model="user.email"
             class="p-2 mt-8 rounded-xl border"
             id="login-email"
             type="email"
@@ -31,7 +59,7 @@
           />
           <div class="relative">
             <input
-             
+             v-model="user.password"
               class="p-2 rounded-xl border w-full"
               id="login-password"
               type="password"

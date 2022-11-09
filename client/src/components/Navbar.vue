@@ -1,4 +1,24 @@
-<script></script>
+<script>
+import {mapWritableState} from 'pinia'
+import {useIndexStore} from '@/stores/index'
+
+export default {
+  computed: {
+    ...mapWritableState(useIndexStore, ['isLogin'])
+  },
+  methods: {
+    logoutHandler() {
+      localStorage.clear()
+      this.navigate('/login')
+      this.isLogin = false
+    },
+    navigate(page) {
+      this.$router.push(page) 
+    }
+  }
+}
+
+</script>
 
 <template>
   <header class="fixed top-0 left-0 right-0 z-50">
@@ -8,7 +28,7 @@
           <div
             class="mx-w-10 text-2xl font-bold capitalize text-white flex items-center"
           >
-            CovNews
+            HackNews
           </div>
 
           <div class="flex flex-row">
@@ -20,6 +40,7 @@
                 class="active relative border-l border-gray-800 hover:bg-gray-900"
               >
                 <a
+                  @click.prevent="navigate('/')"
                   class="block py-3 px-6 border-b-2 border-transparent"
                   href="index.html"
                   >Home</a
@@ -29,6 +50,7 @@
                 class="dropdown relative border-l border-gray-800 hover:bg-gray-900"
               >
                 <a
+                  @click.prevent="navigate('/covid')"
                   class="block py-3 px-6 border-b-2 border-transparent"
                   href="#"
                   >Covid Statistic</a
@@ -36,6 +58,7 @@
               </li>
               <li class="relative border-l border-gray-800 hover:bg-gray-900">
                 <a
+                  @click.prevent="logoutHandler"
                   class="block py-3 px-6 border-b-2 border-transparent"
                   href="#"
                   >Logout</a

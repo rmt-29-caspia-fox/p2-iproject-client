@@ -1,19 +1,38 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import {mapWritableState, mapActions} from 'pinia'
+import {useIndexStore} from '@/stores/index'
 
 export default {
   components: {
     Navbar,
     Footer
+  },
+  computed: {
+    ...mapWritableState(useIndexStore, ['isLogin'])
+  },
+  methods: {
+    ...mapActions(useIndexStore, ['fetchNews', 'fetchTable'])
+  },
+  created() {
+    if(localStorage.getItem('access_token')) {
+      this.isLogin = true
+      this.fetchNews()
+      this.fetchTable()
+    }
   }
 }
 </script>
 
 <template>
-<Navbar/>
+<Navbar
+v-if="isLogin"
+/>
 <router-view/>
-<Footer/>
+<Footer
+v-if="isLogin"
+/>
 </template>
 
 <style>

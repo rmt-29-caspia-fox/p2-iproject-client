@@ -29,5 +29,11 @@ const router = createRouter({
     },
   ]
 })
+router.beforeEach((to, from, next)=> {
+  if(to.name === `home` && !localStorage.getItem('access_token')) next({name: `login`})
+  if(to.name === `covid` && !localStorage.getItem('access_token')) next({name: `login`})
+  if((to.name === `login` || to.name === `register`) && localStorage.getItem('access_token')) next({name: `home`})
+  else next()
+})
 
 export default router

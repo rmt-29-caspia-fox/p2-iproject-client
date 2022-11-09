@@ -1,10 +1,15 @@
 <script>
 import CardNews from '@/components/CardNews.vue'
 import Carousel from '@/components/Carousel.vue'
+import {mapState} from 'pinia'
+import {useIndexStore} from '@/stores/index'
 export default {
   components: {
     CardNews,
     Carousel
+  },
+  computed: {
+    ...mapState(useIndexStore, ['news'])
   }
 }
 </script>
@@ -26,6 +31,8 @@ export default {
           <div class="flex flex-row flex-wrap -mx-3">
             <!-- card -->
             <CardNews
+            v-for="newss in news"
+            :newss="newss"
             />
             <!-- end card -->
           </div>

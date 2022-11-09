@@ -1,4 +1,33 @@
-<script></script>
+<script>
+import { mapActions } from "pinia";
+import { useIndexStore } from "@/stores/index";
+
+export default {
+  data() {
+    return {
+      user: {
+        username: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useIndexStore, ["registerHandler"]),
+    registerAction() {
+      let register = {
+        username: this.user.username,
+        email: this.user.email,
+        password: this.user.password,
+      };
+      this.registerHandler(register);
+    },
+    navigation(page) {
+      this.$router.push(page)
+    }
+  },
+};
+</script>
 
 <template>
   <!-- Register section -->
@@ -10,12 +39,12 @@
       class="px-8 py-6 mx-4 mt-4 mb-4 text-left bg-gray-200 shadow-lg md:w-1/3 lg:w-1/3 sm:w-1/3 border rounded-xl"
     >
       <h3 class="text-2xl font-bold text-center">Register</h3>
-      <form action="" @submit.prevent="registerHandler">
+      <form action="" @submit.prevent="registerAction">
         <div class="mt-4">
           <div>
             <label class="block" for="Name">Username</label>
             <input
-             
+              v-model="user.username"
               type="text"
               id="register-username"
               placeholder="Enter your username"
@@ -27,7 +56,7 @@
           <div class="mt-4">
             <label class="block" for="email">Email</label>
             <input
-            
+              v-model="user.email"
               type="email"
               id="register-email"
               autocomplete="off"
@@ -39,7 +68,7 @@
           <div class="mt-4">
             <label class="block">Password</label>
             <input
-            
+              v-model="user.password"
               type="password"
               id="reqister-password"
               required
