@@ -9,7 +9,7 @@ export const useMangaStore = defineStore("manga", {
     baseUrl: "http://localhost:3000",
     mangas: [],
     manga: {},
-    // wishlists: [],
+    bookmarks: [],
     // qrcode: "",
     // totalPage: 0,
     // filter: { limit: 9, offset: 0, search: "" },
@@ -41,6 +41,37 @@ export const useMangaStore = defineStore("manga", {
         console.log(error);
         console.log(error.response.data, "<<< err resp data");
       }
+    },
+    async fetchBookmarks() {
+      try {
+        const { data } = await axios.get(`${this.baseUrl}/pub/bookmarks`, {
+          headers: { access_token: localStorage.getItem("access_token") },
+        });
+        this.bookmarks = data;
+        console.log(data, "<<< data");
+        // console.log(data.id, "<< data id");
+        // console.log(data.data.id, "<<< data.dataid");
+        // console.log(this.bookmarks, "<< bokm");
+      } catch (error) {
+        console.log(error);
+        // console.log(error.response.data, "<<< err resp data");
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: `${error.response.data.message}`,
+        });
+      }
+    },
+    async addToBookmarks(payload) {
+      console.log("add store");
+      console.log(payload, "<<< payload");
+      return axios.post(
+        `${this.baseUrl}/pub/bookmarks/${payload.id}`,
+        payload,
+        {
+          headers: { access_token: localStorage.getItem("access_token") },
+        }
+      );
     },
   },
 });
