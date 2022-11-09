@@ -1,6 +1,10 @@
 <script>
+import { mapState } from 'pinia';
+import { useUserStore } from '../stores/user';
 export default {
-
+  computed: {
+    ...mapState(useUserStore, ['isLogin'])
+  }
 }
 </script>
 
@@ -18,11 +22,14 @@ export default {
 
       <li><a class="rounded-lg px-3 py-2" href=""> My Order </a></li>
 
-      <li class="hidden lg:block">
+      <li class="hidden lg:block" v-if="!isLogin" >
         <router-link class="rounded-lg px-3 py-2" to="/login"> Login </router-link>
       </li>
-      <li class="hidden lg:block">
+      <li class="hidden lg:block" v-if="!isLogin" >
         <router-link class="rounded-lg px-3 py-2" to="/register"> Register </router-link>
+      </li>
+      <li class="hidden lg:block" >
+        <button class="rounded-lg px-3 py-2" > Logout </button>
       </li>
     </ul>
   </nav>

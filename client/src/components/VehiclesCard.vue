@@ -1,13 +1,22 @@
 <script>
 export default {
-    props: ['vehicle']
+    props: ['vehicle'],
+    methods: {
+        // currencyUSD() {
+
+        // },
+
+        detailPage(id) {
+            this.$router.push(`/vehicle/detail/${id}`)
+        }
+
+    },
 }
 </script>
 
 <template>
-    <a href="#" class="block rounded-lg p-4 shadow-sm shadow-indigo-100">
+    <button @click.prevent="detailPage(vehicle._id)" class="block rounded-lg p-4 shadow-sm shadow-indigo-100">
         <img alt="Home" :src="vehicle.imageUrl" class="h-56 w-full rounded-md object-cover" />
-
         <div class="mt-2">
             <dl>
                 <div>
@@ -70,6 +79,6 @@ export default {
                 </div>
             </div>
         </div>
-    </a>
+    </button>
 
 </template>

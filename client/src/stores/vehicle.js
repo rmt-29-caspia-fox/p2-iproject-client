@@ -6,7 +6,8 @@ export const useVehicleStore = defineStore("vehicle", {
   state: () => ({
     // baseUrl: 'https://movie-cms1.herokuapp.com/pub/',
     baseUrl: "http://localhost:3000/",
-    vehicles: []
+    vehicles: [],
+    vehicle: {}
   }),
 
   actions: {
@@ -19,6 +20,18 @@ export const useVehicleStore = defineStore("vehicle", {
             })
 
             this.vehicles = data
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    async fetchVehicleDetail(id) {
+        try {
+            const { data } = await axios({
+                url: this.baseUrl + `vehicles/${id}`,
+                method: "get"
+            })
+            this.vehicle = data
         } catch (error) {
             console.log(error)
         }
