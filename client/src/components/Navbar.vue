@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-custom bg-light fixed-top">
     
     <div class="container-fluid mt-6">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">FREEBOOK</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,9 +19,6 @@
           <li class="nav-item">
             <router-link class="nav-link active" to="/">Home</router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -30,17 +27,13 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Dropdown
+              User
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Favourite</a></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#">Log Out</a></li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
@@ -49,8 +42,9 @@
             type="search"
             placeholder="Search"
             aria-label="Search"
+            v-model="query"
           />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn btn-outline-success" @click.prevent="emitSrc">Search</button>
         </form>
       </div>
     </div>
@@ -58,7 +52,27 @@
 </template>
 
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 
   export default {
+    data() {
+      return {
+        query:""
+      }
+    },
+    methods:{
+      ...mapActions(useCounterStore,["searchG"]),
+      emitSrc() {
+      this.searchG(this.query);
+    },
+    }
 }
 </script>
+
+<style scoped>
+  .navbar-custom{
+    background-color: cadetblue;
+  }
+</style>

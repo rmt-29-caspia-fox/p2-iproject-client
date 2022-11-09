@@ -2,11 +2,13 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import router from "../router";
+import Swal from "sweetalert2";
+import keys from "../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json";
 
-const urlServer = "http://localhost:3000/"
+const urlServer = "http://localhost:3000/";
 
 export const useCounterStore = defineStore("counter", {
-  state:()=>{
+  state: () => {
     return {
       books: [
         {
@@ -828,22 +830,106 @@ export const useCounterStore = defineStore("counter", {
           },
         },
       ],
+      gutenberg: [],
+      consent: "",
+      isLogged:false
     };
   },
   actions: {
-    async searchG(query){
+    async searchG(query) {
       try {
+        router.push("/loading");
+        this.gutenberg = null;
         console.log(query);
         const { data } = await axios({
           method: "post",
           url: urlServer + "gsearch",
           data: { query },
         });
-        this.books = data.items;
-        router.push("/search")
+        this.books = data.googleBooks.items;
+        console.log(data);
+        if (data.gutenberg.count > 0) {
+          let limit = data.gutenberg.count < 4 ? data.gutenberg.count : 4;
+          let arr = [];
+          for (let i = 0; i < limit; i++) {
+            arr.push(data.gutenberg.results[i]);
+          }
+          this.gutenberg = arr;
+        }
+        router.push("/search");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-  }
+    },
+    getLogged(){
+      if(!localStorage.access_token){
+        this.isLogged = false
+      } else {
+        this.isLogged = true;
+      }
+    },
+    async googleLogin(response) {
+      try {
+        // console.log(response.credential);
+        localStorage.setItem("google_token", response.credential);
+        const { data } = await axios({
+          url: urlServer + "google-sign-in",
+          method: "post",
+          headers: {
+            google_token: response.credential,
+          },
+        });
+        // console.log(data);
+        localStorage.setItem("access_token", data.access_token);
+        this.getLogged();
+        Swal.fire({
+          icon: "success",
+          title: "Login Succesful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.getIsLogged();
+        router.push("/");
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
+    async displayConsent(response) {
+      try {
+        // console.log(response.credential)
+        // const {data} = await axios({
+        //   method: "post",
+        //   url: urlServer + "consent-page",
+        //   headers: {
+        //     google_token: response.credential,
+        //   },
+        // });
+        // console.log(data)
+        this.$gAuth
+          .getAuthCode()
+          .then((authCode) => {
+            //on success
+            console.log(authCode)
+            // return this.$http.post(
+            //   "http://your-backend-server.com/auth/google",
+            //   { code: authCode, redirect_uri: "postmessage" }
+            // );
+          })
+          .then((response) => {
+            //after ajax
+          })
+          .catch((error) => {
+            //on fail do something
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 });
