@@ -1,4 +1,45 @@
-<script></script>
+<script>
+import Swal from "sweetalert2";
+import { mapActions } from "pinia";
+import { useCustomerStore } from "../stores/customer";
+
+export default {
+  data() {
+    return {
+      customer: {
+        username: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useCustomerStore, ["submitRegister"]),
+    registerEvent() {
+      // console.log("masuk method local");
+      this.submitRegister(this.customer)
+        .then((result) => {
+          Swal.fire({
+            icon: "success",
+            title: "Successfully register!",
+          });
+
+          this.$router.push("/login");
+        })
+
+        .catch((error) => {
+          // console.log(error);
+          // console.log(error.message, "<< er resp");
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: `${error.response.data.message}`,
+          });
+        });
+    },
+  },
+};
+</script>
 
 <template>
   <div class="container d-flex justify-content-center">
@@ -12,7 +53,7 @@
         </h6>
       </div>
       <div class="col-md-6 rcol">
-        <form class="sign-up">
+        <form @submit.prevent="registerEvent" class="sign-up">
           <h2 class="heading mb-4">Sign Up</h2>
           <div class="mb-3">
             <div class="d-flex justify-content-between">
