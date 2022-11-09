@@ -2,13 +2,20 @@
 import TableCovid from "@/components/TableCovid.vue";
 import { mapState } from "pinia";
 import { useIndexStore } from "@/stores/index";
+import moment from 'moment'
 export default {
   components: {
     TableCovid,
   },
   computed: {
     ...mapState(useIndexStore, ["tables"]),
+
   },
+  methods: {
+    format(data) {
+      return moment(data).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    }
+  }
 };
 </script>
 
@@ -26,7 +33,7 @@ export default {
                 COVID-19 DATA FOR EACH COUNTRY
               </h2>
             </div>
-            <h1 class="text-sm text-red-500 font-bold">*Updated: {{tables.Date}}</h1>
+            <h1 class="text-sm text-red-500 font-bold">*Updated: {{format(tables.Date)}}</h1>
             <div class="overflow-x-auto relative">
               <table
                 class="w-full text-sm text-left text-gray-500 dark:text-gray-400"

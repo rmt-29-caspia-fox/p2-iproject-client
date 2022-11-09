@@ -56,6 +56,16 @@ export default {
                   >Covid Statistic</a
                 >
               </li>
+              <li
+                class="dropdown relative border-l border-gray-800 hover:bg-gray-900"
+              >
+                <a
+                  @click.prevent="navigate('/room')"
+                  class="block py-3 px-6 border-b-2 border-transparent"
+                  href="#"
+                  >Discuss</a
+                >
+              </li>
               <li class="relative border-l border-gray-800 hover:bg-gray-900">
                 <a
                   @click.prevent="logoutHandler"

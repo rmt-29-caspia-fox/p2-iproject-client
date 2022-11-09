@@ -1,36 +1,38 @@
 <script>
-import {mapActions} from 'pinia'
-import {useIndexStore} from '@/stores/index'
+import { mapActions } from "pinia";
+import { useIndexStore } from "@/stores/index";
+
 
 export default {
   data() {
     return {
       user: {
-        email: '',
-        password: ''
-      }
-    }
+        email: "",
+        password: "",
+      },
+    };
   },
   methods: {
-    ...mapActions(useIndexStore, ['loginHandler', 'googleLogin']),
+    ...mapActions(useIndexStore, ["loginHandler", "googleLogin", 'facebookLogin']),
     loginAction() {
       let login = {
         email: this.user.email,
-        password: this.user.password
-      }
-      this.loginHandler(login)
+        password: this.user.password,
+      };
+      this.loginHandler(login);
     },
     navigation(page) {
-      this.$router.push(page)
+      this.$router.push(page);
     },
     loginGoogle(response) {
-      this.googleLogin(response)
-    }
-  }
-}
+      this.googleLogin(response);
+    },
+    loginFacebook() {
+      this.facebookLogin()
+    },
+  },
+};
 </script>
-
-
 
 <template>
   <!-- Login Section -->
@@ -53,7 +55,7 @@ export default {
           class="flex flex-col gap-4"
         >
           <input
-           v-model="user.email"
+            v-model="user.email"
             class="p-2 mt-8 rounded-xl border"
             id="login-email"
             type="email"
@@ -62,7 +64,7 @@ export default {
           />
           <div class="relative">
             <input
-             v-model="user.password"
+              v-model="user.password"
               class="p-2 rounded-xl border w-full"
               id="login-password"
               type="password"
@@ -78,16 +80,23 @@ export default {
           </button>
         </form>
 
-        <div class="mt-10 grid grid-cols-3 items-center">
+        <div class="mt-4 grid grid-cols-3 items-center">
           <hr class="border-gray-400" />
           <p class="text-center">OR</p>
           <hr class="border-gray-400" />
         </div>
 
-          <div class="flex justify-center">
-            <GoogleLogin :callback="loginGoogle" />
-          </div>
-        
+        <div class="flex justify-center mt-2">
+          <GoogleLogin :callback="loginGoogle" />
+        </div>
+        <div class="mt-4 grid grid-cols-3 items-center">
+          <hr class="border-gray-400" />
+          <p class="text-center">OR</p>
+          <hr class="border-gray-400" />
+        </div>
+        <div class="flex justify-center">
+          <button @click="loginFacebook" class="text-blue-500 font-bold border rounded-lg bg-white">Facebook Login</button>
+        </div>
 
         <div class="mt-3 text-xs flex justify-between items-center">
           <p>Dont have an account?</p>
