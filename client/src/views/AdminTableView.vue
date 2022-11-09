@@ -15,10 +15,10 @@ export default {
       searchStatus: "request",
     };
   },
-  beforeMount(){
-    socket.on("registered-customer",()=>{
-      this.fetchWaitingListAdmin('request')
-    })
+  beforeMount() {
+    socket.on("registered-customer", () => {
+      this.fetchWaitingListAdmin("request");
+    });
   },
   created() {
     this.fetchWaitingListAdmin(this.searchStatus);
@@ -26,6 +26,7 @@ export default {
   watch: {
     searchStatus() {
       this.fetchWaitingListAdmin(this.searchStatus);
+      console.log(this.waitlistsAdmin);
     },
   },
   computed: {
@@ -62,6 +63,7 @@ export default {
             </thead>
             <tbody>
               <Tablebody
+                v-if="waitlistsAdmin"
                 v-for="waitlist in waitlistsAdmin"
                 :key="waitlist.id"
                 :waitlist="waitlist"

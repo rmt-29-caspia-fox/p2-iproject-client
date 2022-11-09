@@ -17,11 +17,12 @@ export default {
     search(newValue,oldValue){
       if(newValue!==oldValue){
         this.changeStatus()
-        // this.state = this.search
       }
-      // else if(this.state){
-      //   this.search = this.state
-      // }
+    },
+    state(newValue,oldValue){
+      if(newValue!==oldValue){
+        this.search = this.state
+      }
     }
   },
   methods: {
@@ -31,7 +32,6 @@ export default {
     },
     changeStatus() {
       this.$emit('searchStatus',this.search)
-      // this.search = 'request'
     },
   },
 };

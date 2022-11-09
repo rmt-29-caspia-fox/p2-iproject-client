@@ -46,7 +46,7 @@ export default {
           title: "Congrats, your data has been sent to admin",
           text: "please wait and check your email for couple minutes or please check to the order book if you're already in waiting list",
         });
-        this.fetchWaitingListAdmin("request");
+        // this.fetchWaitingListAdmin("request");
         socket.emit("register-form-order");
 
         this.formRegister.brand = "";

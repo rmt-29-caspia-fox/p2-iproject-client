@@ -8,8 +8,6 @@ import { useCustomerStore } from "../stores/customer";
 export default {
   props: ["waitlist"],
   created() {
-    // this.fetchWaitingList(),
-    // this.fetchWaitingListAdmin('request')
   },
   data() {
     return {};
@@ -28,18 +26,24 @@ export default {
     ]),
     async handlerPatchWaitlist(status, id) {
       try {
-        socket.emit("update-patch", { update: true });
+        this.state = 'request';
         await this.patchWaitlist(status, id);
-        this.state = "request";
+        const { data } = await this.getWaitlist(id);
+        let text;
+        const payload = `${data.Customer.latitude},${data.Customer.longitude}`
+        if(this.waitlist.status === 'request' && status !== 'request'){
+          await this.handlerMail({email:data.Customer.email,coordinate:payload})
+          let text = 'Email has been send'
+        }
+        await this.fetchWaitingListAdmin('request');
+        
+        socket.emit("update-patch", { update: true });
         Swal.fire({
           icon: "success",
           title: "data has change!",
+          text: text ? text:'',
           timer: 2000,
         });
-        const { data } = await this.getWaitlist(id);
-        const payload = `${data.Customer.latitude},${data.Customer.longitude}`
-        await this.handlerMail({email:data.Customer.email,coordinate:payload})
-        await this.fetchWaitingListAdmin(this.state);
       } catch (err) {
         Swal.fire({
           icon: "error",
@@ -57,8 +61,8 @@ export default {
     <td>
       <div class="d-flex align-items-center">
         <div class="ms-3">
-          <p class="fw-bold mb-1">{{ waitlist.Customer.name }}</p>
-          <p class="text-muted mb-0">{{ waitlist.Customer.email }}</p>
+          <p class="fw-bold mb-1" v-if="waitlist.Customer">{{ waitlist.Customer.name }}</p>
+          <p class="text-muted mb-0" v-if="waitlist.Customer">{{ waitlist.Customer.email }}</p>
         </div>
       </div>
     </td>
@@ -78,7 +82,7 @@ export default {
     <td>
       <div class="d-flex align-items-center" style="height: 40px">
         <p class="fw-bold mb-1" v-if="this.$route.name === 'waitinglist'">
-          {{ waitlist.service }}
+          {{ waitlist.status }}
         </p>
         <select
           class="form-select form-select-sm text-uppercase"
@@ -92,6 +96,7 @@ export default {
           <option value="waiting">waiting</option>
           <option value="onprogres">onprogres</option>
           <option value="done">done</option>
+          <option value="archived">archived</option>
         </select>
       </div>
     </td>
