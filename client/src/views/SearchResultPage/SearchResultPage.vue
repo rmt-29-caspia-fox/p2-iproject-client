@@ -1,8 +1,8 @@
 <template>
   <NavbarVue />
     <!-- Cards -->
-    <div class="container-lg" style="width: 100%;">
-      <div class="d-flex flex-column">
+    <div class="d-flex flex-row justify-content-center py-6" style="width: 100%;">
+      <div class="d-flex flex-column" style="width: 50%;">
         <BookCardVue v-for="book in books" :bookData="book" />
       </div>
       <div class="d-flex flex-column">

@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-custom bg-light fixed-top">
-    
+  <nav class="navbar navbar-expand-lg navbar-custom bg-light sticky-top">
     <div class="container-fluid mt-6">
-      <a class="navbar-brand" href="#">FREEBOOK</a>
+      <router-link class="nav-link active" to="/"><a class="navbar-brand" href="#">FREEBOOK</a></router-link>
+      
       <button
         class="navbar-toggler"
         type="button"
@@ -44,7 +44,9 @@
             aria-label="Search"
             v-model="query"
           />
-          <button class="btn btn-outline-success" @click.prevent="emitSrc">Search</button>
+          <button class="btn btn-outline-success" @click.prevent="emitSrc">
+            Search
+          </button>
         </form>
       </div>
     </div>
@@ -52,27 +54,26 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia';
-import { useCounterStore } from '../stores/counter';
+import { mapActions } from "pinia";
+import { useCounterStore } from "../stores/counter";
 
-
-  export default {
-    data() {
-      return {
-        query:""
-      }
-    },
-    methods:{
-      ...mapActions(useCounterStore,["searchG"]),
-      emitSrc() {
+export default {
+  data() {
+    return {
+      query: "",
+    };
+  },
+  methods: {
+    ...mapActions(useCounterStore, ["searchG"]),
+    emitSrc() {
       this.searchG(this.query);
     },
-    }
-}
+  },
+};
 </script>
 
 <style scoped>
-  .navbar-custom{
-    background-color: cadetblue;
-  }
+.navbar-custom {
+  background-color: lightcoral;
+}
 </style>
