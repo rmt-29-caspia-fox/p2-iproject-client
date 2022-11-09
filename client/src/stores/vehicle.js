@@ -6,7 +6,6 @@ export const useVehicleStore = defineStore("vehicle", {
   state: () => ({
     // baseUrl: 'https://movie-cms1.herokuapp.com/pub/',
     baseUrl: "http://localhost:3000/",
-    isLogin: false,
     vehicles: []
   }),
 

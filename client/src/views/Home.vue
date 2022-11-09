@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from 'pinia';
+import { useUserStore } from '../stores/user';
 import NavbarVue from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue'
 import VehiclesVue from '../components/Vehicles.vue';
@@ -8,6 +10,13 @@ export default {
     NavbarVue,
     Banner,
     VehiclesVue
+  },
+  created() {
+    this.checkAccessToken()
+  },
+  methods: {
+    ...mapActions(useUserStore, ['checkAccessToken'])
+
   }
 }
 </script>
