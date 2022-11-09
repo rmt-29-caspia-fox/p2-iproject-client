@@ -1,21 +1,39 @@
 <script>
-import { mapActions, mapState } from 'pinia';
-import { useWaitlistStore } from '../stores/waitinglist';
-import Tablebody from '../components/TableBody.vue';
+import { mapActions, mapState } from "pinia";
+import { useCustomerStore } from "../stores/customer";
+import Tablebody from "../components/TableBody.vue";
+import socket from "../api/socketio";
+import { useAdminStore } from "../stores/admin";
 
 export default {
-  components:{
-    Tablebody
+  components: {
+    Tablebody,
   },
-  created(){
-    this.fetchWaitingList(['done','waiting','onprogres'])
+  data() {
+    return {
+
+    };
   },
-  computed:{
-    ...mapState(useWaitlistStore,['waitlists'])
+  beforeMount() {
+    this.fetchWaitingList();
+    socket.on("updated-admin", (arg) => {
+      this.fetchWaitingList();
+    });
   },
-  methods:{
-    ...mapActions(useWaitlistStore,['fetchWaitingList'])
-  }
+  watch: {
+    waitlists(newData, oldData) {
+      if (newData.length !== oldData.length) {
+        this.fetchWaitingList();
+      }
+    },
+  },
+  computed: {
+    ...mapState(useAdminStore, ["waitlistsAdmin"]),
+    ...mapState(useCustomerStore, ["waitlists"]),
+  },
+  methods: {
+    ...mapActions(useCustomerStore, ["fetchWaitingList"]),
+  },
 };
 </script>
 
@@ -37,7 +55,11 @@ export default {
             </tr>
           </thead>
           <tbody>
-            <Tablebody v-for="waitlist in waitlists" :key="waitlist.id" :waitlist="waitlist"/>
+            <Tablebody
+              v-for="waitlist in waitlists"
+              :key="waitlist.id"
+              :waitlist="waitlist"
+            />
           </tbody>
         </table>
       </div>

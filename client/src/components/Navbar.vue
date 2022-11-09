@@ -3,7 +3,7 @@ export default {};
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg bg-light bg-linier-1">
+  <nav class="navbar navbar-expand-lg bg-light bg-linier-1" v-if="$route.path !== '/admin'|| $route.path !=='/admin/login'">
     <div class="container-fluid">
       <a class="navbar-brand text-light">CarWosssh</a>
       <button
