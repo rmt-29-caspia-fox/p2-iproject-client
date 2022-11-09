@@ -43,7 +43,7 @@ body{
 
 .content-landing{
     height: 150vh;
-    padding: 100px;
+    padding: 80px;
 }
 
 .content-admin{
@@ -52,7 +52,7 @@ body{
 }
 .content{
     height: 90vh;
-    padding: 100px;
+    padding: 80px;
     position: static;
 }
 

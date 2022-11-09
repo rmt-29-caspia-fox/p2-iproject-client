@@ -10,9 +10,7 @@ export default {
     Tablebody,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   beforeMount() {
     this.fetchWaitingList();
@@ -56,6 +54,7 @@ export default {
           </thead>
           <tbody>
             <Tablebody
+              v-if="waitlists"
               v-for="waitlist in waitlists"
               :key="waitlist.id"
               :waitlist="waitlist"
