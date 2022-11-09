@@ -1,4 +1,58 @@
-<script></script>
+<script>
+import Swal from "sweetalert2";
+import { mapActions, mapWritableState } from "pinia";
+import { useCustomerStore } from "../stores/customer";
+
+export default {
+  data() {
+    return {
+      customer: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  computed: {
+    ...mapWritableState(useCustomerStore, ["isLogin"]),
+  },
+  methods: {
+    ...mapActions(useCustomerStore, ["submitLogin", "googleLogin"]),
+    loginEvent() {
+      console.log("masuk method local");
+      this.submitLogin(this.customer)
+        .then((result) => {
+          // console.log(result, "<< result", result.data, "<< result data");
+          localStorage.setItem("access_token", result.data.access_token);
+          this.isLogin = true;
+
+          let timerInterval;
+          Swal.fire({
+            icon: "success",
+            title: "Successfully logging in!",
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            },
+          });
+
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: `${error.response.data.message}`,
+          });
+        });
+    },
+  },
+};
+</script>
 
 <template>
   <div class="container d-flex justify-content-center">
@@ -8,7 +62,7 @@
         <h6 class="mt-3"></h6>
       </div>
       <div class="col-md-6 rcol">
-        <form class="login">
+        <form @submit.prevent="loginEvent" class="login">
           <h2 class="heading mb-4">Login</h2>
           <div class="mb-3 mt-3">
             <div class="d-flex justify-content-between">
@@ -57,7 +111,6 @@
           <br />
           <br />
           <!-- glogin -->
-          <GoogleLogin :callback="callback" />
         </form>
 
         <p class="exist mt-4">
