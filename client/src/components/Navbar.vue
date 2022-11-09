@@ -20,17 +20,13 @@
           <RouterLink to="/" class="nav-link">Home</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/wishlist" class="nav-link">Bookmarks</RouterLink>
+          <RouterLink to="/bookmarks" class="nav-link">Bookmarks</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" class="nav-link" v-if="!isLogin"
-            >Login</RouterLink
-          >
+          <RouterLink to="/login" class="nav-link">Login</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/register" class="nav-link" v-if="!isLogin"
-            >Register</RouterLink
-          >
+          <RouterLink to="/register" class="nav-link">Register</RouterLink>
         </li>
       </ul>
     </div>
