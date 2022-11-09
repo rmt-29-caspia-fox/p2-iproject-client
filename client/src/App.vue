@@ -40,4 +40,10 @@ nav {
   background-color: #f6953e;
   color: white;
 }
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
 </style>

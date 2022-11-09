@@ -1,4 +1,25 @@
-<script></script>
+<script>
+import { mapActions } from "pinia";
+import { useIndexStore } from "@/stores/index";
+
+export default {
+  data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useIndexStore, ["signInHandler"]),
+    signInButton() {
+      console.log("1");
+      this.signInHandler(this.user);
+    },
+  },
+};
+</script>
 
 <template>
   <!-- ada form untuk login & social media login, & sign up, jika berhasil login, redirect ke home -->
@@ -20,7 +41,12 @@
       <div class="col-12 d-flex justify-content-center">
         <div class="card mt-3 mb-5" style="width: 500px">
           <div class="card-body text-center">
-            <form action="" method="post" id="sign-up-form">
+            <form
+              action=""
+              method="post"
+              id="sign-up-form"
+              @submit.prevent="signInButton"
+            >
               <div class="d-flex justify-content-between">
                 <label for="sign-in-email">Email</label>
                 <label class="text-danger text-end">*</label>
@@ -32,6 +58,7 @@
                 placeholder="Enter your email address ..."
                 autocomplete="off"
                 required
+                v-model="user.email"
               />
               <br />
               <div class="d-flex justify-content-between">
@@ -45,6 +72,7 @@
                 placeholder="Enter your password ..."
                 autocomplete="off"
                 required
+                v-model="user.password"
               />
               <br />
               <button class="btn btn-lazpiz" type="submit">Sign in</button>
