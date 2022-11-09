@@ -1,9 +1,38 @@
 <script>
+import { mapActions } from 'pinia';
+import { useWaitlistStore } from '../stores/waitinglist';
+import Swal from 'sweetalert2'
+
 export default {
   props: ["waitlist"],
   created() {
-    console.log(this.$route.name);
+    // console.log(this.$route.name);
   },
+  data(){
+    return{
+    
+    }
+  },
+  methods:{
+    ...mapActions(useWaitlistStore,['patchWaitlist', 'fetchWaitingList']),
+    async handlerPatchWaitlist(status,id){
+      try {
+        await this.patchWaitlist(status,id)
+        Swal.fire({
+          icon: "success",
+          title: "data has change!",
+          timer: 2000
+        });
+        await this.fetchWaitingList("request");
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.msg,
+        });
+      }
+    }
+  }
 };
 </script>
 
@@ -39,16 +68,16 @@ export default {
           class="form-select form-select-sm text-uppercase"
           v-if="this.$route.name === 'cms-table'"
           style="width: 60%"
+          v-model="waitlist.status"
+          @change.prevent="handlerPatchWaitlist(waitlist.status,waitlist.id)"
         >
           <option disabled selected>Open this select menu</option>
+          <option value="request">request</option>
           <option value="waiting">waiting</option>
           <option value="onprogres">onprogres</option>
           <option value="done">done</option>
         </select>
       </div>
-    </td>
-    <td>
-      
     </td>
   </tr>
 </template>

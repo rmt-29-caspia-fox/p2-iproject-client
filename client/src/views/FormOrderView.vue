@@ -2,6 +2,7 @@
 import { map } from "leaflet";
 import { mapActions } from "pinia";
 import { useWaitlistStore } from "../stores/waitinglist";
+import Swal from 'sweetalert2'
 
 export default {
   data() {
