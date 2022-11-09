@@ -1,11 +1,12 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import instance from "../api/axios";
+import { Swal } from "sweetalert2/dist/sweetalert2.min";
 
 export const useWaitlistStore = defineStore("waitlist", {
   state: () => ({
-    user: '',
-    waitlists : []
+    user: "",
+    waitlists: [],
   }),
   actions: {
     async addtoFirebase() {},
@@ -19,10 +20,33 @@ export const useWaitlistStore = defineStore("waitlist", {
           method: "get",
           params: { status: param },
         });
-        this.waitlists = data
+        this.waitlists = data;
       } catch (err) {
         console.log(err);
       }
+    },
+    customerRegisterHandler(payload) {
+      return instance({
+        url: "/customers/register",
+        method: "post",
+        data: {
+          name: payload.name,
+          email: payload.email,
+        },
+      });
+    },
+    waitlistRegisterHandler(payload,id) {
+      return instance({
+        // /waitinglists/:customerid
+        url: `/customers/waitinglists/${id}`,
+        method: "post",
+        data: {
+          brand: payload.brand,
+          name: payload.nameOfCar,
+          licenseNumber: payload.licenseNumber,
+          service: payload.service,
+        },
+      });
     },
   },
   getters: {},
