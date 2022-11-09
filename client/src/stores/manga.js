@@ -62,5 +62,16 @@ export const useMangaStore = defineStore("manga", {
         });
       }
     },
+    async addToBookmarks(payload) {
+      console.log("add store");
+      console.log(payload, "<<< payload");
+      return axios.post(
+        `${this.baseUrl}/pub/bookmarks/${payload.id}`,
+        payload,
+        {
+          headers: { access_token: localStorage.getItem("access_token") },
+        }
+      );
+    },
   },
 });
