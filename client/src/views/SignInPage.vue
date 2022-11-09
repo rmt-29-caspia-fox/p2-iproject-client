@@ -12,9 +12,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useIndexStore, ["signInHandler"]),
+    ...mapActions(useIndexStore, ["signInHandler", "callback"]),
     signInButton() {
       this.signInHandler(this.user);
+    },
+    callback(response) {
+      this.callback(response);
     },
   },
 };
@@ -92,7 +95,7 @@ export default {
               </div>
             </div>
             <!-- <div id="google-button-sign-in"></div> -->
-            <!-- <GoogleLogin :callback="callback" /> -->
+            <GoogleLogin :callback="callback" />
             <div
               class="pb-2 pt-2 mb-4 mt-2 border-bottom border-$gray-500"
             ></div>

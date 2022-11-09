@@ -1,4 +1,30 @@
-<script></script>
+<script>
+import { mapActions, mapState, mapWritableState } from "pinia";
+import { useIndexStore } from "@/stores/index";
+import CartData from "../components/CartData.vue";
+
+export default {
+  components: {
+    CartData,
+  },
+  computed: {
+    ...mapState(useIndexStore, ["carts", "isCartEmpty"]),
+    ...mapWritableState(useIndexStore, ["prc"]),
+  },
+  created() {
+    this.fetchCarts();
+  },
+  methods: {
+    ...mapActions(useIndexStore, ["fetchCarts"]),
+    convertedPrice: function (number) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(number);
+    },
+  },
+};
+</script>
 
 <template>
   <!-- menampilkan semua product yang sudah di add ke cart dengan display gambar, nama, harga, dan jumlah yang ingin di beli ada increment dan decrement serta delete, ada tombol payment dan redirect ke payment -->
@@ -16,7 +42,7 @@
         <h3>FirstName LastName's Cart</h3>
       </div>
     </div>
-    <div class="container">
+    <div class="container" v-if="isCartEmpty">
       <div
         class="row"
         style="padding-left: 3%; padding-right: 3%; margin-bottom: 3%"
@@ -33,14 +59,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="align-middle text-center">
-              <td>1</td>
-              <td>gambar</td>
-              <td>burrito</td>
-              <td>2</td>
-              <td>Rp 200,000.00</td>
-              <td>delete button</td>
-            </tr>
+            <CartData v-for="cart in carts" :key="cart.id" :cart="cart" />
           </tbody>
         </table>
         <br />
@@ -48,10 +67,28 @@
       <div class="row">
         <div class="col d-flex justify-content-center text-center">
           <div>
-            <h3>Total Price: Rp 200,000.00</h3>
+            <h3>Total Price: {{ convertedPrice(prc) }}</h3>
             <br />
             <button class="btn btn-lazpiz">Confirm Payment</button>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" v-if="!isCartEmpty">
+      <div
+        class="row"
+        style="padding-left: 3%; padding-right: 3%; margin-bottom: 3%"
+      >
+        <div class="col-12 text-center">
+          <img
+            src="../assets/CartEmpty.png"
+            alt="Empty Cart"
+            style="height: 200px"
+          />
+          <br /><br />
+          <h5 style="color: #f6953e">
+            Your cart is still empty, let's browse again
+          </h5>
         </div>
       </div>
     </div>

@@ -24,8 +24,8 @@ const router = createRouter({
       component: SignInPage,
     },
     {
-      path: "/cart/:id",
-      name: "cart",
+      path: "/carts",
+      name: "carts",
       component: CartPage,
     },
     {
@@ -37,7 +37,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  if (to.name == "cart" && !localStorage.access_token) {
+  if (to.name == "carts" && !localStorage.access_token) {
     return "/";
   }
   if (to.name == "sign-up" && localStorage.access_token) {
