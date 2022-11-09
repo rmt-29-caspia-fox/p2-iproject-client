@@ -53,6 +53,7 @@ body{
 .content{
     height: 90vh;
     padding: 100px;
+    position: static;
 }
 
 .content .card{
@@ -88,6 +89,10 @@ img{
     position: relative;
 }
 
+navbar{
+    position: relative !important;
+}
+
 /* sidebar */
 .navbar-sidebar {
     display: flex;
@@ -95,7 +100,7 @@ img{
     justify-content: center;
     align-items: center;
     width: 200px;
-    height: 100%;
+    height: 100vh;
     border: 1px solid #2c698d;
     position: fixed;
     z-index: 100;

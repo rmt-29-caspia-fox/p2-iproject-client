@@ -3,22 +3,17 @@ import { defineStore } from "pinia";
 import instance from "../api/axios";
 import { Swal } from "sweetalert2/dist/sweetalert2.min";
 
-export const useWaitlistStore = defineStore("waitlist", {
+export const useCustomerStore = defineStore("customer", {
   state: () => ({
     user: "",
     waitlists: [],
   }),
   actions: {
-    async addtoFirebase() {},
-    addWaitinglist(payload) {
-      // return instance.post('/customers/waitinglists/:customerid',)
-    },
-    async fetchWaitingList(param) {
+    async fetchWaitingList() {
       try {
         const { data } = await instance({
           url: "/customers/waitinglists",
           method: "get",
-          params: { status: param },
         });
         this.waitlists = data;
       } catch (err) {
@@ -32,6 +27,8 @@ export const useWaitlistStore = defineStore("waitlist", {
         data: {
           name: payload.name,
           email: payload.email,
+          longitude: payload.longitude,
+          latitude: payload.latitude
         },
       });
     },
@@ -48,15 +45,6 @@ export const useWaitlistStore = defineStore("waitlist", {
         },
       });
     },
-    patchWaitlist(status, id){
-      return instance({
-        // /waitinglists
-        url: `/admin/waitinglists/${id}`,
-        method: 'patch',
-        headers: {access_token: localStorage.access_token},
-        data: {status}
-      })
-    }
   },
   getters: {},
 });

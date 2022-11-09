@@ -1,22 +1,41 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import socket from "../api/socketio";
 import Sidebar from "../components/Sidebar.vue";
-import { useWaitlistStore } from "../stores/waitinglist";
 import Tablebody from "../components/TableBody.vue";
+import { useAdminStore } from "../stores/admin";
 
 export default {
   components: {
     Sidebar,
     Tablebody,
   },
+  data() {
+    return {
+      searchStatus: "request",
+    };
+  },
+  beforeMount(){
+    socket.on("registered-customer",()=>{
+      this.fetchWaitingListAdmin('request')
+    })
+  },
   created() {
-    this.fetchWaitingList("request");
+    this.fetchWaitingListAdmin(this.searchStatus);
+  },
+  watch: {
+    searchStatus() {
+      this.fetchWaitingListAdmin(this.searchStatus);
+    },
   },
   computed: {
-    ...mapState(useWaitlistStore, ["waitlists"]),
+    ...mapState(useAdminStore, ["waitlistsAdmin"]),
   },
   methods: {
-    ...mapActions(useWaitlistStore, ["fetchWaitingList"]),
+    ...mapActions(useAdminStore, ["fetchWaitingListAdmin"]),
+    searchByStatus(value) {
+      this.searchStatus = value;
+    },
   },
 };
 </script>
@@ -24,7 +43,7 @@ export default {
 <template>
   <div class="row">
     <div class="col-2">
-      <Sidebar />
+      <Sidebar @searchStatus="searchByStatus" />
     </div>
     <div class="col-10">
       <div class="container-fluid mt-2">
@@ -43,7 +62,7 @@ export default {
             </thead>
             <tbody>
               <Tablebody
-                v-for="waitlist in waitlists"
+                v-for="waitlist in waitlistsAdmin"
                 :key="waitlist.id"
                 :waitlist="waitlist"
               />

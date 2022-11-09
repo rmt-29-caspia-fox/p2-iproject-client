@@ -9,7 +9,7 @@ import { useMapStore } from '@/stores/map.js'
 export default {
   methods: {
     showPosition(position) {
-      console.log(position.coords);
+      console.log(position.coords)
     },
   },
   computed:{

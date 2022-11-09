@@ -1,29 +1,45 @@
 <script>
-import { mapActions } from 'pinia';
-import { useWaitlistStore } from '../stores/waitinglist';
-import Swal from 'sweetalert2'
+import { mapActions, mapState, mapWritableState } from "pinia";
+import Swal from "sweetalert2";
+import socket from "../api/socketio";
+import { useAdminStore } from "../stores/admin";
+import { useCustomerStore } from "../stores/customer";
 
 export default {
   props: ["waitlist"],
   created() {
-    // console.log(this.$route.name);
+    // this.fetchWaitingList(),
+    // this.fetchWaitingListAdmin('request')
   },
-  data(){
-    return{
-    
-    }
+  data() {
+    return {};
   },
-  methods:{
-    ...mapActions(useWaitlistStore,['patchWaitlist', 'fetchWaitingList']),
-    async handlerPatchWaitlist(status,id){
+  computed: {
+    ...mapWritableState(useAdminStore, ["state"]),
+    ...mapState(useAdminStore, ["coords"]),
+  },
+  methods: {
+    ...mapActions(useCustomerStore, ["fetchWaitingList"]),
+    ...mapActions(useAdminStore, [
+      "fetchWaitingListAdmin",
+      "patchWaitlist",
+      "handlerMail",
+      "getWaitlist",
+    ]),
+    async handlerPatchWaitlist(status, id) {
       try {
-        await this.patchWaitlist(status,id)
+        socket.emit("update-patch", { update: true });
+        await this.patchWaitlist(status, id);
+        this.state = "request";
         Swal.fire({
           icon: "success",
           title: "data has change!",
-          timer: 2000
+          timer: 2000,
         });
-        await this.fetchWaitingList("request");
+        const { data } = await this.getWaitlist(id);
+        const payload = `${data.Customer.latitude},${data.Customer.longitude}`
+        await this.handlerMail({email:data.Customer.email,coordinate:payload})
+        await this.fetchWaitingListAdmin(this.state);
       } catch (err) {
         Swal.fire({
           icon: "error",
@@ -31,8 +47,8 @@ export default {
           text: err.response.data.msg,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -69,7 +85,7 @@ export default {
           v-if="this.$route.name === 'cms-table'"
           style="width: 60%"
           v-model="waitlist.status"
-          @change.prevent="handlerPatchWaitlist(waitlist.status,waitlist.id)"
+          @change.prevent="handlerPatchWaitlist(waitlist.status, waitlist.id)"
         >
           <option disabled selected>Open this select menu</option>
           <option value="request">request</option>
