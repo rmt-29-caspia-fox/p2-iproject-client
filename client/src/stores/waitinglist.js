@@ -48,6 +48,15 @@ export const useWaitlistStore = defineStore("waitlist", {
         },
       });
     },
+    patchWaitlist(status, id){
+      return instance({
+        // /waitinglists
+        url: `/admin/waitinglists/${id}`,
+        method: 'patch',
+        headers: {access_token: localStorage.access_token},
+        data: {status}
+      })
+    }
   },
   getters: {},
 });
