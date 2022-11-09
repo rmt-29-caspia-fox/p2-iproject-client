@@ -32,5 +32,15 @@ export const useMangaStore = defineStore("manga", {
         });
       }
     },
+    async fetchMangaById(id) {
+      try {
+        const { data } = await axios.get(`${this.baseUrl}/pub/mangas/${id}`);
+        this.manga = data.data;
+        console.log(data.data, "<<< data data");
+      } catch (error) {
+        console.log(error);
+        console.log(error.response.data, "<<< err resp data");
+      }
+    },
   },
 });

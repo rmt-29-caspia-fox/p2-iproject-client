@@ -1,13 +1,48 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { useMangaStore } from "../stores/manga";
+import Swal from "sweetalert2";
+
+export default {
+  computed: {
+    ...mapState(useMangaStore, ["manga"]),
+  },
+  methods: {
+    ...mapActions(useMangaStore, ["fetchMangaById", "addToWishlist"]),
+    async addToWishlistLocal() {
+      try {
+        await this.addToWishlist(this.product);
+        // console.log(this.product, "<<< pyld");
+        Swal.fire({
+          icon: "success",
+          title: "Succes!",
+          text: `Product added to wishlist`,
+        });
+        this.$router.push("/wishlist");
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: `${error.response.data.message}`,
+        });
+      }
+    },
+  },
+  created() {
+    this.fetchMangaById(this.$route.params.id);
+  },
+};
 </script>
 
 <template>
   <!-- bootstrap 12 col -->
+
   <section class="col-md-9 ms-sm-auto col-lg-12 px-md-4" id="product-section">
     <div
       class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
     >
-      <h1 class="display-2">Product Details</h1>
+      <h1 class="display-5">{{ manga.attributes.titles.en }} Manga Details</h1>
     </div>
     <div class="container mt-5 mb-5">
       <div class="row d-flex justify-content-center">
@@ -17,7 +52,11 @@
               <div class="col-md-6">
                 <div class="images p-3">
                   <div class="text-center p-4">
-                    <img id="main-image" :src="product.imgUrl" width="250" />
+                    <img
+                      id="main-image"
+                      :src="manga.attributes.posterImage.original"
+                      width="400"
+                    />
                   </div>
                 </div>
               </div>
@@ -33,31 +72,90 @@
                     <i class="fa fa-shopping-cart text-muted"></i>
                   </div>
                   <div class="mt-4 mb-3">
-                    <span class="text-uppercase text-muted brand">{{
-                      product.Category?.name
-                    }}</span>
-                    <h5 class="text-uppercase">{{ product.name }}</h5>
+                    <span class="text-uppercase text-muted brand"
+                      >English Title</span
+                    >
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.titles.en }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand"
+                      >Romaji Title</span
+                    >
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.titles.en_jp }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand"
+                      >Japanese Title</span
+                    >
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.titles.ja_jp }}
+                    </h5>
+                    <h6>Description:</h6>
+                    <p class="about">
+                      {{ manga.attributes.description }}
+                    </p>
+                    <span class="text-uppercase text-muted brand">Status</span>
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.status }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand"
+                      >Published</span
+                    >
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.startDate }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand"
+                      >Serialization</span
+                    >
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.serialization }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand">Rating</span>
+                    <h5 class="text-uppercase">
+                      {{ manga.attributes.averageRating }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand"
+                      >Volumes Total</span
+                    >
+                    <h5
+                      v-if="
+                        manga.attributes.volumeCount === null ||
+                        manga.attributes.volumeCount === 0
+                      "
+                      class="text-uppercase"
+                    >
+                      Ongoing
+                    </h5>
+                    <h5 v-else class="text-uppercase">
+                      {{ manga.attributes.volumeCount }}
+                    </h5>
+                    <span class="text-uppercase text-muted brand"
+                      >Chapters Total</span
+                    >
+                    <h5
+                      v-if="
+                        manga.attributes.chapterCount === null ||
+                        manga.attributes.chapterCount === 0
+                      "
+                      class="text-uppercase"
+                    >
+                      Ongoing
+                    </h5>
+                    <h5 v-else class="text-uppercase">
+                      {{ manga.attributes.chapterCount }}
+                    </h5>
                     <div class="price d-flex flex-row align-items-center">
-                      <h5 class="act-price">{{ priceIDR }}</h5>
+                      <h5 class="act-price">aaaa</h5>
                     </div>
                   </div>
-                  <h6>Description:</h6>
-                  <p class="about">
-                    {{ product.description }}
-                  </p>
+
                   <div class="sizes mt-5">
                     <h6 class="text-uppercase"></h6>
                   </div>
-                  <div>
-                    <h5>QR Code</h5>
-                    <img :src="qrcode" class="qrcode" />
-                  </div>
+
                   <div class="cart mt-4 align-items-center">
-                    <button
-                      @click.prevent="addToWishlistLocal"
-                      class="btn btn-warning text-uppercase mr-2 px-4"
-                    >
-                      Add to wishlist
+                    <button class="btn btn-warning text-uppercase mr-2 px-4">
+                      Add to bookmarks
                     </button>
                     <i class="fa fa-heart text-muted"></i>
                     <i class="fa fa-share-alt text-muted"></i>
@@ -65,6 +163,13 @@
                 </div>
               </div>
             </div>
+            <img
+              v-if="manga.attributes.coverImage"
+              id="main-image"
+              :src="manga.attributes.coverImage.original"
+              background-size="cover"
+            />
+            <img v-else id="main-image" src="" background-size="cover" />
           </div>
         </div>
       </div>
@@ -74,11 +179,14 @@
 
 <style scoped>
 body {
-  background-color: #000;
+  background-color: rgb(180, 32, 32);
 }
+
 .card {
   border: none;
+  background-color: rgb(0, 0, 0);
 }
+
 .product {
   background-color: #eee;
 }
@@ -134,10 +242,5 @@ label.radio input:checked + span {
 }
 .cart i {
   margin-right: 10px;
-}
-
-.qrcode {
-  width: 130px;
-  height: 130px;
 }
 </style>

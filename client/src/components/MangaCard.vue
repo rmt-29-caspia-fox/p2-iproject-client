@@ -16,6 +16,9 @@ export default {
         <h5 class="card-text">
           {{ manga.attributes.titles.en }}
         </h5>
+        <h5 v-if="!manga.attributes.titles.en" class="card-text">
+          {{ manga.attributes.titles.en_us }}
+        </h5>
         <h6 class="card-text">Rating: {{ manga.attributes.averageRating }}</h6>
         <RouterLink :to="`/manga/${manga.id}`" class="btn btn-warning"
           >Details</RouterLink
