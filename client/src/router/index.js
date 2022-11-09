@@ -23,6 +23,15 @@ const router = createRouter({
         name: 'DeckList',
         component: DeckList
       }, {
+        path: '/deck/input',
+        name: 'DeckInput',
+        component: DeckBuilder,
+        beforeEnter: (to, from) => {
+          if (!localStorage.access_token) {
+            return { name: 'login' }
+          }
+        }
+      }, {
         path: '/deck/:id',
         name: 'DeckDetail',
         component: DeckBuilder,

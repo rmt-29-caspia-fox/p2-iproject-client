@@ -1,8 +1,13 @@
 <script>
-import { mapActions } from 'pinia'
+import { mapActions, mapState, mapWritableState } from 'pinia'
 import { useCardStore } from '../stores/card'
+import { useDeckStore } from '../stores/deck'
 
 export default {
+  computed: {
+    ...mapState(useCardStore, ['cards']),
+    ...mapWritableState(useDeckStore, ['inputDeck'])
+  },
   data() {
     return {
       options: {
@@ -36,6 +41,9 @@ export default {
     ...mapActions(useCardStore, ['getCard']),
     filterTrigger() {
       this.getCard(this.name, this.selectedRace)
+    },
+    inputToArray(id) {
+      this.inputDeck.push(id)
     }
   }
 }
@@ -72,6 +80,28 @@ export default {
         <button type="submit" class="btn btn-primary btn-lg btn-block">Filter</button>
       </div>
     </form>
+    <div v-if="this.$route.name == 'DeckInput' || this.$route.name == 'DeckDetail'">
+      <table class="table text-center" style="margin-top:10px;">
+        <thead class="table-success">
+          <tr>
+            <th scope="col">Card Name</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-if="cards.length == 0">
+            <td colspan="4">Currently No item to be displayed</td>
+          </tr>
+          <tr v-else v-for="card in cards" :key="card.id">
+            <td>{{ card.name }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" style="margin-right: 10px;"
+                @click.prevent="inputToArray(card.id)">Input</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </template>
 
