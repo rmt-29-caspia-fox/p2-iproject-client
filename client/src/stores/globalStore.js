@@ -48,5 +48,23 @@ export const useGlobalStore = defineStore("store", {
         this.errorAlert(err.response.data.message);
       }
     },
+
+    async payNow() {
+      try {
+        const alertPop = this.successAlert;
+        const { data } = await axios({
+          method: "post",
+          url: this.baseUrl + "/public/payment",
+        });
+        // console.log(data.token);
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            alertPop(result.status_message);
+          },
+        });
+      } catch (error) {
+        this.errorAlert(error);
+      }
+    },
   },
 });
