@@ -5,8 +5,10 @@ export const useIndexStore = defineStore("index", {
   state: () => ({
     baseUrl: "http://localhost:3000",
     isLogin: false,
+    isCartEmpty: false,
     products: [],
     carts: [],
+    prc: 0,
   }),
   actions: {
     async fetchProducts() {
@@ -17,7 +19,24 @@ export const useIndexStore = defineStore("index", {
         });
         this.products = data;
       } catch (err) {
-        console.log(err);
+        console.log(err.data);
+      }
+    },
+
+    async fetchCarts() {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + "/carts",
+          method: "get",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.carts = data;
+        this.isCartEmpty = true;
+      } catch (error) {
+        console.log(error.data);
+        this.isCartEmpty = false;
       }
     },
 
@@ -38,7 +57,11 @@ export const useIndexStore = defineStore("index", {
         this.registerAlert();
       } catch (err) {
         console.log(err);
-        this.globalAlert("error", "Please check:", `${err.data.message}`);
+        this.globalAlert(
+          "error",
+          "Please check:",
+          `${err.response.data.message}`
+        );
       }
     },
 
@@ -63,14 +86,42 @@ export const useIndexStore = defineStore("index", {
         this.globalAlert(
           "error",
           "Please check:",
-          `${(err.data.message = "Invalid Email / Password !!")}`
+          `${(err.response.data.message = "Invalid Email / Password !!")}`
         );
       }
     },
 
+    async callback(response) {
+      try {
+        const result = await axios({
+          url: this.baseUrl + "/google-sign-in",
+          method: "post",
+          headers: {
+            google_token: response.credential,
+          },
+        });
+        localStorage.setItem("access_token", result.data.access_token);
+        if (localStorage.access_token) {
+          this.isLogin = true;
+          this.router.push("/");
+          this.loginAlert();
+        }
+      } catch (err) {
+        console.log(err);
+        this.globalAlert(
+          "error",
+          "Please check:",
+          `${(err.result.data.message = "Google Sign In Failed !!")}`
+        );
+      }
+    },
+
+    signOutHandler() {
+      this.logoutAlert();
+    },
+
     async addToCartHandler(id) {
       try {
-        console.log("2");
         const { data } = await axios({
           url: this.baseUrl + "/carts/" + id,
           method: "post",
@@ -78,12 +129,31 @@ export const useIndexStore = defineStore("index", {
             access_token: localStorage.access_token,
           },
         });
-        console.log("3");
         this.carts.push(data);
-        console.log("4");
-        // this.router.push("/cart");
+        this.addToCartAlert();
+        this.router.push("/carts");
       } catch (error) {
-        console.log("5");
+        console.log(error);
+        this.globalAlert(
+          "warning",
+          "Please check:",
+          `${error.response.data.message}`
+        );
+      }
+    },
+
+    async deleteFromCartHandler(id) {
+      try {
+        await axios({
+          url: this.baseUrl + "/carts/" + id,
+          method: "delete",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.router.push("/carts");
+        this.fetchCarts();
+      } catch (error) {
         console.log(error);
       }
     },
@@ -122,6 +192,64 @@ export const useIndexStore = defineStore("index", {
       Toast.fire({
         icon: "success",
         title: "Signed in successfully",
+      });
+    },
+
+    async logoutAlert() {
+      await Swal.fire({
+        title: "Are you sure?",
+        text: "You are logging out...",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF3A3A",
+        cancelButtonColor: "#E3E3E3",
+        confirmButtonText: "Log Out!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("access_token");
+          this.isLogin = false;
+          this.router.push("/");
+          this.globalAlert("success", "Success!", "You have been logged out.");
+        }
+      });
+    },
+
+    async addToCartAlert() {
+      const Toast = await Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Success adding Product to Cart",
+      });
+    },
+
+    async deleteFromCartAlert(id) {
+      await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF3A3A",
+        cancelButtonColor: "#E3E3E3",
+        confirmButtonText: "DELETE!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteFromCartHandler(id);
+          this.globalAlert(
+            "success",
+            "Deleted!",
+            "The Product has been deleted."
+          );
+        }
       });
     },
 
