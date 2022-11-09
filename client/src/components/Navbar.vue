@@ -23,7 +23,7 @@ export default {
 <template>
   <nav class="navbar navbar-expand-md">
     <a class="navbar-brand" href=""
-      ><img src="../assets/Iveawhite.png" alt="" width="100"
+      ><img src="../assets/reccomangalogo.png" alt="" width="120" height="40"
     /></a>
     <button
       class="navbar-toggler navbar-dark"
@@ -40,7 +40,9 @@ export default {
           <RouterLink to="/" class="nav-link">Home</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/bookmarks" class="nav-link">Bookmarks</RouterLink>
+          <RouterLink to="/bookmarks" v-if="isLogin" class="nav-link"
+            >Bookmarks</RouterLink
+          >
         </li>
         <li class="nav-item">
           <RouterLink to="/login" v-if="!isLogin" class="nav-link"

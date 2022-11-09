@@ -8,17 +8,17 @@ export default {
     ...mapState(useMangaStore, ["manga"]),
   },
   methods: {
-    ...mapActions(useMangaStore, ["fetchMangaById", "addToWishlist"]),
-    async addToWishlistLocal() {
+    ...mapActions(useMangaStore, ["fetchMangaById", "addToBookmarks"]),
+    async addToBookmarksLocal() {
       try {
-        await this.addToWishlist(this.product);
+        await this.addToBookmarks(this.manga);
         // console.log(this.product, "<<< pyld");
         Swal.fire({
           icon: "success",
           title: "Succes!",
-          text: `Product added to wishlist`,
+          text: `Manga added to bookmarks`,
         });
-        this.$router.push("/wishlist");
+        this.$router.push("/bookmarks");
       } catch (error) {
         console.log(error);
         Swal.fire({
@@ -40,7 +40,7 @@ export default {
 
   <section class="col-md-9 ms-sm-auto col-lg-12 px-md-4" id="product-section">
     <div
-      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-dark"
     >
       <h1 class="display-5">{{ manga.attributes.titles.en }} Manga Details</h1>
     </div>
@@ -154,7 +154,10 @@ export default {
                   </div>
 
                   <div class="cart mt-4 align-items-center">
-                    <button class="btn btn-warning text-uppercase mr-2 px-4">
+                    <button
+                      @click.prevent="addToBookmarksLocal"
+                      class="btn btn-warning text-uppercase mr-2 px-4"
+                    >
                       Add to bookmarks
                     </button>
                     <i class="fa fa-heart text-muted"></i>
