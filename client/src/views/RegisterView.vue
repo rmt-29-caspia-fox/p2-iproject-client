@@ -139,7 +139,7 @@ body {
   padding: 0 35px;
 }
 .rcol {
-  background: #fff9ed;
+  background: #fcf3a7;
   padding: 80px;
   height: 800px;
 }
