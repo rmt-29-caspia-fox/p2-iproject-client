@@ -1,9 +1,17 @@
 <script>
+import { mapState } from "pinia";
 import ProductCard from "../components/ProductCard.vue";
+import { useIndexStore } from "@/stores/index";
 
 export default {
   components: {
     ProductCard,
+  },
+  computed: {
+    ...mapState(useIndexStore, ["fetchProducts", "products"]),
+  },
+  created() {
+    this.fetchProducts();
   },
 };
 </script>
@@ -20,33 +28,11 @@ export default {
         margin-bottom: 3%;
       "
     >
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
-      <div class="col-3">
-        <ProductCard />
-      </div>
+      <ProductCard
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+      />
     </div>
   </div>
 </template>

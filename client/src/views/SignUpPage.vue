@@ -1,4 +1,27 @@
-<script></script>
+<script>
+import { mapActions } from "pinia";
+import { useIndexStore } from "@/stores/index";
+
+export default {
+  data() {
+    return {
+      user: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        phoneNumber: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useIndexStore, ["signUpHandler"]),
+    signUpButton() {
+      this.signUpHandler(this.user);
+    },
+  },
+};
+</script>
 
 <template>
   <!-- Halaman untuk register, hanya ada form dan submit dan redirect ke sign-in -->
@@ -20,7 +43,12 @@
       <div class="col-12 d-flex justify-content-center">
         <div class="card" style="width: 50%">
           <div class="card-body">
-            <form action="" method="post" id="sign-up-form">
+            <form
+              action=""
+              method="post"
+              id="sign-up-form"
+              v-on:submit.prevent="signUpButton"
+            >
               <div class="d-flex justify-content-between">
                 <label for="sign-up-firstName">First Name</label>
                 <label class="text-danger text-end">*</label>
@@ -32,6 +60,7 @@
                 placeholder="Enter your first name ..."
                 autocomplete="off"
                 required
+                v-model="user.firstName"
               />
               <br />
               <div class="d-flex justify-content-between">
@@ -45,6 +74,7 @@
                 placeholder="Enter your last name ..."
                 autocomplete="off"
                 required
+                v-model="user.lastName"
               />
               <br />
               <div class="d-flex justify-content-between">
@@ -58,6 +88,7 @@
                 placeholder="Enter your email address ..."
                 autocomplete="off"
                 required
+                v-model="user.email"
               />
               <br />
               <div class="d-flex justify-content-between">
@@ -71,6 +102,7 @@
                 placeholder="Enter your password ..."
                 autocomplete="off"
                 required
+                v-model="user.password"
               />
               <br />
               <div class="d-flex justify-content-between">
@@ -84,6 +116,7 @@
                 placeholder="Enter your phone number ..."
                 autocomplete="off"
                 required
+                v-model="user.phoneNumber"
               />
               <br />
               <div class="col d-flex justify-content-center">

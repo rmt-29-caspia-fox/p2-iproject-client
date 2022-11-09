@@ -28,7 +28,9 @@ export default {
           class="col-1 d-flex justify-content-center"
           style="padding-left: 40px"
         >
-          <img src="../assets/New Logo.png" alt="Logo" style="height: 100px" />
+          <router-link to="/"
+            ><img src="../assets/New Logo.png" alt="Logo" style="height: 100px"
+          /></router-link>
         </div>
         <div class="col-11">
           <div class="row pt-4">
