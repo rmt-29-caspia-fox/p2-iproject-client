@@ -10,6 +10,7 @@ export const useMangaStore = defineStore("manga", {
     mangas: [],
     manga: {},
     bookmarks: [],
+    quotes: [],
     // qrcode: "",
     // totalPage: 0,
     // filter: { limit: 9, offset: 0, search: "" },
@@ -72,6 +73,23 @@ export const useMangaStore = defineStore("manga", {
           headers: { access_token: localStorage.getItem("access_token") },
         }
       );
+    },
+    async fetchQuotes() {
+      try {
+        const { data } = await axios.get(`${this.baseUrl}/pub/quotes`);
+        console.log(data, "<<< data");
+        console.log(data.result, "<<< data data");
+
+        this.quotes = data.result;
+      } catch (error) {
+        console.log(error);
+        // console.log(error.response.data, "<<< err resp data");
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: `${error.response.data.message}`,
+        });
+      }
     },
   },
 });
