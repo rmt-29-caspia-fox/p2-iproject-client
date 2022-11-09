@@ -1,7 +1,7 @@
 <template>
   <div
-    class="card mb-3"
-    style="max-width: 100%; max-height: 450px"
+    class="card mt-3"
+    style="width: 500px; max-height: 600px"
   >
     <div class="row g-0">
       <div class="col-md-4">
@@ -24,6 +24,9 @@
           <p class="card-text" v-if="bookData.volumeInfo.description">
             {{ desc ? desc : bookData.volumeInfo.description }}
           </p>
+          <div v-if="isLogged">
+            <a @click.prevent="emitFav">+ Add to Favourite</a>
+          </div>
         </div>
       </div>
     </div>
@@ -31,6 +34,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useCounterStore } from '../../../stores/counter';
+
 export default {
   props: {
     bookData: Object,
@@ -66,5 +72,30 @@ export default {
       this.desc = tmp.slice(0, 150) + " ... ";
     }
   },
+  methods:{
+    ...mapActions(useCounterStore,['postFavs']),
+    emitFav(){
+      this.postFavs(this.bookData);
+    }
+  },
+  computed:{
+    ...mapState(useCounterStore,['isLogged'])
+  }
 };
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+  color: black;
+  border: solid rgb(50, 140, 92) 1px;
+  padding: 4px 10px ;
+  font-size: smaller;
+  border-radius: 4px;
+}
+a:hover {
+  cursor: pointer;
+  background-color: rgb(56, 122, 68);
+  color: aliceblue;
+}
+</style>

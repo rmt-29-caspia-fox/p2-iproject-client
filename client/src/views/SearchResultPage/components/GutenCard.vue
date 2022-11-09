@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex ms-4">
     <div class="card mb-3" style="width: 250px; max-height: 300px">
       <div class="card-body">
-        <h5 class="card-title">{{ gutenbergData.title }}</h5>
+        <h5 class="card-title fs-12">{{ gutenbergData.title }}</h5>
         <p class="card-text" v-if="gutenbergData.authors">
           <small class="text-muted fw-bold">by {{ this.authorData }}</small>
         </p>
@@ -15,13 +15,13 @@
           <a
             :href="gutenbergData.formats['text/html; charset=utf-8']"
             target="_blank"
-            class="btn mx-3"
+            class="me-3 ms-auto"
             >PREVIEW</a
           >
           <a
             :href="gutenbergData.formats['application/epub+zip']"
             target="_blank"
-            class="mx-3"
+            class="me-auto"
             >DOWNLOAD</a
           >
         </div>
@@ -65,7 +65,17 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: black;
+  border: solid rgb(50, 140, 92) 1px;
+  padding: 4px 10px ;
+  font-size: smaller;
+  border-radius: 4px;
+}
 a:hover {
   cursor: pointer;
+  background-color: rgb(56, 122, 68);
+  color: aliceblue;
 }
 </style>

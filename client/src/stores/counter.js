@@ -832,7 +832,8 @@ export const useCounterStore = defineStore("counter", {
       ],
       gutenberg: [],
       consent: "",
-      isLogged:false
+      isLogged: false,
+      favs: [],
     };
   },
   actions: {
@@ -847,7 +848,7 @@ export const useCounterStore = defineStore("counter", {
           data: { query },
         });
         this.books = data.googleBooks.items;
-        console.log(data);
+        // console.log(data);
         if (data.gutenberg.count > 0) {
           let limit = data.gutenberg.count < 4 ? data.gutenberg.count : 4;
           let arr = [];
@@ -861,9 +862,9 @@ export const useCounterStore = defineStore("counter", {
         console.log(error);
       }
     },
-    getLogged(){
-      if(!localStorage.access_token){
-        this.isLogged = false
+    getLogged() {
+      if (!localStorage.access_token) {
+        this.isLogged = false;
       } else {
         this.isLogged = true;
       }
@@ -871,7 +872,7 @@ export const useCounterStore = defineStore("counter", {
     async googleLogin(response) {
       try {
         // console.log(response.credential);
-        localStorage.setItem("google_token", response.credential);
+        // localStorage.setItem("google_token", response.credential);
         const { data } = await axios({
           url: urlServer + "google-sign-in",
           method: "post",
@@ -915,7 +916,7 @@ export const useCounterStore = defineStore("counter", {
           .getAuthCode()
           .then((authCode) => {
             //on success
-            console.log(authCode)
+            console.log(authCode);
             // return this.$http.post(
             //   "http://your-backend-server.com/auth/google",
             //   { code: authCode, redirect_uri: "postmessage" }
@@ -930,6 +931,83 @@ export const useCounterStore = defineStore("counter", {
       } catch (error) {
         console.log(error);
       }
+    },
+    async fetchFavs() {
+      try {
+        const { data } = await axios({
+          url: urlServer + "favourite",
+          method: "get",
+          headers: { access_token: localStorage.access_token },
+        });
+        this.favs = data;
+        console.log("fetchFavs succeed");
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
+    async postFavs(bookData) {
+      try {
+        const title = bookData.volumeInfo.title;
+        const googleId = bookData.id;
+        const author = bookData.volumeInfo.authors[0] || null;
+        const imageUrl = bookData.volumeInfo.imageLinks.thumbnail || null;
+        const { data ,status} = await axios({
+          method: "post",
+          url: urlServer + "favourite",
+          headers: { access_token: localStorage.access_token },
+          data: {
+            title,
+            googleId,
+            author,
+            imageUrl,
+          },
+        });
+        console.log(data);
+        if (status===201){
+          Swal.fire({
+            icon: "success",
+            title: "Added to Favourites",
+            showConfirmButton: false,
+            timer: 1200,
+          });
+
+        } else {
+          Swal.fire({
+            text: "This book already in your Favourites",
+            showConfirmButton: false,
+            timer: 900,
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
+    logout() {
+      Swal.fire({
+        title: "Do you want to log out?",
+        showCancelButton: true,
+        confirmButtonText: "Log Out",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire("Logged Out!", "", "success");
+          delete localStorage.access_token;
+          router.push("/")
+        } 
+      });
+      // delete localStorage.google_token
     },
   },
 });

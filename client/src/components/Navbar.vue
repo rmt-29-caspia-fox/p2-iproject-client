@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-custom bg-light sticky-top">
+  <nav class="navbar navbar-expand-md navbar-custom bg-light sticky-top">
     <div class="container-fluid mt-6">
       <router-link class="nav-link active" to="/"><a class="navbar-brand" href="#">FREEBOOK</a></router-link>
       
@@ -30,9 +30,9 @@
               User
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Favourite</a></li>
+              <li><router-link class="dropdown-item" to="/favourites">Favourite</router-link></li>
               <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Log Out</a></li>
+              <li><a class="dropdown-item" @click.prevent="logout">Log Out</a></li>
             </ul>
           </li>
         </ul>
@@ -64,7 +64,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCounterStore, ["searchG"]),
+    ...mapActions(useCounterStore, ["searchG","logout"]),
     emitSrc() {
       this.searchG(this.query);
     },
