@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex ms-4">
-    <div class="card mb-3" style="width: 250px; max-height: 300px">
+    <div class="card mb-3" style="width: 250px; max-height: fit-content">
       <div class="card-body">
         <h5 class="card-title fs-12">{{ gutenbergData.title }}</h5>
         <p class="card-text" v-if="gutenbergData.authors">
