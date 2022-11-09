@@ -16,5 +16,23 @@ export const useCustomerStore = defineStore("customer", {
         data: payload,
       });
     },
+    async submitLogout() {
+      localStorage.removeItem("access_token");
+      this.isLogin = false;
+      this.router.push("/login");
+      let timerInterval;
+      Swal.fire({
+        icon: "success",
+        title: "You're now logged out!",
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      });
+    },
   },
 });

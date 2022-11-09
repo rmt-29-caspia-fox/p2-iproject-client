@@ -1,4 +1,24 @@
-<script></script>
+<script>
+import { mapActions, mapWritableState } from "pinia";
+import { useCustomerStore } from "../stores/customer";
+
+export default {
+  methods: {
+    ...mapActions(useCustomerStore, ["submitLogout"]),
+    handleLogout() {
+      this.submitLogout();
+    },
+  },
+  computed: {
+    ...mapWritableState(useCustomerStore, ["isLogin"]),
+  },
+  created() {
+    if (localStorage.access_token) {
+      this.isLogin = true;
+    }
+  },
+};
+</script>
 
 <template>
   <nav class="navbar navbar-expand-md">
@@ -23,10 +43,14 @@
           <RouterLink to="/bookmarks" class="nav-link">Bookmarks</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" class="nav-link">Login</RouterLink>
+          <RouterLink to="/login" v-if="!isLogin" class="nav-link"
+            >Login</RouterLink
+          >
         </li>
         <li class="nav-item">
-          <RouterLink to="/register" class="nav-link">Register</RouterLink>
+          <RouterLink to="/register" v-if="!isLogin" class="nav-link"
+            >Register</RouterLink
+          >
         </li>
       </ul>
     </div>
@@ -42,7 +66,6 @@
           >
             Logout
           </button>
-          <!-- <a class="nav-link" href="#" @click.prevent="logout">Logout</a> -->
         </li>
       </ul>
     </div>
