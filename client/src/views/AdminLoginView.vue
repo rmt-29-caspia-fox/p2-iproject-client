@@ -20,7 +20,7 @@ export default {
         localStorage.setItem('access_token', data.access_token)
         this.$router.push('/admin')
       } catch (err) {
-        console.log(err.response)
+        
         Swal.fire({
           icon: "error",
           title: "Oops...",
