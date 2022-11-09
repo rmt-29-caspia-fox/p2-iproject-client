@@ -21,9 +21,9 @@ export default ({
     //   this.discordLogin(this.$route.query.code);
     // }
   },
-  created() {
-    this.discordTrigger()
-  }
+  // created() {
+  //   this.discordTrigger()
+  // }
 })
 </script>
 
@@ -31,8 +31,10 @@ export default ({
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-center">
+
         <div class="col-md-7 col-lg-5">
           <div class="wrap">
+            <div class="img" style="background-image: url('./assets/img/logo.jpg');"></div>
             <div class="login-wrap p-4 p-md-5">
               <div class="d-flex">
                 <div class="w-100">
@@ -49,9 +51,9 @@ export default ({
                         <font-awesome-icon icon="fa-brands fa-google" @click.prevent />
                       </a>
                     </GoogleLogin>
-                    <a href="" class="social-icon d-flex align-items-center justify-content-center">
-                      <font-awesome-icon icon="fa-solid fa-arrow-left" @click.prevent />
-                    </a>
+                    <RouterLink class="social-icon d-flex align-items-center justify-content-center" to="/">
+                      <font-awesome-icon icon="fa-solid fa-arrow-left" />
+                    </RouterLink>
                   </p>
                 </div>
               </div>
@@ -70,7 +72,8 @@ export default ({
                     In</button>
                 </div>
               </form>
-              <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
+              <p class="text-center">Not a member? <RouterLink data-toggle="tab" to="/register">Sign Up</RouterLink>
+              </p>
             </div>
           </div>
         </div>

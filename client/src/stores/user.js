@@ -14,25 +14,28 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     async fetchProfile() {
-      // if (localStorage.access_token) {
-      //   try {
-      //     const { data } = await axios({
-      //       method: "get",
-      //       url: this.baseUrl + '/profile',
-      //       headers: { access_token: localStorage.access_token }
-      //     })
-      //     this.username = data.user.username
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
+      if (localStorage.access_token) {
+        try {
+          const { data } = await axios({
+            method: "get",
+            url: this.baseUrl + '/profile',
+            headers: { access_token: localStorage.access_token }
+          })
+          this.username = data.user.username
+        } catch (err) {
+          console.log(err);
+        }
+      }
     },
     async inputLogin(email, password) {
       try {
         const { data } = await axios({
           method: "post",
           url: this.baseUrl + '/login',
-          data: payload
+          data: {
+            email: email,
+            password: password
+          }
         })
         localStorage.setItem('access_token', data.access_token);
         this.router.push('/')
@@ -82,7 +85,7 @@ export const useUserStore = defineStore('user', {
       try {
         const { data } = await axios({
           method: "post",
-          url: this.baseUrl + '/pub/register',
+          url: this.baseUrl + '/register',
           data: payload
         })
         this.router.push('/login')
