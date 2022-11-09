@@ -1,5 +1,22 @@
 <script>
-export default {};
+import { mapActions, mapState } from 'pinia';
+import { useWaitlistStore } from '../stores/waitinglist';
+import Tablebody from '../components/TableBody.vue';
+
+export default {
+  components:{
+    Tablebody
+  },
+  created(){
+    this.fetchWaitingList(['done','waiting','onprogres'])
+  },
+  computed:{
+    ...mapState(useWaitlistStore,['waitlists'])
+  },
+  methods:{
+    ...mapActions(useWaitlistStore,['fetchWaitingList'])
+  }
+};
 </script>
 
 <template>
@@ -20,102 +37,7 @@ export default {};
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">John Doe</p>
-                    <p class="text-muted mb-0">john.doe@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Toyota</p>
-                    <p class="text-muted mb-0">Innova</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Heavy</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center" style="height: 40px">
-                  <span class="badge badge-success rounded-pill d-inline"
-                    >Waiting</span
-                  >
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Alex Ray</p>
-                    <p class="text-muted mb-0">alex.ray@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Toyota</p>
-                    <p class="text-muted mb-0">Alphart</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Medium</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center" style="height: 40px">
-                  <span class="badge badge-success rounded-pill d-inline"
-                    >Onprogress</span
-                  >
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Kate Hunington</p>
-                    <p class="text-muted mb-0">kate.hunington@gmail.com</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Toyota</p>
-                    <p class="text-muted mb-0">Alphart</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="ms-3">
-                    <p class="fw-bold mb-1">Light</p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="d-flex align-items-center" style="height: 40px">
-                  <span class="badge badge-success rounded-pill d-inline"
-                    >Done</span
-                  >
-                </div>
-              </td>
-            </tr>
+            <Tablebody v-for="waitlist in waitlists" :key="waitlist.id" :waitlist="waitlist"/>
           </tbody>
         </table>
       </div>
