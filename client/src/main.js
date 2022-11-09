@@ -1,19 +1,32 @@
-import { createApp, markRaw } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp, markRaw } from "vue";
+import { createPinia } from "pinia";
 
-import App from './App.vue'
-import router from './router'
+import firebase from "firebase";
+import App from "./App.vue";
+import router from "./router";
 
-import './assets/style.css'
+import "./assets/style.css";
 
-const app = createApp(App)
-const pinia = createPinia()
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAloPILpV8G1Fbx23ucrpwnScjEIlsEIfk",
+  authDomain: "iproject-carwosssh.firebaseapp.com",
+  projectId: "iproject-carwosssh",
+  storageBucket: "iproject-carwosssh.appspot.com",
+  messagingSenderId: "317314671799",
+  appId: "1:317314671799:web:797931f39a4e6eb56b1932",
+};
+
+const app = createApp(App);
+const pinia = createPinia();
 
 pinia.use(({ store }) => {
-    store.router = markRaw(router)
-  })
+  store.router = markRaw(router);
+});
+firebase.initializeApp(firebaseConfig);
 
-app.use(pinia)
-app.use(router)
+app.use(firebase)
+app.use(pinia);
+app.use(router);
 
-app.mount('#app')
+app.mount("#app");
