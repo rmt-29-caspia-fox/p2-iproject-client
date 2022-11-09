@@ -34,5 +34,13 @@ export const useCustomerStore = defineStore("customer", {
         },
       });
     },
+    submitRegister(payload) {
+      // console.log("masuk store");
+      return axios({
+        method: "post",
+        url: this.baseUrl + "/pub/register",
+        data: payload,
+      });
+    },
   },
 });
