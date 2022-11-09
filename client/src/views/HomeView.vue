@@ -1,4 +1,24 @@
-<script></script>
+<script>
+import MangaCard from "../components/MangaCard.vue";
+import { mapActions, mapState } from "pinia";
+import { useMangaStore } from "../stores/manga";
+
+export default {
+  components: {
+    MangaCard,
+  },
+  computed: {
+    ...mapState(useMangaStore, ["mangas"]),
+    // ...mapWritableState(useMangaStore, ["filter"]),
+  },
+  methods: {
+    ...mapActions(useMangaStore, ["fetchMangas"]),
+  },
+  created() {
+    this.fetchMangas();
+  },
+};
+</script>
 
 <template>
   <!-- bootstrap 12 col -->
@@ -14,8 +34,8 @@
       <!-- ca -->
       <div class="col-3">
         <!-- search -->
-        <h5>Search Products</h5>
-        <p>Just type here what are you looking for</p>
+        <h5>Search Mangas</h5>
+        <p>Find the manga</p>
         <div class="input-group rounded">
           <input
             type="search"
@@ -41,23 +61,9 @@
       <div class="col-9">
         <div class="row">
           <!-- card -->
+          <MangaCard v-for="manga in mangas" :key="manga.id" :manga="manga" />
         </div>
         <!-- page -->
-        <nav class="pagesection" aria-label="...">
-          <ul class="pagination">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1">Page</a>
-            </li>
-            <li class="page-item" v-for="idx in totalPage" :key="idx">
-              <a
-                class="page-link"
-                href="#"
-                @click.prevent="clickPage((idx - 1) * 9)"
-                >{{ idx }}</a
-              >
-            </li>
-          </ul>
-        </nav>
       </div>
     </div>
   </section>

@@ -132,7 +132,7 @@ body {
     rgba(40, 30, 101, 1) 100%,
     rgba(125, 185, 232, 1) 100%
   );
-  background-image: url("https://kpopping.com/documents/71/5/1000/211203-IVE-ELEVEN-Debut-Photoshoot-by-Dispatch-documents-4.jpeg?v=9834a");
+  background-image: url("https://pbs.twimg.com/media/FgXMWY6UUAEHnrg?format=jpg&name=4096x4096");
   background-size: cover;
   background-position: center;
   height: 800px;

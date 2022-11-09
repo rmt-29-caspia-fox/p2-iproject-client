@@ -141,7 +141,7 @@ body {
     rgba(40, 30, 101, 1) 100%,
     rgba(125, 185, 232, 1) 100%
   );
-  background-image: url("https://i.pinimg.com/originals/d7/da/84/d7da840d53d1b94f8b563b35ffd0a6e1.jpg");
+  background-image: url("https://pbs.twimg.com/media/FC-FI8waIAAvh6T?format=jpg&name=4096x4096");
   background-size: cover;
   background-position: center;
   height: 800px;
