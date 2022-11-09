@@ -13,22 +13,26 @@ export default {
 		
 	},
 	methods: {
-		...mapActions(useGameStore,['loginHandler']),
+		...mapActions(useGameStore,['loginHandler','googleLogin']),
 		formLogin(){
 			const payload = {
 				email: this.email,
 				password: this.password
 			}
 			this.loginHandler(payload)
+		},
+		callback(response){
+			this.$emit('googleLogin',response)
+			this.googleLogin(response)
 		}
 	}
 }
 </script>
 
 <template>
-  <section class="container">
+  <section class="container form">
     <div>
-      <span class="container-label">Masuk</span>
+      <span class="container-label">Sign In</span>
       <form @submit.prevent="formLogin">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label"
@@ -56,14 +60,19 @@ export default {
             >Check me out</label
           >
         </div>
-				<span class="no-akun">Tidak punya akun? 
-					<a href="" class="no-akun-link">
-						Daftar disini	
-					</a>
+				<span class="no-akun">Don't have account? 
+					<router-link to="/register" href="" class="no-akun-link">
+						Register here	
+					</router-link>
 				</span>
 				<br>
         <button type="submit" class="btn btn-primary button-submit">Masuk</button>
       </form>
+			<!-- <GoogleLogin :callback="callback" class="google-oath"></GoogleLogin> -->
+			<div class="googleLogin">
+				<GoogleLogin :callback="callback" />
+
+			</div>
     </div>
   </section>
 </template>

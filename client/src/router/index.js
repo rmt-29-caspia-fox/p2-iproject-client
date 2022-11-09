@@ -5,11 +5,15 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import NotFound from '../views/NotFound.vue'
+import GameItems from '../views/GameItems.vue'
+// import FreeFire from '../views/GameItems.vue'
 
 const routes = [
   { path: '/', component: Home, name: 'Home' },
 	{ path: '/login', component: Login, name: 'Login' },
 	{ path: '/register', component: Register, name: 'Register' },
+	{ path: '/items/:id', component: GameItems, name: 'GameItems' },
+	
 	{ path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
