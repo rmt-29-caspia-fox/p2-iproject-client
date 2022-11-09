@@ -11,11 +11,9 @@ export default {
         currency: "IDR",
       }).format(number);
     },
-    ...mapActions(useIndexStore, ["addToCartHandler", "fetchProducts"]),
+    ...mapActions(useIndexStore, ["addToCartHandler"]),
     addToCartButton(id) {
-      console.log("1");
-      // this.addToCartHandler(id);
-      this.fetchProducts();
+      this.addToCartHandler(id);
     },
   },
 };

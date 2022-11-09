@@ -1,5 +1,5 @@
 <script>
-import { mapWritableState } from "pinia";
+import { mapActions, mapWritableState } from "pinia";
 import { useIndexStore } from "../stores/index";
 
 export default {
@@ -12,6 +12,12 @@ export default {
     } else {
       this.isLogin = false;
     }
+  },
+  methods: {
+    ...mapActions(useIndexStore, ["signOutHandler"]),
+    signOutButton() {
+      this.signOutHandler();
+    },
   },
 };
 </script>
@@ -57,8 +63,11 @@ export default {
                 style="padding-right: 105px"
               >
                 <router-link class="navbar-brand" to="/">Home</router-link>|
-                <a class="navbar-brand" href="#">Cart</a>|
-                <a class="navbar-brand" href="#">Sign Out</a>
+                <router-link class="navbar-brand" to="/carts">Cart</router-link
+                >|
+                <a @click.prevent="signOutButton" class="navbar-brand" href="#"
+                  >Sign Out</a
+                >
               </div>
             </div>
           </div>
