@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import firebase from "firebase";
 import instance from "../api/axios";
 
 export const useOrderStore = defineStore('order', {
