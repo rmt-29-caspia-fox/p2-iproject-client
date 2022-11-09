@@ -72,6 +72,22 @@ export const useIndexStore = defineStore("index", {
       } catch (err) {
         console.log(err)
       }
+    },
+    async googleLogin(response) {
+      try {
+        const {data} = await axios({
+          url: `${this.baseUrl}/sign-google`,
+          method: `post`,
+          headers: {
+            google_token: response.credential
+          }
+        })
+        localStorage.setItem(`access_token`, data.access_token)
+        this.isLogin = true
+        this.router.push(`/`)
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
 });

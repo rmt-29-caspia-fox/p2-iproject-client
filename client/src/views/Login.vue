@@ -12,7 +12,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useIndexStore, ['loginHandler']),
+    ...mapActions(useIndexStore, ['loginHandler', 'googleLogin']),
     loginAction() {
       let login = {
         email: this.user.email,
@@ -22,6 +22,9 @@ export default {
     },
     navigation(page) {
       this.$router.push(page)
+    },
+    loginGoogle(response) {
+      this.googleLogin(response)
     }
   }
 }
