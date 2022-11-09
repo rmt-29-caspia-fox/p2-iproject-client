@@ -2,8 +2,14 @@
 import { mapActions, mapState } from "pinia";
 import { useMangaStore } from "../stores/manga";
 import Swal from "sweetalert2";
+import VueDisqus from "vue-disqus";
 
 export default {
+  data() {
+    return {
+      urlshare: "http://localhost:3000" + this.$route.fullPath,
+    };
+  },
   computed: {
     ...mapState(useMangaStore, ["manga"]),
   },
@@ -174,6 +180,50 @@ export default {
             />
             <img v-else id="main-image" src="" background-size="cover" />
           </div>
+          <!-- social sharer -->
+          <br />
+          <br />
+          <div class="section-top2 text-center">
+            <button>
+              <ShareNetwork
+                network="twitter"
+                :url="`${this.urlshare}`"
+                title="Hey, checkout this interesting manga!"
+                description="This is another awesome manga for awesome readers"
+              >
+                <span>Share on Twitter</span>
+              </ShareNetwork>
+            </button>
+            <button>
+              <ShareNetwork
+                network="facebook"
+                :url="`${this.urlshare}`"
+                title="Hey, checkout this interesting manga!"
+                description="This is another awesome manga for awesome readers"
+                quote="bunch of nice mangas."
+                hashtags="manga,comic"
+              >
+                Share on Facebook
+              </ShareNetwork>
+            </button>
+            <button>
+              <ShareNetwork
+                network="Email"
+                :url="`${this.urlshare}`"
+                title="Hey, checkout this interesting manga!"
+                description="This is another awesome manga for awesome readers"
+              >
+                <span>Share on Email</span>
+              </ShareNetwork>
+            </button>
+          </div>
+          <!-- dsq -->
+          <br />
+          <br />
+          <section class="comments" aria-labelledby="comment">
+            <h2 id="comment">Comments</h2>
+            <Disqus />
+          </section>
         </div>
       </div>
     </div>
