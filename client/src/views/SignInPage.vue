@@ -14,7 +14,6 @@ export default {
   methods: {
     ...mapActions(useIndexStore, ["signInHandler"]),
     signInButton() {
-      console.log("1");
       this.signInHandler(this.user);
     },
   },

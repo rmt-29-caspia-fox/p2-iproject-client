@@ -44,7 +44,6 @@ export const useIndexStore = defineStore("index", {
 
     async signInHandler(value) {
       try {
-        console.log(value, "<<<<< value");
         const { data } = await axios({
           url: this.baseUrl + "/login",
           method: "post",
@@ -53,20 +52,19 @@ export const useIndexStore = defineStore("index", {
             password: value.password,
           },
         });
-        console.log(data, "<<<< data");
-        // localStorage.setItem("access_token", data.access_token);
-        // if (localStorage.access_token) {
-        //   this.isLogin = true;
-        //   this.router.push("/");
-        //   this.loginAlert();
-        // }
+        localStorage.setItem("access_token", data.access_token);
+        if (localStorage.access_token) {
+          this.isLogin = true;
+          this.router.push("/");
+          this.loginAlert();
+        }
       } catch (err) {
         console.log(err);
-        // this.globalAlert(
-        //   "error",
-        //   "Please check:",
-        //   `${(err.data.message = "Invalid Email / Password !!")}`
-        // );
+        this.globalAlert(
+          "error",
+          "Please check:",
+          `${(err.data.message = "Invalid Email / Password !!")}`
+        );
       }
     },
 
