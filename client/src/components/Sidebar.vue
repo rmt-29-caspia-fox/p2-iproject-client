@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <div class="col-2">
+  
     <nav class="navbar-sidebar bg-linier-1 text-light" id="nav">
       <div class="nav-items">
 
@@ -33,7 +33,6 @@ export default {
         </div>
       </div>
     </nav>
-  </div>
 </template>
 
 <style scoped></style>
