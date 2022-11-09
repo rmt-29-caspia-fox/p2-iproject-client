@@ -1,23 +1,27 @@
 <template>
-  <form class="d-flex" role="search">
-    <input
-      class="form-control me-2"
-      type="search"
-      placeholder="Search"
-      aria-label="Search"
-      v-model="query"
-    />
-    <button
-      class="btn btn-outline-success"
-      type="submit"
-      @click.prevent="emitSrc"
-    >
-      Search
-    </button>
-    <!-- <button class="btn btn-primary" @click.prevent="displayConsent">Google Log In</button> -->
-    <GoogleLogin :callback="callback"/>
-    
-  </form>
+  <div class="search">
+      <h1 class="text-center">FREEBOOK</h1>
+    <form class="d-flex" role="search">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        v-model="query"
+      />
+      <button
+        class="btn btn-outline-success"
+        type="submit"
+        @click.prevent="emitSrc"
+      >
+        Search
+      </button>
+      <!-- <button class="btn btn-primary" @click.prevent="displayConsent">Google Log In</button> -->
+    </form>
+  </div>
+  <div id="googlebtn">
+    <GoogleLogin :callback="callback" />
+  </div>
   <!-- <form class="form">
     <input type="text" v-model="query" class="form-control-lg"/>
     <button class="btn btn-primary" @click.prevent="emitSrc"><img src="@/components/icons/icons8-search-50.png"></button>
@@ -27,7 +31,7 @@
 <script>
 import { mapActions } from "pinia";
 import { useCounterStore } from "../stores/counter";
-import keys from "../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json"
+import keys from "../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json";
 
 export default {
   data() {
@@ -52,7 +56,7 @@ export default {
     },
     handleCredentialResponse(response) {
       // console.log("Encoded JWT ID token: " + response.credential);
-      this.googleLogin(response)
+      this.googleLogin(response);
     },
   },
   beforeMount() {
@@ -70,5 +74,14 @@ export default {
 </script>
 
 <style scoped>
-  
+.search {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+}
+#googlebtn {
+  position: fixed;
+  right: 0;
+}
 </style>
