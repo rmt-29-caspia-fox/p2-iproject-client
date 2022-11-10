@@ -18,12 +18,10 @@ export default ({
       this.googleLogin(response);
     },
     discordTrigger() {
-      console.log("mashok");
       this.discordLogin(this.$route.query.code);
     }
   },
   created() {
-    console.log("mashok");
     this.discordTrigger()
   }
 })
