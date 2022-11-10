@@ -5,7 +5,7 @@ import { useFavoriteStore } from '../stores/favorite';
 export default{
     props: ['fav'],
     methods: {
-        ...mapActions(useFavoriteStore, ['deleteFav'])
+        ...mapActions(useFavoriteStore, ['deleteFav', 'sendMail'])
     }
 }
 </script>
@@ -26,6 +26,7 @@ export default{
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-outline-danger" @click="deleteFav(fav.id)">Delete</button>
+                        <button class="btn btn-outline-primary" @click="sendMail">Send Mail</button>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const useFavoriteStore = defineStore("favorite", {
     state: () => ({
-        baseUrl: 'http://localhost:3000',
+        baseUrl: 'https://i-project-naufal.herokuapp.com',
         favorites: []
     }),
     actions: {
@@ -48,6 +48,21 @@ export const useFavoriteStore = defineStore("favorite", {
                 })
                 this.fetchFav()
                 this.router.push('/favorites')
+            } catch (err) {
+                console.log(err);
+            }
+        },
+
+        async sendMail(){
+            try {
+                await axios({
+                    url: this.baseUrl + '/favorites/mail',
+                    method: 'post',
+                    headers: {
+                        access_token: localStorage.access_token
+                    }
+                })
+                this.router.push('/')
             } catch (err) {
                 console.log(err);
             }

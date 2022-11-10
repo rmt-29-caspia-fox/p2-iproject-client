@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const useHeroStore = defineStore("hero", {
   state: () => ({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://i-project-naufal.herokuapp.com',
     heros: [],
     roleHero: [],
   }),
