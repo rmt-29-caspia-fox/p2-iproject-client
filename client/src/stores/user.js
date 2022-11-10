@@ -7,6 +7,7 @@ export const useUserStore = defineStore("user", {
     // baseUrl: 'https://movie-cms1.herokuapp.com/pub/',
     baseUrl: "http://localhost:3000/",
     isLogin: false,
+    user: {}
   }),
 
   actions: {
@@ -47,6 +48,21 @@ export const useUserStore = defineStore("user", {
         this.isLogin = true
       } else {
         this.isLogin = false
+      }
+    },
+
+    async userDetail() {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + 'mydetail',
+          method: 'get',
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+        this.user = data
+      } catch (error) {
+        console.log(error)
       }
     }
 

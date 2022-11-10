@@ -22,7 +22,11 @@ export default {
 
     methods: {
         ...mapActions(useVehicleStore, ['fetchVehicleDetail']),
-        ...mapActions(useUserStore, ['checkAccessToken'])
+        ...mapActions(useUserStore, ['checkAccessToken']),
+
+        rentProcess(id) {
+            this.$router.push(`/vehicle/rent/${id}`)
+        }
 
     }
 }
@@ -67,10 +71,10 @@ export default {
                                 Rates : Rp{{ vehicle.price }}/hour
                             </p>
 
-                            <a href="#"
+                            <button @click.prevent="rentProcess(vehicle._id)"
                                 class="mt-8 mr-3 inline-block rounded border border-rose-500 bg-rose-500 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-rose-600 focus:outline-none focus:ring active:text-rose-500">
                                 Rent Now
-                            </a>
+                        </button>
 
                             <a href="#"
                                 class="mt-8 inline-block rounded border border-rose-500 bg-white-500 px-12 py-3 text-sm font-medium text-rose-500 hover:bg-rose-500 hover:text-white focus:outline-none focus:ring active:text-rose-500">
@@ -95,7 +99,7 @@ export default {
                     <blockquote class="rounded-lg bg-gray-100 p-8" v-for="review in vehicle.reviews" :key="vehicle._id" >
                         <div class="flex items-center">
                             <div class="ml-4">
-                                <div class="flex justify-center gap-0.5 text-green-500">
+                                <div class="flex justify-center gap-0.5 text-rose-500">
                                     <p>{{review.rating}}/10</p>
                                 </div>
 

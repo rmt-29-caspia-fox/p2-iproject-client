@@ -29,7 +29,7 @@ export default {
         <router-link class="rounded-lg px-3 py-2" to="/register"> Register </router-link>
       </li>
       <li class="hidden lg:block" >
-        <button class="rounded-lg px-3 py-2" > Logout </button>
+        <button class="rounded-lg px-3 py-2" v-if="isLogin"> Logout </button>
       </li>
     </ul>
   </nav>
