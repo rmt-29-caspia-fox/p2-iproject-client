@@ -26,7 +26,6 @@ export default {
   watch: {
     searchStatus() {
       this.fetchWaitingListAdmin(this.searchStatus);
-      console.log(this.waitlistsAdmin);
     },
   },
   computed: {

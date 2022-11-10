@@ -70,7 +70,6 @@ export default {
       //   longitude: position.coords.longitude,
       //   latitude: position.coords.longitude,
       // });
-      // console.log(position.coords);
     },
   },
 };
