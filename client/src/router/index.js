@@ -47,6 +47,12 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   if(to.name == 'login' && localStorage.access_token) {
     return { name: 'home'}
+  } else if(to.name == 'register' && localStorage.access_token) {
+    return { name: 'home'}
+  } else if(to.name == 'rent' && !localStorage.access_token) {
+    return { name: 'login'}
+  } else if(to.name == 'pay-detail' && !localStorage.access_token) {
+    return { name: 'login'}
   } 
   //  else if(to.name == 'favourites' && !localStorage.access_token) {
   //   return { name: 'login'}

@@ -4,10 +4,12 @@ import axios from 'axios'
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    // baseUrl: 'https://movie-cms1.herokuapp.com/pub/',
-    baseUrl: "http://localhost:3000/",
+    baseUrl: 'https://server-database-mongo.herokuapp.com/',
+    // baseUrl: "http://localhost:3000/",
     isLogin: false,
-    user: {}
+    user: {},
+    weather: {},
+    icon: ''
   }),
 
   actions: {
@@ -44,6 +46,7 @@ export const useUserStore = defineStore("user", {
     },
 
     checkAccessToken() {
+      this.fetchWeather()
       if(localStorage.access_token) {
         this.isLogin = true
       } else {
@@ -64,7 +67,21 @@ export const useUserStore = defineStore("user", {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
+
+      async fetchWeather() {
+        try {
+          const { data } = await axios({
+            url: 'http://api.weatherbit.io/v2.0/current?key=10f7cd6ec99d4f9684a55664eef9bf41&lat=38.123&lon=-78.543&city=Jakarta&country=ID',
+            method: 'get'
+          })
+
+          this.weather = data.data[0]
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
 
   },
 });

@@ -4,8 +4,8 @@ import axios from "axios";
 
 export const useVehicleStore = defineStore("vehicle", {
   state: () => ({
-    // baseUrl: 'https://movie-cms1.herokuapp.com/pub/',
-    baseUrl: "http://localhost:3000/",
+    baseUrl: 'https://server-database-mongo.herokuapp.com/',
+    // baseUrl: "http://localhost:3000/",
     vehicles: [],
     vehicle: {},
     payDetail: {},
@@ -95,7 +95,7 @@ export const useVehicleStore = defineStore("vehicle", {
 
     async qrCodeGenerator(id) {
       try {
-        const url = `http://127.0.0.1:5173/vehicle/rent/pay/${id}`;
+        const url = `https://server-database-mongo.herokuapp.com/vehicle/rent/pay/${id}`;
         const { data } = await axios({
           url: `https://api.happi.dev/v1/qrcode?data=${url}&width=&dots=000000&bg=FFFFFF&apikey=d8917ecx6lDdfnwyzjTjtGvw8zcOeLVr135JfDpkbsi66ZpH5osCqfLW`,
           method: "get",

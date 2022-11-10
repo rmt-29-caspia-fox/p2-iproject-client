@@ -1,7 +1,18 @@
 <script>
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import { useUserStore } from '../stores/user';
 export default {
+  methods: {
+    ...mapActions(useUserStore, ['checkAccessToken']),
+
+    logoutHandler() {
+      localStorage.removeItem("access_token")
+      this.checkAccessToken()
+    }
+  },
+  created() {
+    this.checkAccessToken()
+  },
   computed: {
     ...mapState(useUserStore, ['isLogin'])
   }
@@ -20,16 +31,16 @@ export default {
         <router-link class="rounded-lg px-3 py-2" to="/"> Home </router-link>
       </li>
 
-      <li><a class="rounded-lg px-3 py-2" href=""> My Order </a></li>
+      <li><a class="rounded-lg px-3 py-2" href="" v-if="isLogin"> My Order </a></li>
 
-      <li class="hidden lg:block" v-if="!isLogin" >
+      <li class="hidden lg:block" v-if="!isLogin">
         <router-link class="rounded-lg px-3 py-2" to="/login"> Login </router-link>
       </li>
-      <li class="hidden lg:block" v-if="!isLogin" >
+      <li class="hidden lg:block" v-if="!isLogin">
         <router-link class="rounded-lg px-3 py-2" to="/register"> Register </router-link>
       </li>
-      <li class="hidden lg:block" >
-        <button class="rounded-lg px-3 py-2" v-if="isLogin"> Logout </button>
+      <li class="hidden lg:block">
+        <button @click.prevent="logoutHandler" class="rounded-lg px-3 py-2" v-if="isLogin"> Logout </button>
       </li>
     </ul>
   </nav>
