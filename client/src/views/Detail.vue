@@ -26,6 +26,10 @@ export default {
 
         rentProcess(id) {
             this.$router.push(`/vehicle/rent/${id}`)
+        },
+
+        submitReview(id) {
+            this.$router.push(`/vehicle/${id}/review`)
         }
 
     }
@@ -76,10 +80,10 @@ export default {
                                 Rent Now
                         </button>
 
-                            <a href="#"
+                            <button @click.prevent="submitReview(vehicle._id)"
                                 class="mt-8 inline-block rounded border border-rose-500 bg-white-500 px-12 py-3 text-sm font-medium text-rose-500 hover:bg-rose-500 hover:text-white focus:outline-none focus:ring active:text-rose-500">
                                 Review
-                            </a>
+                    </button>
                         </div>
                     </div>
                 </div>

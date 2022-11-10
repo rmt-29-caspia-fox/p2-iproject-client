@@ -6,6 +6,7 @@ import Detail from '../views/Detail.vue'
 import RentPage from '../views/RentPage.vue'
 import PayNow from '../views/PayNow.vue'
 import MyRents from '../views/MyRents.vue'
+import Review from '../views/Review.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,12 @@ const router = createRouter({
       name: "myrents",
       component: MyRents,
     },
+
+    {
+      path: "/vehicle/:id/review",
+      name: "review",
+      component: Review,
+    },
     
   ],
 });
@@ -60,6 +67,8 @@ router.beforeEach((to, from) => {
   } else if(to.name == 'pay-detail' && !localStorage.access_token) {
     return { name: 'login'}
   } else if(to.name == 'myrents' && !localStorage.access_token) {
+    return { name: 'login'}
+  } else if(to.name == 'review' && !localStorage.access_token) {
     return { name: 'login'}
   } 
   //  else if(to.name == 'favourites' && !localStorage.access_token) {

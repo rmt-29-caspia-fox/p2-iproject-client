@@ -125,6 +125,23 @@ export const useUserStore = defineStore("user", {
         } catch (error) {
           console.log(error)
         }
+      },
+
+      async reviewHandler(id, { rating, msg }) {
+        try {
+          await axios({
+            url: this.baseUrl + `vehicles/review/${id}`,
+            method: "put",
+            headers: {
+              access_token: localStorage.access_token
+            },
+            data: {
+              rating, msg
+            }
+          })
+        } catch (error) {
+          console.log(error)
+        }
       }
 
 
