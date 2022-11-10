@@ -38,7 +38,7 @@ export default {
           style="padding-left: 40px"
         >
           <a @click.prevent="homeButton" href=""
-            ><img src="../assets/New Logo.png" alt="Logo" style="height: 100px"
+            ><img src="../assets/New_Logo.png" alt="Logo" style="height: 100px"
           /></a>
         </div>
         <div class="col-11">

@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
     isLogin: false,
     isCartEmpty: false,
     products: [],
