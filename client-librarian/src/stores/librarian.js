@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const baseUrl = 'http://localhost:3000/librarians/'
+
 const useLibrarianStore = defineStore('librarian', {
   state: () => ({
-    registerForm: [],
-    loginForm: [],
     isLogin: false
   }),
   getters: {
@@ -19,7 +19,21 @@ const useLibrarianStore = defineStore('librarian', {
         this.router.push('/login')
       }
     },
-    login(){},
+    async login(loginForm){
+      try {
+        const { data } = await axios({
+          method: 'post',
+          url: baseUrl + '/login',
+          data: loginForm
+        })
+        localStorage.setItem('access_token', data.access_token)
+        this.loginHandler()
+        this.router.push('/')
+        
+      } catch (error) {
+        console.log(error);
+      }
+    },
     register(){},
   },
 })

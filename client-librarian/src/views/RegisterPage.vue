@@ -37,7 +37,11 @@ export default {
       <div class="flex justify-center" style="height: 100vh">
         <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-1/3">
           <div class="flex-1">
-            <div class="">
+            <div class="text-center">
+              <h2 class="text-4xl font-bold text-center">Liblib</h2>
+              <p class="mt-3 text-gray-700">Create new account</p>
+            </div>
+            <div class="mt-10">
               <form @submit.prevent="addCustomer">
                 <div>
                   <label for="email" class="block mb-2 text-sm text-gray-500"

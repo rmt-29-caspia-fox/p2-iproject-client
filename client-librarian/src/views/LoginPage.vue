@@ -1,13 +1,26 @@
 <script>
+import { mapActions, mapWritableState } from 'pinia';
+import useLibrarianStore from '../stores/librarian';
+
 export default {
   data() {
     return {
       loginForm: {
-        email: "",
-        password: "",
-      },
-    };
+      email: "",
+      password: "",
+    },
+    }
   },
+  methods: {
+    ...mapActions(useLibrarianStore, ['login']),
+   async submitLogin() {
+    try {
+      await this.login(this.loginForm)
+    } catch (error) {
+      console.log(error);
+    }
+    }
+  }
 };
 </script>
 <template>
@@ -30,7 +43,7 @@ export default {
                     >Email Address</label
                   >
                   <input
-                    type="login-email"
+                    type="text"
                     name="login-email"
                     id="login-email"
                     placeholder="example@example.com"
