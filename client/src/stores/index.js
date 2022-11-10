@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
-    // baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
+    // baseUrl: "http://localhost:3000",
     isLogin: false,
     isCartEmpty: false,
     products: [],
