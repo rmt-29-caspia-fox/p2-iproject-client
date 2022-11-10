@@ -51,7 +51,7 @@ export const useDeckStore = defineStore('deck', {
       try {
         const { data } = await axios({
           method: "get",
-          url: this.baseUrl + `/decks/download/${id}`,
+          url: this.baseUrl + `/download/${id}`,
           headers: { access_token: localStorage.access_token },
           responseType: 'blob'
         })
