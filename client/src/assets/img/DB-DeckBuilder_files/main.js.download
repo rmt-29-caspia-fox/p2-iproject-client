@@ -1,0 +1,31 @@
+import { createApp, markRaw } from '/node_modules/.vite/deps/vue.js?v=18fac880'
+import { createPinia } from '/node_modules/.vite/deps/pinia.js?v=18fac880'
+import { library } from '/node_modules/.vite/deps/@fortawesome_fontawesome-svg-core.js?v=18fac880'
+import { FontAwesomeIcon } from '/node_modules/.vite/deps/@fortawesome_vue-fontawesome.js?v=18fac880'
+import { faDiscord } from '/node_modules/.vite/deps/@fortawesome_free-brands-svg-icons.js?v=18fac880'
+import { faGoogle } from '/node_modules/.vite/deps/@fortawesome_free-brands-svg-icons.js?v=18fac880'
+import { faArrowLeft } from '/node_modules/.vite/deps/@fortawesome_free-solid-svg-icons.js?v=18fac880'
+
+import App from '/src/App.vue'
+import vue3GoogleLogin from '/node_modules/.vite/deps/vue3-google-login.js?v=18fac880'
+import router from '/src/router/index.js?t=1668024154201'
+
+import '/src/assets/main.css?t=1668024104541'
+
+const app = createApp(App)
+const pinia = createPinia()
+
+pinia.use(({ store }) => {
+  store.router = markRaw(router)
+})
+
+library.add(faDiscord, faGoogle, faArrowLeft)
+
+app.use(vue3GoogleLogin, {
+  clientId: '1072848415686-frvpq1ovkr1t92568dckdd2aid3dug7o.apps.googleusercontent.com'
+})
+
+app.use(pinia)
+app.use(router)
+
+app.component('font-awesome-icon', FontAwesomeIcon).mount('#app')
