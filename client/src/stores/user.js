@@ -1,6 +1,19 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from 'axios'
+import Swal from 'sweetalert2'
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -23,8 +36,16 @@ export const useUserStore = defineStore("user", {
           }
         })
         this.router.push('/login')
+        Toast.fire({
+          icon: 'success',
+          title: 'Register success. Please login'
+        })
       } catch (error) {
         console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: 'Error. Please check your input'
+        })
       }
     },
 
@@ -40,8 +61,16 @@ export const useUserStore = defineStore("user", {
         localStorage.setItem("access_token", data.access_token)
         this.isLogin = true
         this.router.push('/')
+        Toast.fire({
+          icon: 'success',
+          title: 'Logged in'
+        })
       } catch (error) {
         console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: 'Email/password is wrong'
+        })
       }
     },
 

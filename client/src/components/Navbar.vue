@@ -1,6 +1,19 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import { useUserStore } from '../stores/user';
+import Swal from 'sweetalert2'
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 export default {
   methods: {
     ...mapActions(useUserStore, ['checkAccessToken']),
@@ -8,6 +21,10 @@ export default {
     logoutHandler() {
       localStorage.removeItem("access_token")
       this.$router.push('/')
+      Toast.fire({
+        icon: 'success',
+        title: 'Logged out'
+      })
       this.checkAccessToken()
     }
   },

@@ -3,6 +3,19 @@ import NavbarVue from '../components/Navbar.vue';
 import { mapActions, mapState } from 'pinia';
 import { useUserStore } from '../stores/user';
 import { useVehicleStore } from '../stores/vehicle';
+import Swal from 'sweetalert2'
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 export default {
     data() {
         return {
@@ -32,6 +45,10 @@ export default {
 
             this.mailer({qrcode, url, email})
             this.$router.push(`/vehicle/rent/pay/${this.vehicle._id}`)
+            Toast.fire({
+                icon: 'success',
+                title: 'Car booked. Please complete the payment'
+            })
         }
 
 
