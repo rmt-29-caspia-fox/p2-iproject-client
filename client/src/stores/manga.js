@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-// https://ivea.herokuapp.com
-// http://localhost:3000/customers/products
+//https://reccomanga.herokuapp.com
+//http://localhost:3000
 
 export const useMangaStore = defineStore("manga", {
   state: () => ({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://reccomanga.herokuapp.com",
     mangas: [],
     manga: {},
     bookmarks: [],

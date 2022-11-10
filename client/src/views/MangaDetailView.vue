@@ -7,7 +7,7 @@ import VueDisqus from "vue-disqus";
 export default {
   data() {
     return {
-      urlshare: "http://localhost:3000" + this.$route.fullPath,
+      urlshare: "https://recco-manga.web.app" + this.$route.fullPath,
     };
   },
   computed: {
