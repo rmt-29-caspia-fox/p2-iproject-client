@@ -5,26 +5,48 @@ import { useUserStore } from '../stores/user';
 export default {
     data() {
         return {
-            loginForm :{
+            loginForm: {
                 email: null,
                 password: null
             },
             registerForm: {
                 username: null,
                 email: null,
-                password: null
+                password: null,
+                latitude: null,
+                longitude: null
             }
         }
     },
     methods: {
-        ...mapActions(useUserStore, ['login', 'register']),
-        loginLocal(){
+        ...mapActions(useUserStore, ['login', 'register', 'handleCredentialResponse']),
+        loginLocal() {
             this.login(this.loginForm)
         },
 
-        registerLocal(){
+        registerLocal() {
             this.register(this.registerForm)
+        },
+        handleCredentialResponseLocal(response){
+            this.handleCredentialResponse(response)
+        },
+        success(pos) {
+            const crd = pos.coords;
+            this.registerForm.latitude = crd.latitude
+            this.registerForm.longitude = crd.longitude
+        },
+
+        error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
         }
+    },
+    created() {
+        const options = {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 0
+        };
+        navigator.geolocation.getCurrentPosition(this.success, this.error, options)
     }
 }
 </script>
@@ -50,6 +72,13 @@ export default {
                 <div class="tab-content">
                     <div class="tab-pane active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                         <form @submit.prevent="loginLocal">
+                            <div class="text-center mb-3">
+                                <p>Sign in with:</p>
+
+                                <div>
+                                    <GoogleLogin :callback="handleCredentialResponse" />
+                                </div>
+                            </div>
 
                             <p class="text-center">or:</p>
 
@@ -62,7 +91,8 @@ export default {
                             <!-- Password input -->
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="loginPassword">Password</label>
-                                <input type="password" id="loginPassword" class="form-control" v-model="loginForm.password" />
+                                <input type="password" id="loginPassword" class="form-control"
+                                    v-model="loginForm.password" />
                             </div>
 
                             <!-- 2 column grid layout -->
@@ -99,19 +129,22 @@ export default {
                             <!-- Name input -->
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="registerName">Username</label>
-                                <input type="text" id="registerName" class="form-control" v-model="registerForm.username" />
+                                <input type="text" id="registerName" class="form-control"
+                                    v-model="registerForm.username" />
                             </div>
 
                             <!-- Username input -->
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="registerUsername">Email</label>
-                                <input type="email" id="registerUsername" class="form-control" v-model="registerForm.email" />
+                                <input type="email" id="registerUsername" class="form-control"
+                                    v-model="registerForm.email" />
                             </div>
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="registerEmail">Password</label>
-                                <input type="password" id="registerEmail" class="form-control" v-model="registerForm.password" />
+                                <input type="password" id="registerEmail" class="form-control"
+                                    v-model="registerForm.password" />
                             </div>
 
                             <!-- Submit button -->
