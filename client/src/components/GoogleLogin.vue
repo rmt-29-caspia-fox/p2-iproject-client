@@ -6,7 +6,7 @@ const callback = async (response) => {
   try {
     const data = await axios({
 
-      url: "http://localhost:3000" + "/login-google",
+      url: "https://pulsa-osi.herokuapp.com" + "/login-google",
       method: "post",
       headers: {
         google_token: response.credential

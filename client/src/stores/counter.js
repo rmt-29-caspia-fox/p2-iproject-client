@@ -2,9 +2,9 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from 'axios'
 
-const base_url = "http://localhost:3000"
+const base_url = "https://pulsa-osi.herokuapp.com"
 
-const client_url = "http://localhost:5173"
+const client_url = "https://pulsa-osi.web.app"
 
 export const useCounterStore = defineStore("counter", {
   state:() => ({
