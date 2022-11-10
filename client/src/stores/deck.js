@@ -7,7 +7,8 @@ export const useDeckStore = defineStore('deck', {
     {
       baseUrl: "http://localhost:3000",
       decks: [],
-      inputDeck: []
+      inputDeck: [],
+      qrCode: ""
     }
   ),
   getters: {
@@ -33,8 +34,17 @@ export const useDeckStore = defineStore('deck', {
           url: this.baseUrl + `/decks/${id}`,
           headers: { access_token: localStorage.access_token }
         })
+        Swal.fire(
+          'Deleted',
+          'Item has been deleted.',
+          'success'
+        )
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
       }
     },
     async downloadDeck(id) {
@@ -47,7 +57,11 @@ export const useDeckStore = defineStore('deck', {
         })
         fileDownload(data, 'deck.ydk')
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
       }
     },
 
@@ -62,8 +76,17 @@ export const useDeckStore = defineStore('deck', {
             name: name
           }
         })
+        Swal.fire(
+          'Input Success',
+          'Your deck has been saved',
+          'success'
+        )
       } catch (err) {
-        console.log(err)
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
       }
     },
     async deckDetail(id) {
@@ -75,7 +98,59 @@ export const useDeckStore = defineStore('deck', {
         })
         this.inputDeck = data.detail.Cards
       } catch (err) {
-        console.log(err)
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
+      }
+    },
+    async editDeck(id, name) {
+      try {
+        const { data } = await axios({
+          method: "put",
+          url: this.baseUrl + `/decks/${id}`,
+          headers: { access_token: localStorage.access_token },
+          data: {
+            card: this.inputDeck,
+            name: name
+          }
+        })
+        Swal.fire(
+          'Input Success',
+          'Your deck has been edited',
+          'success'
+        )
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
+      }
+    },
+    async fetchQR(id) {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: "https://api.happi.dev/v1/qrcode",
+          headers: {
+            "x-happi-key": "b707c6zNw79g21upLO0alrmPyN0IXbrkbzrKezc6nSw79wVX1ynVDKvk"
+          },
+          params: {
+            data: this.baseUrl + `/download/${id}`,
+            width: 160,
+            bg: "FFFFFF",
+            dots: "000000"
+          }
+        })
+        this.qrCode = data.qrcode
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
       }
     }
   }

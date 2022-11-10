@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const useUserStore = defineStore('user', {
   state: () => (
@@ -40,11 +41,11 @@ export const useUserStore = defineStore('user', {
         localStorage.setItem('access_token', data.access_token);
         this.router.push('/')
       } catch (err) {
-        // Swal.fire({
-        //   icon: 'error',
-        //   title: err.response.data.error,
-        //   text: err.response.data.message
-        // })
+        Swal.fire({
+          icon: 'error',
+          title: err.response.data.error,
+          text: err.response.data.message
+        })
       }
     },
     async googleLogin(response) {
@@ -59,26 +60,45 @@ export const useUserStore = defineStore('user', {
         localStorage.setItem("access_token", data.access_token)
         this.router.push('/')
       } catch (err) {
-        console.log(err);
-        // Swal.fire({
-        //   icon: 'error',
-        //   title: 'Something went wrong!',
-        //   text: 'Contact us!'
-        // })
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
       }
     },
     async discordLogin(code) {
+      const params = new URLSearchParams();
+      params.append('client_id', "1039609972046168114");
+      params.append('client_secret', "j2z-l-R-ux7GedG3aCl9jiuOzgc_Hh53");
+      params.append('grant_type', 'authorization_code');
+      params.append('code', code);
+      params.append('redirect_uri', "http://localhost:8000/login");
       try {
+        const response = await axios.post('https://discord.com/api/oauth2/token', params)
+        let { access_token, token_type } = response.data
+        const userResponse = await axios({
+          method: "get",
+          url: 'https://discord.com/api/users/@me',
+          headers: {
+            authorization: `${token_type} ${access_token}`
+          }
+        })
         const { data } = await axios({
           method: "get",
           url: this.baseUrl + '/discord',
           params: {
-            code: code
+            username: userResponse.data.username,
+            email: userResponse.data.email
           }
         })
-        console.log(data);
+        localStorage.setItem('access_token', data.access_token)
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: 'Contact us!'
+        })
       }
     },
     async inputRegister(payload) {

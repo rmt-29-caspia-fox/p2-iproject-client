@@ -6,7 +6,7 @@ import { useDeckStore } from '../stores/deck';
 
 export default {
   computed: {
-    ...mapState(useDeckStore, ['inputDeck'])
+    ...mapState(useDeckStore, ['inputDeck', 'qrCode'])
   },
   data() {
     return {
@@ -17,11 +17,12 @@ export default {
     SidebarVue
   },
   methods: {
-    ...mapActions(useDeckStore, ['deleteDeck', 'saveDeck', 'fetchDeck', 'deckDetail']),
+    ...mapActions(useDeckStore, ['deleteDeck', 'saveDeck', 'fetchDeck', 'deckDetail', 'editDeck', 'fetchQR']),
     ...mapActions(useCardStore, ['getCard']),
     triggerDelete() {
       this.deleteDeck(this.$route.params.id)
       this.$router.push('/deck');
+      this.fetchDeck();
     },
     triggerSave() {
       this.saveDeck(this.name);
@@ -29,7 +30,13 @@ export default {
       this.$router.push('/deck')
       this.inputDeck.length = 0
     },
-    removeItem(card, index) {
+    triggerEdit() {
+      this.editDeck(this.$route.params.id, this.name);
+      this.fetchDeck();
+      this.$router.push('/deck')
+      this.inputDeck.length = 0
+    },
+    removeItem(index) {
       this.inputDeck.splice(index, 1);
     }
   },
@@ -37,6 +44,7 @@ export default {
     if (this.$route.params.id != undefined) {
       this.deckDetail(this.$route.params.id)
     }
+    this.fetchQR(this.$route.params.id);
   }
 }
 </script>
@@ -47,19 +55,21 @@ export default {
 
     <div class="container">
       <div class="intro">
-        <div class="col-6 form-group" style="margin-top:20px">
+        <div class="col-6 form-group" style="margin-top:20px;">
           <input v-model="name" type="text" class="form-control" placeholder="Input your Deck Name">
         </div>
+        <img :src="qrCode" style="margin-right:40px">
         <div style="display: flex; flex-direction: row; justify-content:space-between;">
-          <p>
+          <p style="font-size:20px">
             Total Cards : {{ inputDeck.length }}
-            <br>Total Price :
-            <br>
-            <span>USD : 30.000</span>
           </p>
           <div>
-            <button type="button" class="btn btn-success" style="margin-right: 20px;" @click.prevent="triggerSave">Save
+            <button v-if="this.$route.name == 'DeckDetail'" type="button" class="btn btn-success"
+              style="margin-right: 20px;" @click.prevent="triggerEdit">Save
               Deck</button>
+            <button v-else type="button" class="btn btn-success" style="margin-right: 20px;"
+              @click.prevent="triggerSave">Save
+              Deck 1</button>
             <button type="button" class="btn btn-danger" @click.prevent="triggerDelete">Delete Deck</button>
           </div>
         </div>
@@ -68,7 +78,7 @@ export default {
         <div v-for="(card, index) in inputDeck" :key="index" class="col-lg-3 col-sm-4 col-11 offset-sm-0 offset-1">
           <div class="card">
             <img class="card-img-top" :src="`https://images.ygoprodeck.com/images/cards_small/${card}.jpg`"
-              alt="Card image cap" @click="removeItem(card, index)">
+              alt="Card image cap" @click="removeItem(index)">
           </div>
         </div>
       </div>

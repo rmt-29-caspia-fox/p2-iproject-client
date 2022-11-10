@@ -37,6 +37,8 @@ export default {
         <p>Amazon : {{ cardOne.card_prices[0].amazon_price }} USD</p>
         <p>Ebay: {{ cardOne.card_prices[0].ebay_price }} USD</p>
         <p>TCG_Player: {{ cardOne.card_prices[0].tcgplayer_price }} USD</p>
+        <p>Lowest Price (IDR) :</p><br>
+        <p>{{ cardOne.lowPrice.result }}</p>
         <br>
       </div>
     </div>
@@ -52,6 +54,8 @@ export default {
         <p>Amazon : {{ cardTwo.card_prices[0].amazon_price }} USD</p>
         <p>Ebay: {{ cardTwo.card_prices[0].ebay_price }} USD</p>
         <p>TCG_Player: {{ cardTwo.card_prices[0].tcgplayer_price }} USD</p>
+        <p>Lowest Price (IDR) :</p>
+        <p>Rp {{ cardTwo.lowPrice.result }}</p>
         <br>
       </div>
     </div>
