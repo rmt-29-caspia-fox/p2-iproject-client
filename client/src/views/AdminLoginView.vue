@@ -13,7 +13,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useAdminStore, ["login"]),
+    ...mapActions(useAdminStore, ["login",'googleSignIn']),
     async loginHandler() {
       try {
         const { data } = await this.login(this.formLogin);
@@ -25,6 +25,27 @@ export default {
           icon: "error",
           title: "Oops...",
           text: err.response.data.msg,
+        });
+      }
+    },
+    async googleHandler() {
+      try {
+        const { data } = await this.googleSignIn();
+        localStorage.setItem("access_token", data.access_token);
+
+        Swal.fire({
+          icon: "success",
+          title: "Congrats!",
+          timer: 2500
+        });
+
+        this.$router.push("/admin");
+      } catch ({ response }) {
+        console.log(response)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response.data.msg,
         });
       }
     },
@@ -81,7 +102,7 @@ export default {
                 <button
                   class="btn btn-lg btn-outline-primary rounded-pill w-100 p-2 mt-2 text-light"
                   type="button"
-                  @click="googleSignIn"
+                  @click.prevent="googleHandler"
                 >
                   Login With Google
                 </button>

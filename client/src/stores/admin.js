@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import instance from "../api/axios";
+import { googleTokenLogin } from "vue3-google-login";
 
 export const useAdminStore = defineStore("admin", {
   state: () => ({
@@ -19,6 +20,14 @@ export const useAdminStore = defineStore("admin", {
           email: dataObj.email,
           password: dataObj.password,
         },
+      });
+    },
+    async googleSignIn() {
+      const { access_token } = await googleTokenLogin();
+      return instance({
+        url: "/admin/google-sign-in",
+        method: "post",
+        headers: { google_token: access_token },
       });
     },
     async fetchWaitingListAdmin(param) {
