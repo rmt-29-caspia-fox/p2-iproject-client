@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 export const useCustomerStore = defineStore("customer", {
   state: () => ({
     isLogin: false,
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://reccomanga.herokuapp.com",
   }),
   actions: {
     submitLogin(payload) {
