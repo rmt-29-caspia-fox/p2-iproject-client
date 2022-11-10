@@ -8,8 +8,14 @@ const router = createRouter({
   routes: [
     {path: '/', component: HomePage, name: 'home'},
     {path: '/login', component: LoginPage, name: 'login'},
-    {path: '/favorites', component: FavoritePage, name: 'favorite'}
+    {path: '/favorites', component: FavoritePage, name: 'favorites'}
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'favorites' && !localStorage.access_token) next({ name: 'login' })
+  if (to.name === 'login' && localStorage.access_token) next({ name: 'home'})
+  next()
 })
 
 
