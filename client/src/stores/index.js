@@ -150,7 +150,7 @@ export const useIndexStore = defineStore("index", {
     },
 
     async paymentFollowUp() {
-      console.log("MASUKKKKKKKKK");
+      console.log("MASUKKKKKKKK");
       this.router.push("/");
       this.carts = [];
       this.paymentAlert();
