@@ -50,7 +50,7 @@ export default {
 				<span class="text-sm">UV</span>
 			</div>
 			<div class="flex items-center space-x-1">
-				<span class="font-bold">{{weather.precip}}%</span>
+				<span class="font-bold">{{Math.round(weather.precip * 10)/10}}%</span>
 				<span class="text-sm">Precip</span>
 			</div>
 			<div class="flex items-center space-x-1">
