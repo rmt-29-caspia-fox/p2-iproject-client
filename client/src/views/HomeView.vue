@@ -36,7 +36,8 @@ export default {
                     <p class="pb-2">"{{ this.quotes[0].english }}"</p>
                   </blockquote>
                   <figcaption class="blockquote-footer mb-0 text-dark">
-                    {{ this.quotes[0].character }}
+                    {{ this.quotes[0].character }} from
+                    {{ this.quotes[0].anime }}
                   </figcaption>
                 </figure>
               </div>
@@ -57,28 +58,24 @@ export default {
       <!-- ca -->
       <div class="col-3">
         <!-- search -->
-        <h5>Search Mangas</h5>
-        <p>Find the manga</p>
-        <div class="input-group rounded">
-          <input
-            type="search"
-            class="form-control rounded"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="search-addon"
-          />
-          <button type="button" class="btn btn-warning">Search</button>
-        </div>
+        <h5>Latest Manga News</h5>
+        <br />
 
-        <!-- <div class="card" style="width: 18rem">
-          <img class="card-img-top" src="..." alt="Card image cap" />
-          <div class="card-body">
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-          </div>
-        </div> -->
+        <a
+          class="twitter-timeline"
+          href="https://twitter.com/MangaMoguraRE?ref_src=twsrc%5Etfw"
+          data-tweet-limit="4"
+          >Tweets by MangaMoguraRE</a
+        >
+        <br />
+
+        <a
+          class="twitter-timeline"
+          href="https://twitter.com/WSJ_manga"
+          data-tweet-limit="4"
+        >
+          Tweets by @WSJ_manga
+        </a>
       </div>
       <!-- right col -->
       <div class="col-9">
