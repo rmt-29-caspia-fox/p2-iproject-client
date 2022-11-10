@@ -22,7 +22,7 @@ export default ({
     }
   },
   created() {
-    this.discordTrigger()
+    // this.discordTrigger()
   }
 })
 </script>
@@ -42,10 +42,10 @@ export default ({
                 </div>
                 <div class="w-100">
                   <p class="social-media d-flex justify-content-end">
-                    <a href="https://discord.com/api/oauth2/authorize?client_id=1039609972046168114&redirect_uri=https%3A%2F%2Fdbuilder-iproject.web.app%2Flogin&response_type=code&scope=identify%20email"
+                    <!-- <a href="https://discord.com/api/oauth2/authorize?client_id=1039609972046168114&redirect_uri=https%3A%2F%2Fdbuilder-iproject.web.app%2Flogin&response_type=code&scope=identify%20email"
                       class="social-icon d-flex align-items-center justify-content-center">
                       <font-awesome-icon icon="fa-brands fa-discord" @click.prevent />
-                    </a>
+                    </a> -->
                     <GoogleLogin :callback="callback">
                       <a href="" class="social-icon d-flex align-items-center justify-content-center">
                         <font-awesome-icon icon="fa-brands fa-google" @click.prevent />
