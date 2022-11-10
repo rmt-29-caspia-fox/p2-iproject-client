@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-    <div class="grid grid-cols-3 gap-8 px-24 py-12">
+    <div class="grid grid-cols-3 gap-8 px-10 py-12">
     <VehiclesCardVue v-for="vehicle in vehicles" :key="vehicle._id" :vehicle="vehicle" />
   </div>
 </template>
