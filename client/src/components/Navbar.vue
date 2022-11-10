@@ -7,6 +7,7 @@ export default {
 
     logoutHandler() {
       localStorage.removeItem("access_token")
+      this.$router.push('/')
       this.checkAccessToken()
     }
   },
@@ -31,7 +32,7 @@ export default {
         <router-link class="rounded-lg px-3 py-2" to="/"> Home </router-link>
       </li>
 
-      <li><a class="rounded-lg px-3 py-2" href="" v-if="isLogin"> My Order </a></li>
+      <li><router-link to="/myrents" class="rounded-lg px-3 py-2" v-if="isLogin"> My Order </router-link></li>
 
       <li class="hidden lg:block" v-if="!isLogin">
         <router-link class="rounded-lg px-3 py-2" to="/login"> Login </router-link>
