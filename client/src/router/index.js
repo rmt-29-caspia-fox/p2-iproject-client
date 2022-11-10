@@ -1,23 +1,72 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
+import Detail from '../views/Detail.vue'
+import PathNotFound from '../views/404.vue'
+import Whitelist from '../views/Whitelist.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
+    { 
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: PathNotFound
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
+      path: "/",
+      name: "home",
+      component: Home,
+    },
+    {
+      path: "/:id/",
+      name: "home_page",
+      component: Home,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register,
+    },
+    {
+      path: "/product/:id",
+      name: "product",
+      component: Detail
+    },
+    {
+      path: '/logout',
+      name: 'logout'
+    },
+    // {
+    //   path: '/whitelist',
+    //   name: 'whitelist',
+    //   component: Whitelist
+    // }
+  ],
+});
+
+router.beforeEach((to, from) => {
+  if(to.name ==="login" && localStorage.access_token){
+    return {name: 'home'}
+
+  }
+
+  if(to.name ==="register" && localStorage.access_token){
+    return {name: 'home'}
+
+  }
+  // if(to.name ==="whitelist" && !localStorage.access_token){
+  //   return {name: 'login'}
+  // }
+  if(to.name === "home" && from.name === "login" && localStorage.access_token){
+    // window.location.reload()
+  }
 })
 
-export default router
+export default router;
