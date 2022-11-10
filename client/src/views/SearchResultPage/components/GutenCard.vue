@@ -56,7 +56,7 @@ export default {
     },
   },
   beforeMount() {
-    console.log(this.gutenbergData);
+    // console.log(this.gutenbergData);
     if (this.gutenbergData.authors && this.gutenbergData.authors.length !== 0) {
       this.authorData = this.authorformatter(this.gutenbergData.authors);
     }

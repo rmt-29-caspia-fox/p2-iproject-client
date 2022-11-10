@@ -21,6 +21,14 @@ import FavCardVue from './components/FavCard.vue'
     created() {
       this.fetchFavs();
     },
+    updated(){
+      
+    },
+    watch: {
+      favs(newQuestion){
+        this.fetchFavs();
+      }
+    },
     computed:{
       ...mapState(useCounterStore,['favs'])
     }

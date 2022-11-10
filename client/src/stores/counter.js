@@ -5,7 +5,7 @@ import router from "../router";
 import Swal from "sweetalert2";
 import keys from "../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json";
 
-const urlServer = "http://localhost:3000/";
+const urlServer = "https://freebook1.herokuapp.com/";
 
 export const useCounterStore = defineStore("counter", {
   state: () => {
@@ -834,6 +834,12 @@ export const useCounterStore = defineStore("counter", {
       consent: "",
       isLogged: false,
       favs: [],
+      editfav: {
+        imageUrl: "",
+        title: "",
+        review: null,
+        shortDesc: null,
+      },
     };
   },
   actions: {
@@ -955,9 +961,10 @@ export const useCounterStore = defineStore("counter", {
       try {
         const title = bookData.volumeInfo.title;
         const googleId = bookData.id;
-        const author = bookData.volumeInfo.authors[0] || null;
+        const author = bookData.volumeInfo.authors ? bookData.volumeInfo.authors[0] : null
         const imageUrl = bookData.volumeInfo.imageLinks.thumbnail || null;
-        const { data ,status} = await axios({
+        console.log("masuk pake ko")
+        const { data, status } = await axios({
           method: "post",
           url: urlServer + "favourite",
           headers: { access_token: localStorage.access_token },
@@ -969,14 +976,13 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         console.log(data);
-        if (status===201){
+        if (status === 201) {
           Swal.fire({
             icon: "success",
             title: "Added to Favourites",
             showConfirmButton: false,
             timer: 1200,
           });
-
         } else {
           Swal.fire({
             text: "This book already in your Favourites",
@@ -1004,10 +1010,63 @@ export const useCounterStore = defineStore("counter", {
         if (result.isConfirmed) {
           Swal.fire("Logged Out!", "", "success");
           delete localStorage.access_token;
-          router.push("/")
-        } 
+          router.push("/");
+        }
       });
       // delete localStorage.google_token
     },
+    async updateFav(favId, payload) {
+      try {
+        await axios({
+          method: "put",
+          url: server + `favourites/${favId}`,
+          headers: { access_token: localStorage.access_token },
+          data: payload,
+        });
+        Swal.fire({
+          icon: "success",
+          text: `Your review has been added`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        console.log("changes succeeded");
+        router.push("/favourites");
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message,
+        });
+        console.log(error.response.data.message);
+      }
+    },
+    editFavChg(payload){
+      console.log("masuk")
+      // console.log(payload)
+      this.editfav.imageUrl = payload.imageUrl;
+      console.log(this.editfav)
+      // router.push(`/favourites/${payload.id}`);
+    },
+    async delFav(favId){
+      console.log(favId)
+      try {
+        await axios({
+          method: "delete",
+          url: urlServer + `favourite/${favId}`,
+          headers: { access_token: localStorage.access_token },
+        });
+        Swal.fire({
+          icon: "success",
+          text: `Your book has been deleted`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.getFav();
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message,
+        });
+      }
+    }
   },
 });
