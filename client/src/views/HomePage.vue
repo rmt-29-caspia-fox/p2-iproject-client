@@ -27,14 +27,7 @@ export default {
     </div>
     <div class="row mb-4">
       <div class="col-6">
-        <div class="row">
-          <label for="filter" class="col-sm-2 col-form-label">Filter</label>
-          <div class="col-sm-10">
-            <select class="form-select">
-              <option value=""></option>
-            </select>
-          </div>
-        </div>
+        <div class="row"></div>
       </div>
       <div class="col-6">
         <form>
