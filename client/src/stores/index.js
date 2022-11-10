@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
-    // baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
+    // baseUrl: "http://localhost:3000",
     isLogin: false,
     isCartEmpty: false,
     products: [],
@@ -12,6 +12,8 @@ export const useIndexStore = defineStore("index", {
     prc: 0,
     firstName: "",
     lastName: "",
+    email: "",
+    avatar: "",
   }),
   actions: {
     async fetchProducts() {
@@ -82,6 +84,8 @@ export const useIndexStore = defineStore("index", {
         localStorage.setItem("access_token", data.access_token);
         this.firstName = data.firstName;
         this.lastName = data.lastName;
+        this.email = data.email;
+        this.avatar = data.avatar;
         if (localStorage.access_token) {
           this.isLogin = true;
           this.router.push("/");
@@ -109,6 +113,8 @@ export const useIndexStore = defineStore("index", {
         localStorage.setItem("access_token", data.access_token);
         this.firstName = data.firstName;
         this.lastName = data.lastName;
+        this.email = data.email;
+        this.avatar = data.avatar;
         if (localStorage.access_token) {
           this.isLogin = true;
           this.router.push("/");

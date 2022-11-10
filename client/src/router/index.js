@@ -4,6 +4,7 @@ import SignUpPage from "../views/SignUpPage.vue";
 import SignInPage from "../views/SignInPage.vue";
 import CartPage from "../views/CartPage.vue";
 import NotFoundPage from "../views/NotFoundPage.vue";
+import ProfilePage from "../views/ProfilePage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       component: CartPage,
     },
     {
+      path: "/profile",
+      name: "profile",
+      component: ProfilePage,
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "notfound",
       component: NotFoundPage,
@@ -38,6 +44,9 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (to.name == "carts" && !localStorage.access_token) {
+    return "/";
+  }
+  if (to.name == "profile" && !localStorage.access_token) {
     return "/";
   }
   if (to.name == "sign-up" && localStorage.access_token) {
