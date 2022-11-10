@@ -50,7 +50,7 @@ export default {
                         Duration : {{myRent.duration}}
                     </p>
                     <p class="mt-2 text-sm leading-relaxed text-gray-700 line-clamp-3">
-                        Total Price : {{myRent.totalPrice}}
+                        Total Price : Rp {{myRent.totalPrice}}
                     </p>
                 </div>
 
