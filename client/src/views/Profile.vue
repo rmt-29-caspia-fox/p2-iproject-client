@@ -12,7 +12,7 @@ export default {
     Navbar,
   },
   computed: {
-    ...mapState(useUserStore, ["profile"]),
+    ...mapState(useUserStore, ["proP"]),
   },
   created() {
     this.getPic();
@@ -56,30 +56,30 @@ export default {
   </div>
   <!-- bg end -->
 
-  <div class="grid mt-40">
+  <div class="grid mt-72">
     <article
-      class="flex justify-self-center bg-blue-500 transition hover:shadow-xl"
+      class="flex justify-self-center bg-blue-500 drop-shadow-lg"
     >
-      <div class="rotate-180 p-2 [writing-mode:_vertical-lr]">My Profile</div>
+      <div class="text-white rotate-180 p-2 [writing-mode:_vertical-lr]">My Profile</div>
 
       <div class="hidden sm:block sm:basis-56">
         <img
-          v-if="profile == '-'"
+          v-if="proP == '-'"
           alt="Guitar"
           src="../assets/feng1.png"
-          class="aspect-square h-full w-full object-cover"
+          class="aspect-square max-h-60 max-w-60 object-cover"
         />
         <img
           v-else
           alt="Guitar"
-          :src="profile"
-          class="aspect-square h-full w-full object-cover"
+          :src="proP"
+          class="aspect-square max-h-60 max-w-60 object-cover"
         />
       </div>
 
       <div class="flex flex-1 flex-col justify-between">
-        <div class="sm:flex">
-          <h1 class="font-bold">CHANGE PROFILE PICTURE</h1>
+        <div class="sm:flex justify-center">
+          <h1 class="font-bold text-white">CHANGE PROFILE PICTURE</h1>
         </div>
         <div class="sm:flex">
           <input

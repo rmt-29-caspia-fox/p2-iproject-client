@@ -12,7 +12,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useUserStore, ["login"]),
+    ...mapActions(useUserStore, ["login", "googleHandler"]),
     loginHandler() {
       const payload = {
         email: this.formLogin.email,
@@ -20,6 +20,9 @@ export default {
       };
       this.login(payload);
     },
+    google(response){
+      this.googleHandler(response)
+    }
   },
 };
 </script>
@@ -77,7 +80,9 @@ export default {
         </form>
 
         <hr class="my-6 border-gray-300 w-full" />
-
+        <div class="py-2 mb-2">
+          <GoogleLogin class="ml-14" :callback="google" />
+        </div>
         <button
           type="button"
           class="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"

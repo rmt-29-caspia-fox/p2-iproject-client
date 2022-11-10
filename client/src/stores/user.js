@@ -1,12 +1,15 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import FormData from "form-data";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    baseUrl:  "http://localhost:3000",    //"https://matching-u.herokuapp.com",
+    baseUrl: "http://localhost:3000", //"https://matching-u.herokuapp.com",
     username: "",
-    userId:"",
-    profile:""
+    userId: {
+      id: "",
+    },
+    proP: "",
   }),
   actions: {
     async login(payload) {
@@ -17,7 +20,22 @@ export const useUserStore = defineStore("user", {
           data: payload,
         });
         this.username = data.username;
-        this.userId = data.id
+        this.userId.id = data.id;
+        localStorage.setItem("access_token", data.access_token);
+        this.router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async googleHandler(response) {
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: this.baseUrl + "/google-sign-in",
+          headers: {
+            google_token: response.credential,
+          },
+        });
         localStorage.setItem("access_token", data.access_token);
         this.router.push("/");
       } catch (err) {
@@ -38,38 +56,41 @@ export const useUserStore = defineStore("user", {
     },
     async changePP(payload) {
       try {
-        console.log("ini payload",payload.id);
+        let form = new FormData();
+        form.append("profilePic", payload.profilePic);
+        console.log("ini payload", form);
         const { data } = await axios({
           method: "put",
           url: this.baseUrl + `/profile/${payload.id}`,
           headers: {
-            access_token : localStorage.access_token
+            access_token: localStorage.access_token,
+            "Content-Type": "multipart/form-data",
           },
           data: {
-            profilePic: payload.profilePic
-          }
+            profilePic: form,
+          },
         });
-        this.getProfPic(payload.id)
+        this.getProfPic(payload.id);
       } catch (err) {
         console.log(err);
       }
     },
-    async getProfPic(id){
+    async getProfPic(id) {
       try {
-        const {data} = await axios({
+        const { data } = await axios({
           method: "get",
           url: this.baseUrl + `/profile/${id.id}`,
           headers: {
-            access_token : localStorage.access_token
-          }
-        })
-        this.profile = data.profilePic
+            access_token: localStorage.access_token,
+          },
+        });
+        this.proP = data.profilePic;
       } catch (err) {
         console.log(err);
       }
     },
     logout() {
-      localStorage.removeItem("access_token");
+      localStorage.clear();
       this.router.push("/login");
     },
   },
