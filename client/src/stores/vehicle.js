@@ -108,7 +108,7 @@ export const useVehicleStore = defineStore("vehicle", {
 
     async qrCodeGenerator(id) {
       try {
-        const url = `https://server-database-mongo.herokuapp.com/vehicle/rent/pay/${id}`;
+        const url = `https://rentalkita-dd425.web.app/vehicle/rent/pay/${id}`;
         const { data } = await axios({
           url: `https://api.happi.dev/v1/qrcode?data=${url}&width=&dots=000000&bg=FFFFFF&apikey=d8917ecx6lDdfnwyzjTjtGvw8zcOeLVr135JfDpkbsi66ZpH5osCqfLW`,
           method: "get",
