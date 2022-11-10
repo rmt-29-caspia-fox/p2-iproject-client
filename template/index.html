@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./assets/bootstrap_custom.css" />
+    <title>Template</title>
+  </head>
+  <body>
+    <section id="landing-page"></section>
+    <section id="home-page">
+      <nav class="navbar navbar-expand-lg bg-light bg-linier-1">
+        <div class="container-fluid">
+          <a class="navbar-brand text-light" href="#">Navbar</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end text-center"
+            id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link active text-light"
+                  aria-current="page"
+                  href="#"
+                  >Book List</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="#">login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="#">logut</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- landing -->
+      <div class="d-flex align-items-center justify-content-center content">
+        <div class="card mb-3 shadow bg-linier-1">
+          <div class="row g-0 inside-card p-3">
+            <div class="col-md-4 col-12">
+              <img
+                src="https://portagecarwashin.com/wp-content/uploads/sites/799/2018/05/bg.png"
+                class="img-fluid rounded-start"
+                alt="..." />
+            </div>
+            <div class="col-md-8 col-12 text-light">
+              <div class="card-body">
+                <h5 class="card-title display-3"><strong>Welcome</strong></h5>
+                <p class="card-text">
+                  This is a wider card with supporting text below as a natural
+                  lead-in to additional content. This content is a little bit
+                  longer.
+                </p>
+                <p class="card-text">
+                  <a class="link"> click Here </a> to book
+                </p>
+              </div>
+            </div>
+            <div class="col-md-10 col-12">
+              <div id="map"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- landing end -->
+
+      <!-- form -->
+      <div
+        class="d-flex align-items-center justify-content-center content"
+        id="form-book">
+        <div class="box bg-linier-2">
+          <form action="">
+            <h2
+              class="text-center mb-5 border-bottom border-warning text-light">
+              Book Order
+            </h2>
+            <div
+              class="row justify-content-center align-items-center px-4 px-md-0">
+              <div class="col-12 col-md-4 text-light">
+                <div class="form-outline">
+                  <input type="text" id="form8Example1" class="form-control" />
+                  <label class="form-label" for="form8Example1">Name</label>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 text-light">
+                <div class="form-outline">
+                  <input type="email" id="form8Example2" class="form-control" />
+                  <label class="form-label" for="form8Example2"
+                    >Email address</label
+                  >
+                </div>
+              </div>
+            </div>
+            <hr />
+            <h3 class="text-center text-light">choose you cars</h3>
+            <hr />
+            <div class="row px-4 px-md-0">
+              <div class="col-12 col-md-4 text-light">
+                <div class="form-outline">
+                  <select class="form-select">
+                    <option value="1">MVP</option>
+                    <option value="2">Sedan</option>
+                    <option value="3">Hatchback</option>
+                  </select>
+                  <label class="visually" for="inlineFormSelectPref"
+                    >type</label
+                  >
+                </div>
+              </div>
+              <div class="col-12 col-md-4 text-light">
+                <div class="form-outline">
+                  <select class="form-select">
+                    <option value="1">Toyota</option>
+                    <option value="2">Honda</option>
+                    <option value="3">Hyundai</option>
+                  </select>
+                  <label class="visually" for="inlineFormSelectPref"
+                    >Brand</label
+                  >
+                </div>
+              </div>
+              <div class="col-12 col-md-4 text-light">
+                <div class="form-outline">
+                  <select class="form-select">
+                    <option value="1">Kijang</option>
+                    <option value="2">Fortuner</option>
+                    <option value="3">Alphart</option>
+                  </select>
+                  <label class="visually" for="inlineFormSelectPref"
+                    >Name of car</label
+                  >
+                </div>
+              </div>
+              <div class="col-12 mt-3 text-light">
+                <div class="form-outline">
+                  <select class="form-select">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                  <label class="visually" for="inlineFormSelectPref"
+                    >type of wash</label
+                  >
+                  <button
+                    type="submit"
+                    class="btn btn-outline-secondary rounded-pill w-100 mt-5 text-light">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- form end -->
+
+      <!-- table section  -->
+      <div
+        class="d-flex align-items-center justify-content-center content"
+        id="table-book">
+        <div class="box bg-linier-2 p-4">
+          <div class="container-fluid">
+            <h1 class="text-light mb-4">Book Order</h1>
+            <table class="table table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th>Name and Email</th>
+                  <th>Car</th>
+                  <th>Servis</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">John Doe</p>
+                        <p class="text-muted mb-0">john.doe@gmail.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Toyota</p>
+                        <p class="text-muted mb-0">Innova</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Heavy</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center" style="height: 40px">
+                      <span class="badge badge-success rounded-pill d-inline"
+                        >Waiting</span
+                      >
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Alex Ray</p>
+                        <p class="text-muted mb-0">alex.ray@gmail.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Toyota</p>
+                        <p class="text-muted mb-0">Alphart</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Medium</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center" style="height: 40px">
+                      <span class="badge badge-success rounded-pill d-inline"
+                        >Onprogress</span
+                      >
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Kate Hunington</p>
+                        <p class="text-muted mb-0">kate.hunington@gmail.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Toyota</p>
+                        <p class="text-muted mb-0">Alphart</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Light</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center" style="height: 40px">
+                      <span class="badge badge-success rounded-pill d-inline"
+                        >Done</span
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- table section end  -->
+    </section>
+
+    <!-- script here -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"></script>
+  </body>
+</html>
