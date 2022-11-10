@@ -3,7 +3,8 @@ import axios from "axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://matching-u.herokuapp.com",
+    username: "",
   }),
   actions: {
     async login(payload) {
@@ -13,7 +14,7 @@ export const useUserStore = defineStore("user", {
           method: "post",
           data: payload,
         });
-
+        this.username = data.username;
         localStorage.setItem("access_token", data.access_token);
         this.router.push("/");
       } catch (err) {
@@ -32,7 +33,37 @@ export const useUserStore = defineStore("user", {
         console.log(err);
       }
     },
-    logoutHandler() {
+    // async changePP() {
+    //   try {
+    //     const { data } = await axios({
+    //       method: "post",
+    //       url: "https://upload.imagekit.io/api/v1/files/upload",
+    //       data: {
+    //         publicKey: "public_dV32LkjmtFPBB3QUri2gQ3M2Ilc=",
+
+    //       },
+    //       headers: {
+    //         Authorization: "private_QbmZScRY8vkb6ai1JXcfKqtAkTA="
+    //       } 
+    //     });
+    //   } catch (err) {}
+    // },
+    async changePP() {
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: this.baseUrl + "/register",
+          data: {
+            publicKey: "public_dV32LkjmtFPBB3QUri2gQ3M2Ilc=",
+
+          },
+          headers: {
+            Authorization: "private_QbmZScRY8vkb6ai1JXcfKqtAkTA="
+          } 
+        });
+      } catch (err) {}
+    },
+    logout() {
       localStorage.removeItem("access_token");
       this.router.push("/login");
     },

@@ -19,9 +19,14 @@ const router = createRouter({
       component: () => import('../views/Register.vue')
     },
     {
-      path: '/chatroom',
+      path: '/chatroom/:id',
       name: 'chatroom',
-      component: () => import('../views/Chatroom.vue')
+      component: () => import('../views/Chatroom1.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/Profile.vue')
     }
   ]
 })
