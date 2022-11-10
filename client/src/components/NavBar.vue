@@ -70,6 +70,9 @@ export default {
                 >|
                 <router-link class="navbar-brand" to="/carts">Cart</router-link
                 >|
+                <router-link class="navbar-brand" to="/profile"
+                  >Profile</router-link
+                >|
                 <a @click.prevent="signOutButton" class="navbar-brand" href="#"
                   >Sign Out</a
                 >

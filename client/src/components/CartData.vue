@@ -6,10 +6,10 @@ export default {
   data() {
     return {
       quantity: 1,
-      price: this.cart.Product.price,
+      price: 0,
     };
   },
-  props: ["cart"],
+  props: ["cart", "number"],
   computed: {
     ...mapWritableState(useIndexStore, ["prc"]),
     calculate() {
@@ -44,6 +44,7 @@ export default {
     },
   },
   created() {
+    this.price = this.cart.Product.price;
     this.total();
   },
 };
@@ -51,7 +52,7 @@ export default {
 
 <template>
   <tr class="align-middle text-center">
-    <td>{{ cart.id }}</td>
+    <td>{{ number + 1 }}</td>
     <td>
       <img
         :src="cart.Product?.imageUrl"

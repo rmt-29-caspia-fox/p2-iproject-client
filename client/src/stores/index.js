@@ -1,15 +1,19 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-// import midtransClient from "midtrans-client";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
     baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
+    // baseUrl: "http://localhost:3000",
     isLogin: false,
     isCartEmpty: false,
     products: [],
     carts: [],
     prc: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    avatar: "",
   }),
   actions: {
     async fetchProducts() {
@@ -33,6 +37,7 @@ export const useIndexStore = defineStore("index", {
             access_token: localStorage.access_token,
           },
         });
+        this.prc = 0;
         this.carts = data;
         this.isCartEmpty = true;
       } catch (error) {
@@ -77,6 +82,10 @@ export const useIndexStore = defineStore("index", {
           },
         });
         localStorage.setItem("access_token", data.access_token);
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.email = data.email;
+        this.avatar = data.avatar;
         if (localStorage.access_token) {
           this.isLogin = true;
           this.router.push("/");
@@ -92,16 +101,20 @@ export const useIndexStore = defineStore("index", {
       }
     },
 
-    async callback(response) {
+    async googleLogin(response) {
       try {
-        const result = await axios({
+        const { data } = await axios({
           url: this.baseUrl + "/google-sign-in",
           method: "post",
           headers: {
             google_token: response.credential,
           },
         });
-        localStorage.setItem("access_token", result.data.access_token);
+        localStorage.setItem("access_token", data.access_token);
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.email = data.email;
+        this.avatar = data.avatar;
         if (localStorage.access_token) {
           this.isLogin = true;
           this.router.push("/");
@@ -112,31 +125,42 @@ export const useIndexStore = defineStore("index", {
         this.globalAlert(
           "error",
           "Please check:",
-          `${(err.result.data.message = "Google Sign In Failed !!")}`
+          `${(err.data.message = "Google Sign In Failed !!")}`
         );
       }
     },
 
-    // async payment() {
-    //   let snap = new midtransClient.Snap({
-    //     // Set to true if you want Production Environment (accept real transaction).
-    //     isProduction: false,
-    //     serverKey: "SB-Mid-server-Hgx1_XJ42nh0NHrjvpV4pkm-",
-    //   });
-    //   try {
-    //     const { data } = await axios({
-    //       url: this.baseUrl + "/carts/payment",
-    //       method: "get",
-    //     });
-    //     window.snap.pay(data.token, {
-    //       onSuccess: function (result) {
-    //         this.paymentAlert();
-    //       },
-    //     });
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // },
+    async payment() {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + "/midtrans-transaction-token",
+          method: "post",
+          data: {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            price: this.prc,
+          },
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        const cb = this.paymentFollowUp;
+        window.snap.pay(data.transaction.token, {
+          onSuccess: function (result) {
+            cb();
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async paymentFollowUp() {
+      console.log("MASUKKKKKKKK");
+      this.router.push("/");
+      this.carts = [];
+      this.paymentAlert();
+    },
 
     signOutHandler() {
       this.logoutAlert();
@@ -267,36 +291,36 @@ export const useIndexStore = defineStore("index", {
         showCancelButton: true,
         confirmButtonColor: "#FF3A3A",
         cancelButtonColor: "#E3E3E3",
-        confirmButtonText: "DELETE!",
+        confirmButtonText: "REMOVE!",
       }).then((result) => {
         if (result.isConfirmed) {
           this.deleteFromCartHandler(id);
           this.globalAlert(
             "success",
-            "Deleted!",
-            "The Product has been deleted."
+            "Removed!",
+            "The Product has been removed."
           );
         }
       });
     },
 
-    // async paymentAlert() {
-    //   const Toast = await Swal.mixin({
-    //     toast: true,
-    //     position: "top-end",
-    //     showConfirmButton: false,
-    //     timer: 3000,
-    //     timerProgressBar: true,
-    //     didOpen: (toast) => {
-    //       toast.addEventListener("mouseenter", Swal.stopTimer);
-    //       toast.addEventListener("mouseleave", Swal.resumeTimer);
-    //     },
-    //   });
-    //   Toast.fire({
-    //     icon: "success",
-    //     title: "Payment successful",
-    //   });
-    // },
+    async paymentAlert() {
+      const Toast = await Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Payment successful",
+      });
+    },
 
     async globalAlert(icon, title, text) {
       let result = {};
