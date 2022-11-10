@@ -46,17 +46,17 @@
           </div>
         </div>
       </nav>
-      <!-- content -->
-      <!-- <div class="d-flex align-items-center justify-content-center content">
+      <!-- landing -->
+      <div class="d-flex align-items-center justify-content-center content">
         <div class="card mb-3 shadow bg-linier-1">
           <div class="row g-0 inside-card p-3">
-            <div class="col-md-4">
+            <div class="col-md-4 col-12">
               <img
                 src="https://portagecarwashin.com/wp-content/uploads/sites/799/2018/05/bg.png"
                 class="img-fluid rounded-start"
                 alt="..." />
             </div>
-            <div class="col-md-8 text-light">
+            <div class="col-md-8 col-12 text-light">
               <div class="card-body">
                 <h5 class="card-title display-3"><strong>Welcome</strong></h5>
                 <p class="card-text">
@@ -69,13 +69,16 @@
                 </p>
               </div>
             </div>
+            <div class="col-md-10 col-12">
+              <div id="map"></div>
+            </div>
           </div>
         </div>
-      </div> -->
-      <!-- content end -->
+      </div>
+      <!-- landing end -->
 
       <!-- form -->
-      <!-- <div
+      <div
         class="d-flex align-items-center justify-content-center content"
         id="form-book">
         <div class="box bg-linier-2">
@@ -87,14 +90,12 @@
             <div
               class="row justify-content-center align-items-center px-4 px-md-0">
               <div class="col-12 col-md-4 text-light">
-
                 <div class="form-outline">
                   <input type="text" id="form8Example1" class="form-control" />
                   <label class="form-label" for="form8Example1">Name</label>
                 </div>
               </div>
               <div class="col-12 col-md-4 text-light">
-
                 <div class="form-outline">
                   <input type="email" id="form8Example2" class="form-control" />
                   <label class="form-label" for="form8Example2"
@@ -153,17 +154,17 @@
                   <label class="visually" for="inlineFormSelectPref"
                     >type of wash</label
                   >
+                  <button
+                    type="submit"
+                    class="btn btn-outline-secondary rounded-pill w-100 mt-5 text-light">
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>
-            <button
-              type="submit"
-              class="btn btn-outline-secondary rounded-pill w-100 mt-5 text-light">
-              Submit
-            </button>
           </form>
         </div>
-      </div> -->
+      </div>
       <!-- form end -->
 
       <!-- table section  -->
@@ -178,6 +179,7 @@
                 <tr>
                   <th>Name and Email</th>
                   <th>Car</th>
+                  <th>Servis</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -193,20 +195,25 @@
                   </td>
                   <td>
                     <div class="d-flex align-items-center">
-                      <img
-                        src="https://asset.kompas.com/crops/5pshS8uLnBI6LqDSuOXSutPO8hA=/493x0:8437x5296/750x500/data/photo/2022/06/09/62a20870e7623.jpg"
-                        alt=""
-                        style="width: 95px; height: 95px"
-                        class="rounded-circle" />
                       <div class="ms-3">
                         <p class="fw-bold mb-1">Toyota</p>
                         <p class="text-muted mb-0">Innova</p>
                       </div>
+                    </div>
                   </td>
                   <td>
-                    <span class="badge badge-success rounded-pill d-inline"
-                      >Waiting</span
-                    >
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Heavy</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center" style="height: 40px">
+                      <span class="badge badge-success rounded-pill d-inline"
+                        >Waiting</span
+                      >
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -220,20 +227,25 @@
                   </td>
                   <td>
                     <div class="d-flex align-items-center">
-                      <img
-                      src="https://asset.kompas.com/crops/5pshS8uLnBI6LqDSuOXSutPO8hA=/493x0:8437x5296/750x500/data/photo/2022/06/09/62a20870e7623.jpg"
-                      alt=""
-                      style="width: 95px; height: 95px"
-                      class="rounded-circle" />
                       <div class="ms-3">
                         <p class="fw-bold mb-1">Toyota</p>
                         <p class="text-muted mb-0">Alphart</p>
                       </div>
+                    </div>
                   </td>
                   <td>
-                    <span class="badge badge-primary rounded-pill d-inline"
-                      >Onprogress</span
-                    >
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Medium</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center" style="height: 40px">
+                      <span class="badge badge-success rounded-pill d-inline"
+                        >Onprogress</span
+                      >
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -247,20 +259,25 @@
                   </td>
                   <td>
                     <div class="d-flex align-items-center">
-                      <img
-                        src="https://www.honda-indonesia.com/uploads/images/sections_items/exterior01__1621657879722.jpg"
-                        alt=""
-                        style="width: 95px; height: 95px"
-                        class="rounded-circle" />
                       <div class="ms-3">
                         <p class="fw-bold mb-1">Toyota</p>
                         <p class="text-muted mb-0">Alphart</p>
                       </div>
+                    </div>
                   </td>
                   <td>
-                    <span class="badge badge-warning rounded-pill d-inline"
-                      >Done</span
-                    >
+                    <div class="d-flex align-items-center">
+                      <div class="ms-3">
+                        <p class="fw-bold mb-1">Light</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center" style="height: 40px">
+                      <span class="badge badge-success rounded-pill d-inline"
+                        >Done</span
+                      >
+                    </div>
                   </td>
                 </tr>
               </tbody>
