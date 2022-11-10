@@ -14,6 +14,9 @@ export default {
   methods: {
     format(data) {
       return moment(data).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    },
+    number(data) {
+      return new Intl.NumberFormat().format(data)
     }
   }
 };
@@ -59,10 +62,10 @@ export default {
                     >
                      Global
                     </th>
-                    <td class="py-4 px-6">{{tables.Global.NewConfirmed}}</td>
-                    <td class="py-4 px-6">{{tables.Global.TotalConfirmed}}</td>
-                    <td class="py-4 px-6">{{tables.Global.TotalRecovered}}</td>
-                    <td class="py-4 px-6">{{tables.Global.TotalDeaths}}</td>
+                    <td class="py-4 px-6 font-medium text-red-500">{{number(tables.Global.NewConfirmed)}}</td>
+                    <td class="py-4 px-6 font-medium text-red-500">{{number(tables.Global.TotalConfirmed)}}</td>
+                    <td class="py-4 px-6 font-medium text-red-500">{{number(tables.Global.TotalRecovered)}}</td>
+                    <td class="py-4 px-6 font-medium text-red-500">{{number(tables.Global.TotalDeaths)}}</td>
                   </tr>
                 </tbody>
               </table>

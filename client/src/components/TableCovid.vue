@@ -1,7 +1,12 @@
 <script>
 
 export default {
-  props: ['table']
+  props: ['table'],
+  methods: {
+    number(data) {
+      return new Intl.NumberFormat().format(data)
+    }
+  }
 }
 </script>
 
@@ -13,9 +18,9 @@ export default {
     >
       {{table.Country}}
     </th>
-    <td class="py-4 px-6">{{table.NewConfirmed}}</td>
-    <td class="py-4 px-6">{{table.TotalConfirmed}}</td>
-    <td class="py-4 px-6">{{table.TotalRecovered}}</td>
-    <td class="py-4 px-6">{{table.TotalDeaths}}</td>
+    <td class="py-4 px-6">{{number(table.NewConfirmed)}}</td>
+    <td class="py-4 px-6">{{number(table.TotalConfirmed)}}</td>
+    <td class="py-4 px-6">{{number(table.TotalRecovered)}}</td>
+    <td class="py-4 px-6">{{number(table.TotalDeaths)}}</td>
   </tr>
 </template>

@@ -4,7 +4,7 @@ import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 const provider = new FacebookAuthProvider();
 export const useIndexStore = defineStore("index", {
   state: () => ({
-    baseUrl: `http://localhost:3000`,
+    baseUrl: `https://hack-news-project.herokuapp.com`,
     isLogin: false,
     news: [],
     tables: [],
@@ -25,7 +25,17 @@ export const useIndexStore = defineStore("index", {
         this.fetchNews();
         this.fetchTable();
         this.router.push("/");
+        Swal.fire({
+          title: "Success",
+          text: "Login Success",
+          icon: "success",
+        });
       } catch (err) {
+        Swal.fire({
+          title: "Oopss..",
+          text: err.response.data.message,
+          icon: "error",
+        });
         console.log(err);
       }
     },
@@ -41,7 +51,17 @@ export const useIndexStore = defineStore("index", {
           },
         });
         this.router.push("/login");
+        Swal.fire({
+          title: "Success",
+          text: "Register Success",
+          icon: "success",
+        });
       } catch (err) {
+        Swal.fire({
+          title: "Oopss..",
+          text: err.response.data.message,
+          icon: "error",
+        });
         console.log(err);
       }
     },
@@ -87,7 +107,17 @@ export const useIndexStore = defineStore("index", {
         this.fetchNews();
         this.fetchTable();
         this.router.push(`/`);
+        Swal.fire({
+          title: "Success",
+          text: "Login Success",
+          icon: "success",
+        });
       } catch (err) {
+        Swal.fire({
+          title: "Oopss..",
+          text: err.response.data.message,
+          icon: "error",
+        });
         console.log(err);
       }
     },
@@ -110,8 +140,18 @@ export const useIndexStore = defineStore("index", {
               this.fetchTable();
               this.isLogin = true;
               this.router.push("/");
+              Swal.fire({
+                title: "Success",
+                text: "Login Success",
+                icon: "success",
+              });
           })
           .catch((err)=> {
+            Swal.fire({
+              title: "Oopss..",
+              text: err.response.data.message,
+              icon: "error",
+            });
             console.log(err)
           })
         })

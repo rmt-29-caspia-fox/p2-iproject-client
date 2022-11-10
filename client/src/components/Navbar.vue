@@ -1,16 +1,22 @@
 <script>
 import {mapWritableState} from 'pinia'
 import {useIndexStore} from '@/stores/index'
-
+import {getAuth} from 'firebase/auth'
 export default {
   computed: {
     ...mapWritableState(useIndexStore, ['isLogin'])
   },
   methods: {
     logoutHandler() {
+      getAuth().signOut()
       localStorage.clear()
       this.navigate('/login')
       this.isLogin = false
+      Swal.fire({
+          title: "Success",
+          text: "Logout Success",
+          icon: "success",
+        });
     },
     navigate(page) {
       this.$router.push(page) 
