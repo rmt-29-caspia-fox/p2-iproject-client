@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+// import midtransClient from "midtrans-client";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
@@ -116,8 +117,34 @@ export const useIndexStore = defineStore("index", {
       }
     },
 
+    // async payment() {
+    //   let snap = new midtransClient.Snap({
+    //     // Set to true if you want Production Environment (accept real transaction).
+    //     isProduction: false,
+    //     serverKey: "SB-Mid-server-Hgx1_XJ42nh0NHrjvpV4pkm-",
+    //   });
+    //   try {
+    //     const { data } = await axios({
+    //       url: this.baseUrl + "/carts/payment",
+    //       method: "get",
+    //     });
+    //     window.snap.pay(data.token, {
+    //       onSuccess: function (result) {
+    //         this.paymentAlert();
+    //       },
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
+
     signOutHandler() {
       this.logoutAlert();
+    },
+
+    prcHandler() {
+      this.prc = 0;
+      this.router.push("/");
     },
 
     async addToCartHandler(id) {
@@ -252,6 +279,24 @@ export const useIndexStore = defineStore("index", {
         }
       });
     },
+
+    // async paymentAlert() {
+    //   const Toast = await Swal.mixin({
+    //     toast: true,
+    //     position: "top-end",
+    //     showConfirmButton: false,
+    //     timer: 3000,
+    //     timerProgressBar: true,
+    //     didOpen: (toast) => {
+    //       toast.addEventListener("mouseenter", Swal.stopTimer);
+    //       toast.addEventListener("mouseleave", Swal.resumeTimer);
+    //     },
+    //   });
+    //   Toast.fire({
+    //     icon: "success",
+    //     title: "Payment successful",
+    //   });
+    // },
 
     async globalAlert(icon, title, text) {
       let result = {};

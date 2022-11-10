@@ -14,9 +14,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useIndexStore, ["signOutHandler"]),
+    ...mapActions(useIndexStore, ["signOutHandler", "prcHandler"]),
     signOutButton() {
       this.signOutHandler();
+    },
+    homeButton() {
+      this.prcHandler();
     },
   },
 };
@@ -34,9 +37,9 @@ export default {
           class="col-1 d-flex justify-content-center"
           style="padding-left: 40px"
         >
-          <router-link to="/"
+          <a @click.prevent="homeButton" href=""
             ><img src="../assets/New Logo.png" alt="Logo" style="height: 100px"
-          /></router-link>
+          /></a>
         </div>
         <div class="col-11">
           <div class="row pt-4">
@@ -62,7 +65,9 @@ export default {
                 class="col gap-5 d-flex justify-content-center"
                 style="padding-right: 105px"
               >
-                <router-link class="navbar-brand" to="/">Home</router-link>|
+                <a @click.prevent="homeButton" class="navbar-brand" href=""
+                  >Home</a
+                >|
                 <router-link class="navbar-brand" to="/carts">Cart</router-link
                 >|
                 <a @click.prevent="signOutButton" class="navbar-brand" href="#"
