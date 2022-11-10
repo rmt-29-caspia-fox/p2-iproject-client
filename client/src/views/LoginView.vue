@@ -82,7 +82,3 @@ export default ({
     </div>
   </section>
 </template>
-
-<style>
-@import '../assets/loginStyle.css'
-</style>
