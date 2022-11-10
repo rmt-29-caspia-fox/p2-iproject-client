@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 export const useGlobalStore = defineStore("store", {
   state: () => ({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://caspia-i-project.herokuapp.com",
     isLogin: false,
     products: [],
     cart: [],
