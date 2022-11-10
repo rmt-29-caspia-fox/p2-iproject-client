@@ -43,6 +43,11 @@ export default {
               >Home</RouterLink
             >
           </li>
+          <li v-if="isLogin">
+            <RouterLink to="/" class="nav-link px-2 text-white"
+              >History</RouterLink
+            >
+          </li>
         </ul>
 
         <div class="text-end">
@@ -63,14 +68,14 @@ export default {
           <!-- shown on login true -->
           <span v-if="isLogin">
             <RouterLink
-              to="/favorite"
+              to="/cart"
               type="button"
               class="btn btn-danger position-relative me-5"
             >
-              <i class="fa-solid fa-heart me-2"></i>Favorite
+              <i class="fa-solid fa-heart me-2"></i>Cart
               <span
                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-muted"
-                >{{ favorites.length }}</span
+                >999</span
               >
             </RouterLink>
             <button
