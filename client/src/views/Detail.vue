@@ -27,7 +27,14 @@
             ...mapActions(useCounterStore, ['fetchMovieByIdStore']),
             ...mapActions(useCounterStore, ['getqrCode']),
             ...mapActions(useCounterStore, ['postBuy']),
-            
+            buyProduct(){
+                try {
+                    this.postBuy(this.formBuy.idSubproduct.id, this.formBuy.phone)
+                    this.$swal('Buy Product Success');
+                } catch (err) {
+                    this.$swal(err);
+                }
+            }
         },
         created(){
             this.getqrCode(this.$route.params.id)
@@ -51,7 +58,7 @@
                 </div>
             </div>
             <div class="col-8">
-                <form @submit.prevent="postBuy(formBuy.idSubproduct.id, formBuy.phone)">
+                <form @submit.prevent="buyProduct">
                     <div class="mb-4">
                         <h5>Description</h5>
                         <p>{{movie.description}}</p>

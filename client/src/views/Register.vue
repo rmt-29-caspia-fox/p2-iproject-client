@@ -24,6 +24,7 @@
                 let form = await this.postRegisterStore(this.registerForm)
                 if(form){
                     this.$router.push({ path: '/?status="please check your email to verify your email"' })
+                    this.$swal('Register Success, Please Verify Your Email');
                 }
             },
             changeProvinsi(){

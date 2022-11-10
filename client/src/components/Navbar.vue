@@ -55,6 +55,7 @@
       </span> -->
       <span v-if="isMember === true">
         <router-link to="/login">Halo {{userData.username}}, saldo anda Rp. {{userData.balance}}</router-link>
+        <router-link to="/topup">Top Up</router-link>
         <a href="" @click="logout">Logout</a>
       </span>
       <span v-else>

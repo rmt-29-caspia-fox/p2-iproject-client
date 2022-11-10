@@ -67,6 +67,26 @@ export const useCounterStore = defineStore("counter", {
     //   console.log(val);
     // }
 
+    async topup(nominal){
+      try {
+        const response = await axios({
+          method: "post",
+          url: base_url + "/topup",
+          data: {
+            nominal: nominal
+          },
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        // console.log(response);
+        // this.address.provinces = response.data;
+        this.$swal('Top Up Success')
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async fetchApiProvince() {
       try {
         const response = await axios({
@@ -164,34 +184,7 @@ export const useCounterStore = defineStore("counter", {
       }
     },
 
-    // async fetchMovieStore(id, idgenre, search) {
-    //   try {
-    //     let image = this.getqrCode(id)
-    //     if (id <= 1 || id === null){
-    //       id = 1
-    //     }
-
-    //     let data
-
-    //     if(idgenre){
-    //       data = base_url + "/public/movies?page=" + id + "&genre=" + idgenre
-    //     }
-
-    //     if(search){
-    //       data = base_url + "/public/movies?page=" + id + '&search=' + search
-    //     }
-
-    //     const response = await axios({
-    //       method: "get",
-    //       url: data
-    //     });
-    //     this.movies = response.data.message;
-    //     console.log(this.movie);
-    //   } catch (err) {
-    //     console.log(err);
-    //     // this.$swal('Bad Request');
-    //   }
-    // },
+    
     
     async fetchMovieByIdStore(id) {
       try {
@@ -206,19 +199,7 @@ export const useCounterStore = defineStore("counter", {
         // this.$swal('Bad Request');
       }
     },
-    async fetchGenreStore() {
-      try {
-        const response = await axios({
-          method: "get",
-          url: base_url + "/public/genres"
-        });
-        console.log(response.data.message);
-        this.genres = response.data.message;
-      } catch (err) {
-        console.log(err);
-        // this.$swal('Bad Request');
-      }
-    },
+    
     async postLoginStore(val) {
       try {
         const response = await axios({
@@ -234,7 +215,9 @@ export const useCounterStore = defineStore("counter", {
           throw { name: "bad_request" };
         }
       } catch (err) {
+        console.log('meong');
         console.log(err);
+        // this.$swal(err);
       }
     },
     async postRegisterStore(payload){
@@ -246,12 +229,14 @@ export const useCounterStore = defineStore("counter", {
           });
           if (response) {
             // localStorage.setItem("access_token", response.data.access_token);
+            this.$swal('Register Success, Please Verify your Email');
             return true
           } else {
             throw { name: "bad_request" };
           }
       } catch (err) {
           console.log(err);
+          this.$swal(err);
           // this.$swal('Bad Request');
       }
     },
@@ -283,27 +268,29 @@ export const useCounterStore = defineStore("counter", {
           }
         });
         this.message = response.data
+        this.$swal(message);
       } catch (err) {
         console.log(err);
+        this.$swal(err);
       }
     },
-    async deletelistStore(id){
-      try {
-        const response = await axios({
-          method: "delete",
-          url: base_url + "/public/whitelist",
-          data: {
-            idmovie: id
-          },
-          headers: {
-            access_token: localStorage.access_token
-          }
-        });
-        this.whitelistData = response.data
-      } catch (err) {
-        console.log(err);
-      }
-    },
+    // async deletelistStore(id){
+    //   try {
+    //     const response = await axios({
+    //       method: "delete",
+    //       url: base_url + "/public/whitelist",
+    //       data: {
+    //         idmovie: id
+    //       },
+    //       headers: {
+    //         access_token: localStorage.access_token
+    //       }
+    //     });
+    //     this.whitelistData = response.data
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
     async checkToken(){
       if(localStorage.access_token){
         this.isMember = true
@@ -329,7 +316,7 @@ export const useCounterStore = defineStore("counter", {
           url: "https://api.happi.dev/v1/qrcode",
           params: {
             data: client_url + "/public/movie/" + id,
-            apikey: "df0580CbdB0ktn5dnTHdeQsWknArCwi8smdVYZKb0DBjYWLpQ9FsLLd1",
+            apikey: "6e7933FnX2vYqBdz42BqUlWcCI1rw73bCwO1ZUIo1iFvQaNLhjg4MhYz",
             dots: '000000',
             bg: 'FFFFFF',
             width: '200'

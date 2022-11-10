@@ -13,9 +13,10 @@
         methods: {
             ...mapActions(useCounterStore, ['postLoginStore']),
             async postLogin(){
-                const meong = await this.postLoginStore(this.loginForm)
-                if(meong){
+                const isLogin = await this.postLoginStore(this.loginForm)
+                if(isLogin){
                     this.$router.push({ path: '/' })
+                    this.$swal('Login Success');
                 }
             },
         },

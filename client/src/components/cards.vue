@@ -40,7 +40,7 @@
                         url: "https://api.happi.dev/v1/qrcode",
                         params: {
                             data: this.clientUrl + "/product/" + id,
-                            apikey: "df0580CbdB0ktn5dnTHdeQsWknArCwi8smdVYZKb0DBjYWLpQ9FsLLd1",
+                            apikey: "6e7933FnX2vYqBdz42BqUlWcCI1rw73bCwO1ZUIo1iFvQaNLhjg4MhYz",
                             dots: '000000',
                             bg: 'FFFFFF',
                             width: '20'
