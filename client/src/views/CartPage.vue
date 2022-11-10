@@ -15,12 +15,15 @@ export default {
     this.fetchCarts();
   },
   methods: {
-    ...mapActions(useIndexStore, ["fetchCarts"]),
+    ...mapActions(useIndexStore, ["fetchCarts", "payment"]),
     convertedPrice: function (number) {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
       }).format(number);
+    },
+    paymentButton() {
+      this.payment();
     },
   },
 };
@@ -59,7 +62,12 @@ export default {
             </tr>
           </thead>
           <tbody>
-            <CartData v-for="cart in carts" :key="cart.id" :cart="cart" />
+            <CartData
+              v-for="(cart, index) in carts"
+              :key="cart.id"
+              :cart="cart"
+              :number="index"
+            />
           </tbody>
         </table>
         <br />
@@ -69,7 +77,9 @@ export default {
           <div>
             <h3>Total Price: {{ convertedPrice(prc) }}</h3>
             <br />
-            <button class="btn btn-lazpiz">Confirm Payment</button>
+            <button @click="paymentButton" type="button" class="btn btn-lazpiz">
+              Confirm Payment
+            </button>
           </div>
         </div>
       </div>

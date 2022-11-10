@@ -12,12 +12,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useIndexStore, ["signInHandler", "callback"]),
+    ...mapActions(useIndexStore, ["signInHandler", "googleLogin"]),
     signInButton() {
       this.signInHandler(this.user);
     },
     callback(response) {
-      this.callback(response);
+      this.googleLogin(response);
     },
   },
 };
