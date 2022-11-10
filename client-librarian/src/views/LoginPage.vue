@@ -43,6 +43,7 @@ export default {
                     >Email Address</label
                   >
                   <input
+                    required
                     type="text"
                     name="login-email"
                     id="login-email"
@@ -60,6 +61,7 @@ export default {
                   </div>
 
                   <input
+                    required
                     type="password"
                     name="login-password"
                     id="login-password"
