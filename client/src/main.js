@@ -1,5 +1,6 @@
 import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
+import Paginate from "vuejs-paginate-next";
 
 import App from "./App.vue";
 import router from "./router";
@@ -15,6 +16,7 @@ pinia.use(({ store }) => {
   store.router = markRaw(router);
 });
 
+app.use(Paginate)
 app.use(pinia);
 app.use(router);
 

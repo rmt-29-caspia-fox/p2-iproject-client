@@ -4,13 +4,19 @@ import { useCustomerStore } from "../stores/customer";
 import Tablebody from "../components/TableBody.vue";
 import socket from "../api/socketio";
 import { useAdminStore } from "../stores/admin";
+import Paginate from "vuejs-paginate-next";
 
 export default {
   components: {
     Tablebody,
+    paginate: Paginate,
   },
   data() {
-    return {};
+    return {
+      params: {
+        page: 0,
+      },
+    };
   },
   beforeMount() {
     this.fetchWaitingList();
@@ -31,6 +37,10 @@ export default {
   },
   methods: {
     ...mapActions(useCustomerStore, ["fetchWaitingList"]),
+    handlerPaging() {
+      // this.params.page = page;
+      this.fetchWaitingList(this.params);
+    },
   },
 };
 </script>
@@ -54,13 +64,23 @@ export default {
           </thead>
           <tbody>
             <Tablebody
-              v-if="waitlists"
-              v-for="waitlist in waitlists"
+              v-if="waitlists.waitlists"
+              v-for="waitlist in waitlists.waitlists"
               :key="waitlist.id"
               :waitlist="waitlist"
             />
           </tbody>
         </table>
+        <paginate
+          v-model="params.page"
+          :page-count="waitlists.totalPages"
+          :click-handler="handlerPaging"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :container-class="'pagination row-column justify-content-end'"
+          :page-class="'page-item'"
+        >
+        </paginate>
       </div>
     </div>
   </div>

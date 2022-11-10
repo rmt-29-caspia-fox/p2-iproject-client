@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import instance from "../api/axios";
-import { Swal } from "sweetalert2/dist/sweetalert2.min";
+
 
 export const useCustomerStore = defineStore("customer", {
   state: () => ({
@@ -9,11 +9,10 @@ export const useCustomerStore = defineStore("customer", {
     waitlists: [],
   }),
   actions: {
-    async fetchWaitingList() {
+    async fetchWaitingList(params) {
       try {
-        const { data } = await instance({
-          url: "/customers/waitinglists",
-          method: "get",
+        const { data } = await instance.get("/customers/waitinglists", {
+          params,
         });
         this.waitlists = data;
       } catch (err) {
@@ -28,11 +27,11 @@ export const useCustomerStore = defineStore("customer", {
           name: payload.name,
           email: payload.email,
           longitude: payload.longitude,
-          latitude: payload.latitude
+          latitude: payload.latitude,
         },
       });
     },
-    waitlistRegisterHandler(payload,id) {
+    waitlistRegisterHandler(payload, id) {
       return instance({
         // /waitinglists/:customerid
         url: `/customers/waitinglists/${id}`,
