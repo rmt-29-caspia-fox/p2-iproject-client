@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 export const useUserStore = defineStore('user', {
   state: () => (
     {
-      baseUrl: "http://localhost:3000",
+      baseUrl: "https://dbuilder-iproject-server.herokuapp.com",
       username: "",
       isLogin: false
     }
@@ -73,7 +73,7 @@ export const useUserStore = defineStore('user', {
       params.append('client_secret', "j2z-l-R-ux7GedG3aCl9jiuOzgc_Hh53");
       params.append('grant_type', 'authorization_code');
       params.append('code', code);
-      params.append('redirect_uri', "http://localhost:8000/login");
+      params.append('redirect_uri', "https://dbuilder-iproject.web.app");
       try {
         const response = await axios.post('https://discord.com/api/oauth2/token', params)
         let { access_token, token_type } = response.data

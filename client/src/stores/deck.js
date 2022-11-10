@@ -5,7 +5,7 @@ import fileDownload from 'js-file-download'
 export const useDeckStore = defineStore('deck', {
   state: () => (
     {
-      baseUrl: "http://localhost:3000",
+      baseUrl: "https://dbuilder-iproject-server.herokuapp.com",
       decks: [],
       inputDeck: [],
       qrCode: ""

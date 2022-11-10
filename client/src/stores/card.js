@@ -4,7 +4,7 @@ import axios from 'axios'
 export const useCardStore = defineStore('card', {
   state: () => (
     {
-      baseUrl: "http://localhost:3000",
+      baseUrl: "https://dbuilder-iproject-server.herokuapp.com",
       cards: [],
       cardOne: {},
       cardTwo: {}
