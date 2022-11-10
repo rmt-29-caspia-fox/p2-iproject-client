@@ -1,11 +1,14 @@
 <script>
-import { mapActions } from 'pinia';
-import { useUserStore } from '../stores/user';
+import { mapActions, mapState } from "pinia";
+import { useUserStore } from "../stores/user";
 
 export default {
-    methods: {
-        ...mapActions(useUserStore, ["logout"])
-    }
+  computed: {
+    ...mapState(useUserStore, ["userId"])
+  },
+  methods: {
+    ...mapActions(useUserStore, ["logout"]),
+  },
 };
 </script>
 
@@ -15,9 +18,7 @@ export default {
       <div class="flex h-16 items-center justify-between">
         <div class="md:flex md:items-center md:gap-12">
           <a class="block text-teal-600" href="/">
-            <p>
-                Matchingu
-            </p>
+            <p>Matchingu</p>
           </a>
         </div>
 
@@ -27,7 +28,7 @@ export default {
               <li>
                 <router-link
                   class="text-gray-500 transition hover:text-gray-500/75"
-                  to="/profile"
+                  :to="`/profile/${userId}`"
                 >
                   My Profile
                 </router-link>
