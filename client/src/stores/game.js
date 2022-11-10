@@ -4,7 +4,8 @@ import Swal from 'sweetalert2'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
-		baseUrl: 'http://localhost:3000',
+		// baseUrl: 'http://localhost:3000',
+		baseUrl: 'https://caspia-iproject.herokuapp.com',
 		isLogin: false,
 		games: [],
 		gameId: '',
@@ -41,8 +42,9 @@ export const useGameStore = defineStore('game', {
 				localStorage.setItem('access_token', data.access_token)
 				this.router.push('/')
 				this.isLogin = true
+				this.SuccessSwal('Login Success')
 			} catch (error) {
-				console.log(error);
+				this.ErrorSwal(error)
 			}
 		},
 
@@ -92,7 +94,7 @@ export const useGameStore = defineStore('game', {
 				})
 				this.games = data.games
 			} catch (error) {
-				console.log(error);
+				this.ErrorSwal(error)
 			}
 		},
 
@@ -107,7 +109,7 @@ export const useGameStore = defineStore('game', {
 				})
 				this.gameItems = data.gameItems
 			} catch (error) {
-				console.log(error);
+				this.ErrorSwal(error)
 			}
 		},
 		

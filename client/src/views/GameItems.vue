@@ -22,9 +22,6 @@ export default {
       // console.log({id, game});
     },
 		payButton(price) {
-      // const price = 50000;
-      // this.getTokenMid(price);
-			// console.log(price);
 			this.getTokenMid(price);
     }
   },
@@ -71,9 +68,6 @@ export default {
         </div>
 			</form>
       </div>
-      <!-- <div v-for="game in gameF">
-		<h1>{{game.price}}</h1>
-	</div> -->
     </div>
   </div>
 </template>

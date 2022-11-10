@@ -33,9 +33,6 @@ export default {
           <p class="card-text">
             {{ game.name }}
           </p>
-						<!-- <button 
-					@click.prevent="payButton"
-					id="pay-button" class="btn btn-secondary">Pay!</button> -->
         </div>
 				
     </div>

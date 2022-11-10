@@ -23,7 +23,7 @@ export default {
 <nav>
   <router-link to="/"> HOME</router-link>
   <a
-		
+		v-if="isLogin"
 		@click.prevent="logOutHandler">LOG OUT</a>
   <div id="indicator"></div>
 </nav>
