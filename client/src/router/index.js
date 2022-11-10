@@ -7,6 +7,7 @@ import RentPage from '../views/RentPage.vue'
 import PayNow from '../views/PayNow.vue'
 import MyRents from '../views/MyRents.vue'
 import Review from '../views/Review.vue'
+import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,6 +54,12 @@ const router = createRouter({
       name: "review",
       component: Review,
     },
+
+
+
+
+
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
     
   ],
 });

@@ -39,7 +39,7 @@ export default {
             const endDate = String(this.newEndDate)
             this.rentHandler({vehicleId, startDate, endDate, duration, totalPrice})
 
-            const url = `https://server-database-mongo.herokuapp.com/vehicle/rent/pay/${this.vehicle._id}`
+            const url = `https://rentalkita-dd425.web.app/vehicle/rent/pay/${this.vehicle._id}`
             const qrcode = this.qrCode.qrcode
             const email = this.user.email
 
