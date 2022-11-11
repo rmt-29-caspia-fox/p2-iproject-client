@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
-    baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
-    // baseUrl: "http://localhost:3000",
+    // baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
+    baseUrl: "http://localhost:3000",
     isLogin: false,
     isCartEmpty: false,
     products: [],
@@ -111,6 +111,7 @@ export const useIndexStore = defineStore("index", {
           },
         });
         localStorage.setItem("access_token", data.access_token);
+        console.log(">>>>>>", data);
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.email = data.email;
@@ -156,9 +157,11 @@ export const useIndexStore = defineStore("index", {
     },
 
     async paymentFollowUp() {
-      console.log("MASUKKKKKKKK");
-      this.router.push("/");
       this.carts = [];
+      console.log("MASUKKKKKKKK");
+
+      this.router.push("/");
+
       this.paymentAlert();
     },
 
@@ -185,11 +188,7 @@ export const useIndexStore = defineStore("index", {
         this.router.push("/carts");
       } catch (error) {
         console.log(error);
-        this.globalAlert(
-          "warning",
-          "Please check:",
-          `${error.response.data.message}`
-        );
+        this.globalAlert("warning", "Please check:", `Have you signed in?`);
       }
     },
 
