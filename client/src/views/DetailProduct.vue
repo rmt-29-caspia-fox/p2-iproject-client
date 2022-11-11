@@ -4,22 +4,40 @@ import { watch } from "vue";
 import { useGlobalStore } from "../stores/globalStore";
 
 export default {
+  data() {
+    return {
+      provinceId: "",
+      cityId: "",
+      address: "",
+    };
+  },
   computed: {
-    ...mapState(useGlobalStore, ["product", "isLogin", "provinces"]),
-    ...mapWritableState(useGlobalStore, ["provinceId"]),
+    ...mapState(useGlobalStore, [
+      "product",
+      "isLogin",
+      "provinces",
+      "cities",
+      "shippingCost",
+    ]),
   },
   methods: {
     ...mapActions(useGlobalStore, [
       "getProduct",
       "getProvince",
       "getCity",
+      "getCost",
       "payNow",
     ]),
-    cityHandler() {
-      this.getCity(this.provinceId);
-    },
     paymentHandler() {
-      this.payNow();
+      const payload = {
+        address: this.address,
+        cityId: this.cityId,
+        provinceId: this.provinceId,
+        shippingCost: this.shippingCost,
+        productId: this.product.id,
+        totalPrice: this.product.price + this.shippingCost,
+      };
+      this.payNow(payload);
     },
   },
   watch: {
@@ -30,6 +48,16 @@ export default {
         this.getProvince();
       },
       immediate: true,
+    },
+    provinceId() {
+      this.getCity(this.provinceId);
+    },
+    cityId() {
+      const payload = {
+        destination: this.cityId,
+        weight: 1,
+      };
+      this.getCost(payload);
     },
   },
 };
@@ -55,6 +83,10 @@ export default {
             </div>
             <div class="col-md-8">
               <div class="card-body">
+                <p class="lead">Price :</p>
+                <p class="card-text">
+                  <b>Rp {{ product.price }}</b>
+                </p>
                 <p class="lead">Description :</p>
                 <p class="card-text">
                   <b>{{ product.description }}</b>
@@ -83,7 +115,7 @@ export default {
             <form action="">
               <div class="mb-3">
                 <label class="form-label">Address</label>
-                <input type="address" class="form-control" />
+                <input v-model="address" type="text" class="form-control" />
               </div>
               <div class="mb-3">
                 <label class="form-label">Province</label>
@@ -101,18 +133,31 @@ export default {
                   </option>
                 </select>
               </div>
-              <div class="mb-3">
-                <label class="form-label">Province</label>
+              <div class="mb-3" v-if="cities.length !== 0">
+                <label class="form-label">City</label>
                 <select
+                  v-model="cityId"
                   name="province"
                   class="form-select"
                   aria-label="Default select example"
                 >
-                  <option v-for="city in cities"></option>
+                  <option v-for="city in cities" :value="city.city_id">
+                    {{ city.city_name }}
+                  </option>
                 </select>
+              </div>
+              <div class="mb-3" v-if="cityId.length !== 0">
+                <label class="form-label">Shipping Cost</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  :value="shippingCost"
+                  disabled
+                />
               </div>
             </form>
             <button
+              v-if="shippingCost !== 0"
               @click.prevent="paymentHandler"
               class="btn btn-lg btn-warning"
             >

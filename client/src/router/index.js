@@ -23,6 +23,11 @@ const router = createRouter({
       name: "details",
       component: () => import("../views/DetailProduct.vue"),
     },
+    {
+      path: "/histories",
+      name: "histories",
+      component: () => import("../views/HistoryPage.vue"),
+    },
   ],
 });
 

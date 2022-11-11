@@ -44,7 +44,7 @@ export default {
             >
           </li>
           <li v-if="isLogin">
-            <RouterLink to="/" class="nav-link px-2 text-white"
+            <RouterLink to="/histories" class="nav-link px-2 text-white"
               >History</RouterLink
             >
           </li>
@@ -67,17 +67,6 @@ export default {
 
           <!-- shown on login true -->
           <span v-if="isLogin">
-            <RouterLink
-              to="/cart"
-              type="button"
-              class="btn btn-danger position-relative me-5"
-            >
-              <i class="fa-solid fa-heart me-2"></i>Cart
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white text-muted"
-                >999</span
-              >
-            </RouterLink>
             <button
               @click.prevent="logoutHandler"
               type="button"
