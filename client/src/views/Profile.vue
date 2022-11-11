@@ -1,23 +1,45 @@
 <script>
 import Navbar from "../components/Navbar.vue";
-import { mapActions, mapStores } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useUserStore } from "../stores/user";
 export default {
+  data() {
+    return {
+      link: "",
+    };
+  },
   components: {
     Navbar,
   },
   computed: {
-    ...mapStores(useUserStore, []),
+    ...mapState(useUserStore, ["proP"]),
+  },
+  created() {
+    this.getPic();
   },
   methods: {
-    ...mapActions(useUserStore, ["changePP"]),
-    change() {},
+    ...mapActions(useUserStore, ["changePP", "getProfPic"]),
+    updatePP(event) {
+      let payload = {
+        id: this.$route.params.id,
+        profilePic: event.target.files[0]
+      }
+      console.log("masuk updatePP");
+      this.changePP(payload);
+    },
+    updateLink() {
+      this.changePP(this.link);
+    },
+    getPic() {
+      this.getProfPic(this.$route.params.id);
+    },
   },
 };
 </script>
 
 <template>
   <Navbar />
+  <!-- bg -->
   <div class="fixed -z-10">
     <div
       class="bg-gray-700 bg-opacity-80 w-screen h-screen z-10 absolute top-0 left-0"
@@ -30,25 +52,36 @@ export default {
       />
     </div>
   </div>
+  <!-- bg end -->
 
-  <div class="mt-40">
+  <div class="grid mt-72">
     <article
-      class="flex justify-self-center bg-white transition hover:shadow-xl"
+      class="flex justify-self-center bg-blue-500 drop-shadow-lg"
     >
-      <div class="rotate-180 p-2 [writing-mode:_vertical-lr]">My Profile</div>
+      <div class="text-white rotate-180 p-2 [writing-mode:_vertical-lr]">My Profile</div>
 
       <div class="hidden sm:block sm:basis-56">
         <img
+          v-if="proP == '-'"
           alt="Guitar"
-          src=""
-          class="aspect-square h-full w-full object-cover"
+          src="../assets/feng1.png"
+          class="aspect-square max-h-60 max-w-60 object-cover"
+        />
+        <img
+          v-else
+          alt="Guitar"
+          :src="proP"
+          class="aspect-square max-h-60 max-w-60 object-cover"
         />
       </div>
 
       <div class="flex flex-1 flex-col justify-between">
+        <div class="sm:flex justify-center">
+          <h1 class="font-bold text-white">CHANGE PROFILE PICTURE</h1>
+        </div>
         <div class="sm:flex">
-            <form @submit.prevent=""></form>
           <input
+            @change="updatePP"
             type="file"
             class="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900"
           />

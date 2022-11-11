@@ -1,10 +1,15 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import FormData from "form-data";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    baseUrl: "https://matching-u.herokuapp.com",
+    baseUrl:  "http://localhost:3000",  //"https://matching-u.herokuapp.com",
     username: "",
+    userId: {
+      id: "",
+    },
+    proP: "",
   }),
   actions: {
     async login(payload) {
@@ -15,6 +20,22 @@ export const useUserStore = defineStore("user", {
           data: payload,
         });
         this.username = data.username;
+        this.userId.id = data.id;
+        localStorage.setItem("access_token", data.access_token);
+        this.router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async googleHandler(response) {
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: this.baseUrl + "/google-sign-in",
+          headers: {
+            google_token: response.credential,
+          },
+        });
         localStorage.setItem("access_token", data.access_token);
         this.router.push("/");
       } catch (err) {
@@ -33,38 +54,41 @@ export const useUserStore = defineStore("user", {
         console.log(err);
       }
     },
-    // async changePP() {
-    //   try {
-    //     const { data } = await axios({
-    //       method: "post",
-    //       url: "https://upload.imagekit.io/api/v1/files/upload",
-    //       data: {
-    //         publicKey: "public_dV32LkjmtFPBB3QUri2gQ3M2Ilc=",
-
-    //       },
-    //       headers: {
-    //         Authorization: "private_QbmZScRY8vkb6ai1JXcfKqtAkTA="
-    //       } 
-    //     });
-    //   } catch (err) {}
-    // },
-    async changePP() {
+    async changePP(payload) {
+      try {
+        let form = new FormData();
+        form.append("profilePic", payload.profilePic);
+        console.log("ini payload", payload.profilePic);
+        const { data } = await axios({
+          method: "put",
+          url: this.baseUrl + `/profile/${payload.id}`,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            access_token: localStorage.access_token,
+          },
+          data: form
+        });
+        this.getProfPic(payload.id);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getProfPic(id) {
       try {
         const { data } = await axios({
-          method: "post",
-          url: this.baseUrl + "/register",
-          data: {
-            publicKey: "public_dV32LkjmtFPBB3QUri2gQ3M2Ilc=",
-
-          },
+          method: "get",
+          url: this.baseUrl + `/profile/${id}`,
           headers: {
-            Authorization: "private_QbmZScRY8vkb6ai1JXcfKqtAkTA="
-          } 
+            access_token: localStorage.access_token,
+          },
         });
-      } catch (err) {}
+        this.proP = data.profilePic;
+      } catch (err) {
+        console.log(err);
+      }
     },
     logout() {
-      localStorage.removeItem("access_token");
+      localStorage.clear();
       this.router.push("/login");
     },
   },

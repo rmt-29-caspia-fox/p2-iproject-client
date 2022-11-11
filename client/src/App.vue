@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <RouterView />
+  <router-view />
 </template>
 
 
