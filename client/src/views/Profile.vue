@@ -22,18 +22,16 @@ export default {
     updatePP(event) {
       let payload = {
         id: this.$route.params.id,
-        profilePic: event.target.files[0].name 
+        profilePic: event.target.files[0]
       }
       console.log("masuk updatePP");
-      console.log(event.target.files[0].name);
-      console.log(payload);
       this.changePP(payload);
     },
     updateLink() {
       this.changePP(this.link);
     },
     getPic() {
-      this.getProfPic(this.$route.params);
+      this.getProfPic(this.$route.params.id);
     },
   },
 };

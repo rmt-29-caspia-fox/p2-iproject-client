@@ -4,7 +4,7 @@ import FormData from "form-data";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    baseUrl: "http://localhost:3000", //"https://matching-u.herokuapp.com",
+    baseUrl:  "http://localhost:3000",  //"https://matching-u.herokuapp.com",
     username: "",
     userId: {
       id: "",
@@ -58,17 +58,15 @@ export const useUserStore = defineStore("user", {
       try {
         let form = new FormData();
         form.append("profilePic", payload.profilePic);
-        console.log("ini payload", form);
+        console.log("ini payload", payload.profilePic);
         const { data } = await axios({
           method: "put",
           url: this.baseUrl + `/profile/${payload.id}`,
           headers: {
-            access_token: localStorage.access_token,
             "Content-Type": "multipart/form-data",
+            access_token: localStorage.access_token,
           },
-          data: {
-            profilePic: form,
-          },
+          data: form
         });
         this.getProfPic(payload.id);
       } catch (err) {
@@ -79,7 +77,7 @@ export const useUserStore = defineStore("user", {
       try {
         const { data } = await axios({
           method: "get",
-          url: this.baseUrl + `/profile/${id.id}`,
+          url: this.baseUrl + `/profile/${id}`,
           headers: {
             access_token: localStorage.access_token,
           },
