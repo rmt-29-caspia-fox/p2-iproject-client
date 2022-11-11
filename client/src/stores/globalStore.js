@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 export const useGlobalStore = defineStore("store", {
   state: () => ({
-    baseUrl: "https://caspia-i-project.herokuapp.com",
+    baseUrl: "http://localhost:3000",
     isLogin: false,
     products: [],
     cart: [],
@@ -15,8 +15,9 @@ export const useGlobalStore = defineStore("store", {
     totalItems: 0,
     id: "",
     provinces: [],
-    provinceId: "",
     cities: [],
+    histories: [],
+    shippingCost: 0,
   }),
 
   actions: {
@@ -88,6 +89,20 @@ export const useGlobalStore = defineStore("store", {
       }
     },
 
+    async getHistories() {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: this.baseUrl + "/histories",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.histories = data;
+      } catch (err) {
+        this.errorAlert(err);
+      }
+    },
     async getProducts() {
       try {
         let productUrl = "/public/products";
@@ -98,7 +113,7 @@ export const useGlobalStore = defineStore("store", {
         });
         this.products = data;
       } catch (err) {
-        this.errorAlert(err.response.data.message);
+        this.errorAlert(err);
       }
     },
 
@@ -110,7 +125,7 @@ export const useGlobalStore = defineStore("store", {
         });
         this.product = data;
       } catch (err) {
-        this.errorAlert(err.response.data.message);
+        this.errorAlert(err);
       }
     },
 
@@ -129,24 +144,78 @@ export const useGlobalStore = defineStore("store", {
       try {
         const { data } = await axios({
           method: "get",
-          url: this.baseUrl + `/city/:${id}`,
+          url: this.baseUrl + `/shipping-cost/city/${id}`,
         });
         this.cities = data;
       } catch (err) {
         this.errorAlert(err.response.data.message);
       }
     },
-    async payNow() {
+    async getCost(payload) {
       try {
-        const alertPop = this.successAlert;
+        const { destination, weight } = payload;
         const { data } = await axios({
           method: "post",
-          url: this.baseUrl + "/public/payment",
+          url:
+            this.baseUrl +
+            `/shipping-cost/cost?destination=${destination}&weight=${weight}`,
+        });
+        this.shippingCost = data.cost;
+      } catch (err) {
+        this.errorAlert(err.response.data.message);
+      }
+    },
+
+    async paymentUpdate(id, result) {
+      try {
+        await axios({
+          method: "put",
+          url: this.baseUrl + `/payment_update/${id}`,
+          data: {
+            status: "done",
+          },
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.successAlert(result.message);
+        this.router.push("/histories");
+      } catch (err) {
+        this.errorAlert(err.response.data.message);
+      }
+    },
+
+    async payNow(payload) {
+      try {
+        const paymentUpdate = this.paymentUpdate;
+        const {
+          address,
+          cityId,
+          provinceId,
+          shippingCost,
+          productId,
+          totalPrice,
+        } = payload;
+        const { data } = await axios({
+          method: "post",
+          url: this.baseUrl + "/payment",
+          data: {
+            address,
+            cityId,
+            provinceId,
+            shippingCost,
+            productId,
+            totalPrice,
+          },
+          headers: {
+            access_token: localStorage.access_token,
+          },
         });
         // console.log(data.token);
         window.snap.pay(data.token, {
-          onSuccess: function (result) {
-            alertPop(result.status_message);
+          onSuccess: async function (result) {
+            console.log(result);
+            paymentUpdate(data.token, result);
           },
         });
       } catch (error) {
