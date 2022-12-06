@@ -8,11 +8,18 @@ export default {
     CartData,
   },
   computed: {
-    ...mapState(useIndexStore, ["carts", "isCartEmpty"]),
+    ...mapState(useIndexStore, [
+      "carts",
+      "isCartEmpty",
+      "firstName",
+      "lastName",
+    ]),
     ...mapWritableState(useIndexStore, ["prc"]),
   },
   created() {
     this.fetchCarts();
+    this.firstName;
+    this.lastName;
   },
   methods: {
     ...mapActions(useIndexStore, ["fetchCarts", "payment"]),
@@ -42,7 +49,7 @@ export default {
       "
     >
       <div class="col-12 text-center">
-        <h3>FirstName LastName's Cart</h3>
+        <h3>{{ firstName }} {{ lastName }}'s Cart</h3>
       </div>
     </div>
     <div class="container" v-if="isCartEmpty">

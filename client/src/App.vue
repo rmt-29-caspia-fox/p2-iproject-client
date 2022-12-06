@@ -27,10 +27,10 @@ body {
     #f6953e 91.5%,
     #f6953e 100%
   );
-  font-family: fantasy;
+  font-family: sans-serif;
 }
 nav {
-  font-family: fantasy;
+  font-family: sans-serif;
 }
 .btn-lazpiz {
   background-color: #f7d2b2;

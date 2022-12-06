@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const useIndexStore = defineStore("index", {
   state: () => ({
-    // baseUrl: "https://p2-ip-thelazpiz.herokuapp.com",
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://p2-iproject-server-production.up.railway.app",
+    // baseUrl: "http://localhost:3000",
     isLogin: false,
     isCartEmpty: false,
     products: [],
@@ -183,12 +183,20 @@ export const useIndexStore = defineStore("index", {
             access_token: localStorage.access_token,
           },
         });
-        this.carts.push(data);
         this.addToCartAlert();
-        this.router.push("/carts");
       } catch (error) {
         console.log(error);
-        this.globalAlert("warning", "Please check:", `Have you signed in?`);
+        if (error.response.data.message === "Invalid token") {
+          this.globalAlert("warning", "Please check:", `Have you signed in?`);
+        } else if (
+          error.response.data.message === "Product has been added to cart"
+        ) {
+          this.globalAlert(
+            "warning",
+            "Please check:",
+            `You have added this product to cart`
+          );
+        }
       }
     },
 
