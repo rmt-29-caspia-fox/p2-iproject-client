@@ -1,12 +1,13 @@
 <script>
-import { mapActions, mapState, mapWritableState } from "pinia";
+import { mapActions, mapWritableState } from "pinia";
 import { useIndexStore } from "@/stores/index";
 
 export default {
   data() {
     return {
-      quantity: 1,
+      quantity: 0,
       price: 0,
+      greyMinus: false,
     };
   },
   props: ["cart", "number"],
@@ -27,11 +28,15 @@ export default {
     increment() {
       this.quantity++;
       this.prc = this.prc + this.price;
+      this.greyMinus = true;
     },
     decrement() {
       if (this.quantity >= 2) {
         this.quantity--;
         this.prc = this.prc - this.price;
+        if (this.quantity === 1) {
+          this.greyMinus = false;
+        }
       } else {
         this.quantity = 1;
       }
@@ -44,6 +49,7 @@ export default {
     },
   },
   created() {
+    this.quantity = this.cart.Product.quantity;
     this.price = this.cart.Product.price;
     this.total();
   },
@@ -64,7 +70,18 @@ export default {
     <td>
       <div class="row">
         <div class="col-4" style="padding-left: 40px">
-          <a href="" @click.prevent="decrement()" style="color: #f6953e"
+          <a
+            href=""
+            v-if="greyMinus"
+            @click.prevent="decrement()"
+            style="color: #f6953e"
+            ><i class="fa fa-minus"></i
+          ></a>
+          <a
+            href=""
+            v-if="!greyMinus"
+            @click.prevent="decrement()"
+            style="color: #dbdbdb"
             ><i class="fa fa-minus"></i
           ></a>
         </div>

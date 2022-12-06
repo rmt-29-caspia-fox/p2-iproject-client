@@ -31,7 +31,7 @@ export default {
     <div class="container">
       <div
         class="row"
-        style="background-color: white; width: 99.8%; margin-left: 1px"
+        style="background-color: white; width: 94%; margin-left: 3%"
       >
         <div
           class="col-1 d-flex justify-content-center"
